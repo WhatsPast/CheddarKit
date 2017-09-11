@@ -13,14 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.backgroundColor = UIColor.white
 //        window?.rootViewController = UINavigationController()
 //        (window?.rootViewController as! UINavigationController).pushViewController(LoginViewController(), animated: true)
-        window?.rootViewController = LoginViewController()
+//        window?.rootViewController = LoginViewController()
+        window?.rootViewController = CDWebView()
         
         window?.makeKeyAndVisible()
         
