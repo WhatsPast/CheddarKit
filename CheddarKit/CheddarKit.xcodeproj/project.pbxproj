@@ -14,8 +14,8 @@
 		930341C41F64F92A00C7A5F1 /* CDLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930341C31F64F92A00C7A5F1 /* CDLogin.swift */; };
 		931639D41F658B5B00C5B5D6 /* CDUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D31F658B0E00C5B5D6 /* CDUser.swift */; };
 		931639D51F658B5B00C5B5D6 /* CDWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D01F658AC100C5B5D6 /* CDWebView.swift */; };
-		931639D71F65AC6400C5B5D6 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D61F65AC6400C5B5D6 /* LoginController.swift */; };
 		931639D91F6603D200C5B5D6 /* CDResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D81F6603D200C5B5D6 /* CDResponseTypes.swift */; };
+		931639DD1F664F0C00C5B5D6 /* APIContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639DC1F664F0C00C5B5D6 /* APIContract.swift */; };
 		93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FEE71F6491D60036D68E /* AppDelegate.swift */; };
 		93A0FEEF1F6491D60036D68E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEEE1F6491D60036D68E /* Assets.xcassets */; };
 		93A0FEF21F6491D60036D68E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEF01F6491D60036D68E /* LaunchScreen.storyboard */; };
@@ -49,8 +49,8 @@
 		930341C31F64F92A00C7A5F1 /* CDLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDLogin.swift; sourceTree = "<group>"; };
 		931639D01F658AC100C5B5D6 /* CDWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDWebView.swift; sourceTree = "<group>"; };
 		931639D31F658B0E00C5B5D6 /* CDUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDUser.swift; sourceTree = "<group>"; };
-		931639D61F65AC6400C5B5D6 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		931639D81F6603D200C5B5D6 /* CDResponseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDResponseTypes.swift; sourceTree = "<group>"; };
+		931639DC1F664F0C00C5B5D6 /* APIContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIContract.swift; sourceTree = "<group>"; };
 		93A0FEE41F6491D60036D68E /* CheddarKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheddarKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A0FEE71F6491D60036D68E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A0FEEE1F6491D60036D68E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,7 +102,6 @@
 		930341B51F649FC000C7A5F1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				931639D61F65AC6400C5B5D6 /* LoginController.swift */,
 				930341B61F649FDD00C7A5F1 /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -113,6 +112,7 @@
 			children = (
 				931639D11F658ACC00C5B5D6 /* Data */,
 				931639CF1F658AC100C5B5D6 /* UI */,
+				931639DC1F664F0C00C5B5D6 /* APIContract.swift */,
 				930341BD1F64CB9700C7A5F1 /* APIManager.swift */,
 				930341C31F64F92A00C7A5F1 /* CDLogin.swift */,
 			);
@@ -336,10 +336,10 @@
 				931639D51F658B5B00C5B5D6 /* CDWebView.swift in Sources */,
 				930341C41F64F92A00C7A5F1 /* CDLogin.swift in Sources */,
 				930341B71F649FDD00C7A5F1 /* LoginViewController.swift in Sources */,
-				931639D71F65AC6400C5B5D6 /* LoginController.swift in Sources */,
 				93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */,
 				930341BE1F64CB9700C7A5F1 /* APIManager.swift in Sources */,
 				930341B91F64ADE000C7A5F1 /* UITextField+Blue.swift in Sources */,
+				931639DD1F664F0C00C5B5D6 /* APIContract.swift in Sources */,
 				930341BB1F64B24C00C7A5F1 /* UIButton+Blue.swift in Sources */,
 				931639D91F6603D200C5B5D6 /* CDResponseTypes.swift in Sources */,
 			);

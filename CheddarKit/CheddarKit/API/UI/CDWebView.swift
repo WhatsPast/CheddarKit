@@ -14,6 +14,8 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
     var initialRequest: URLRequest?
     var authDelegate: CDWebViewDelegate?
+    var authCodeCallback: (authCode: String?, error: CDSimpleError?)?
+    var tokenCallback: (token: CDTokenResponse?, error: CDSimpleError?)?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -40,18 +42,9 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
     
     func setupWebView() {
-        
         webView.uiDelegate = self
         webView.navigationDelegate = self
         view = webView
-        
-//        self.view.addSubview(webView)
-//        webView.translatesAutoresizingMaskIntoConstraints = false
-//        webView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-//        webView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-//        webView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-//        webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-//        webView.backgroundColor = .black
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +52,10 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    /*
+         This interecepts a page redirect so that we can get the key out of it.
+         It also gets the token out of it if we can.
+     */
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         print("intercepting urls!")
@@ -71,9 +68,6 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
             if url.scheme == myScheme && app.canOpenURL(url) {
 
                 if let values = url.queryParameters {
-//                    for (key, value) in comps {
-//                        print("\(key): \(value)")
-//                    }
                     if let code = values["code"]  {
                         let response = CDAuthCode(code: code,
                                                   response: "success",
@@ -119,14 +113,13 @@ extension CDWebView: CDWebViewDelegate {
             // it worked
             // parse that code and try to get an auth token.
             print(codeResponse.code)
-            APIManager.sharedInstance.convertCodeToToken(code: codeResponse.code)
+            APIManager.sharedInstance.convertCodeToToken(code: codeResponse.code, callback: nil)
         } else {
             // post errors
         }
     }
     
 }
-
 
 // Thanks to: https://stackoverflow.com/questions/41421686/swift-get-url-parameters
 extension URL {

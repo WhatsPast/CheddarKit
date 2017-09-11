@@ -38,25 +38,14 @@ class APIManager: NSObject {
                                    redirectURI: "https://cheddarapp.com",
                                    state: "Cheddar Blue")
         let params = ["client_id": user.clientID]
-        
         let request = makeQueryRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/authorize", params: params)
-        
-//        let session = getSession()
-//        let task: URLSessionDataTask = session.dataTask(with: request) { (data, response, error) in
-//            if let data = data {
-//                let response = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-////                let response =
-//                print(response)
-//            }
-//        }
-//        task.resume()
         return request
     }
     
     // convertCodeToToken
     // get's a token from the authorize code that we already have.
     // API Endpoint: oath/token
-    func convertCodeToToken(code: String) -> Bool {
+    func convertCodeToToken(code: String, callback: (token: CDTokenResponse?, error: CDSimpleError?)? ) {
         
         let params = ["grant_type": "authorization_code", "code": code]
         let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/token", params: params)
@@ -98,7 +87,6 @@ class APIManager: NSObject {
             }
             
         }.resume()
-        return true
     }
     
     // utilities
@@ -157,7 +145,7 @@ class APIManager: NSObject {
         return request
     }
     
-    // make an authenticated post request using generic parameters.
+    // Make an authenticated post request using generic parameters.
     private func makeAuthenticatedRequest(host: String?,
                                           endpoint: String,
                                           params: [String: String]?) -> URLRequest {

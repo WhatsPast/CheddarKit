@@ -6,6 +6,8 @@
 //  Copyright © 2017 Karl Weber. All rights reserved.
 //
 
+// for sure read these docs alot: https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types
+
 import UIKit
 
 //class CDResponseTypes: NSObject {
