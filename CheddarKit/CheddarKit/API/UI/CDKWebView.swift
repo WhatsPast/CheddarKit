@@ -1,5 +1,5 @@
 //
-//  CDWebView.swift
+//  CDKWebView.swift
 //  CheddarKit
 //
 //  Created by Karl Weber on 9/10/17.
@@ -9,13 +9,13 @@
 import UIKit
 import WebKit
 
-class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class CDKWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
     var initialRequest: URLRequest?
-    var authDelegate: CDWebViewDelegate?
-    var authCodeCallback: ((_ authCode: String?, _ error: CDSimpleError?) -> ())?
-    var tokenCallback: ((_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ())?
+    var authDelegate: CDKWebViewDelegate?
+    var authCodeCallback: ((_ authCode: String?, _ error: CDKSimpleError?) -> ())?
+    var tokenCallback: ((_ token: CDKToken?, _ error: CDKSimpleError?) -> ())?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -33,7 +33,7 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let manager = APIManager.sharedInstance
+        let manager = CheddarKit.sharedInstance
         let request = manager.authorizeUser()
         // Do any additional setup after loading the view.
         setupWebView()
@@ -69,7 +69,7 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
                 if let values = url.queryParameters {
                     if let code = values["code"]  {
-                        let response = CDAuthCode(code: code,
+                        let response = CDKAuthCode(code: code,
                                                   response: "success",
                                                   message: "Successfully did it!")
                         
@@ -103,15 +103,15 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 }
 
-// The CDWebViewDelegate does 1 thing, it either returns a code for successfull authentication.
+// The CDKWebViewDelegate does 1 thing, it either returns a code for successfull authentication.
 // or it returns an error.
-protocol CDWebViewDelegate {
-    func cheddarAuthResponse(codeResponse: CDAuthCode, error: CDSimpleError?)
+protocol CDKWebViewDelegate {
+    func cheddarAuthResponse(codeResponse: CDKAuthCode, error: CDKSimpleError?)
 }
 
-extension CDWebView: CDWebViewDelegate {
+extension CDKWebView: CDKWebViewDelegate {
     
-    func cheddarAuthResponse(codeResponse: CDAuthCode, error: CDSimpleError?) {
+    func cheddarAuthResponse(codeResponse: CDKAuthCode, error: CDKSimpleError?) {
         if codeResponse.response == "success" {
             // it worked
             // parse that code and try to get an auth token.

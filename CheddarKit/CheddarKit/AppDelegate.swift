@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window?.rootViewController = UINavigationController()
 //        (window?.rootViewController as! UINavigationController).pushViewController(LoginViewController(), animated: true)
 //        window?.rootViewController = LoginViewController()
-        let webView = CDWebView()
+        let webView = CDKWebView()
         window?.rootViewController = webView
         
         webView.authCodeCallback = { (code, error) -> () in
@@ -42,16 +42,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleAuth(code: String) {
-        APIManager.sharedInstance.convertCodeToToken(code: code, callback:  { (token: CDTokenResponse?, error: CDSimpleError?) -> () in
+        CheddarKit.sharedInstance.convertCodeToToken(code: code, callback:  { (token: CDKToken?, error: CDKSimpleError?) -> () in
             print("I love it here.")
-            self.handleToken(token: code)
+            if let token = token {
+                self.handleToken(token: token)
+            } else if let error = error {
+                // handle the error
+            }
             return
         })
     }
     
-    func handleToken(token: String) {
+    func handleToken(token: CDKToken) {
         // save that there token
-        CDModel.sharedInstance.setUserToken(token)
+        CheddarKit.sharedInstance.setUserSessionWith(token)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

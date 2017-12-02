@@ -1,5 +1,5 @@
 //
-//  APIManager.swift
+//  CheddarKit.swift
 //  CheddarKit
 //
 //  Created by Karl Weber on 9/9/17.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-class APIManager: NSObject {
+class CheddarKit: NSObject {
 
-    static let sharedInstance = APIManager.init(singleton: true)
+    static let sharedInstance = CheddarKit.init(singleton: true)
     
     let clientID = "65415c5a8311383d2e73a324f362a1a3"
     let clientSecret = "66c8ba7060d13612debcbec386e515a3"
     
-    fileprivate init(singleton: Bool) {
+    private init(singleton: Bool) {
         super.init()
     }
     
@@ -24,78 +24,12 @@ class APIManager: NSObject {
         fatalError("Just stop it. Please just stop. This has to be used as a Singleton.")
     }
     
-    // Authenticated Request
-    func loginUser() {
-//        let session = getSession()
-//        let request = URLRequest(url: URL(string: "https://api.cheddarapp.com")!)
-    }
-    
-    // Authorize a User
-    // Returns a URL Request to load into a webview so that we can authorize a user.
-    // API Endpoint: oauth/authorize
-    func authorizeUser() -> URLRequest {
-        
-        let user = CDAuthorizeUser(clientID: clientID,
-                                   redirectURI: "https://cheddarapp.com",
-                                   state: "Cheddar Blue")
-        let params = ["client_id": user.clientID]
-        let request = makeQueryRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/authorize", params: params)
-        return request
-    }
-    
-    // convertCodeToToken
-    // get's a token from the authorize code that we already have.
-    // API Endpoint: oath/token
-    func convertCodeToToken(code: String, callback: @escaping (_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ()?) {
-        
-        let params = ["grant_type": "authorization_code", "code": code]
-        let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/token", params: params)
-        
-        let session = getSession()
-        
-        session.dataTask(with: request) { (data, response, error) in
-            
-            if let data = data {
-                // to spit out whatever is coming from the api uncomment below
-//                if let returnData = String(data: data, encoding: .utf8) {
-//                    print(returnData)
-//                }
-                
-                let decoder = JSONDecoder()
-                decoder.dataDecodingStrategy = .deferredToData
-                do {
-                    let decoded = try decoder.decode(CDTokenResponse.self, from: data)
-                    print("decoded: \(decoded)")
-                    // success!
-                    callback(decoded, nil)
-                    
-                } catch {
-                    
-                    do {
-                        let decoded = try decoder.decode(CDSimpleError.self, from:data)
-                        print("We've got an error.")
-                        print("\(decoded.error)")
-                        callback(nil, decoded)
-                    } catch {
-                        do {
-                            if let returnData = String(data: data, encoding: .utf8) {
-                                print("ok what we got?")
-                                print(returnData)
-                            }
-                        }
-                    }
-                }
-            }
-            
-        }.resume()
-    }
-    
     // utilities
-    private func getSession() -> URLSession {
+    func getSession() -> URLSession {
         return URLSession(configuration: URLSessionConfiguration.default)
     }
     
-    private func encode(parametersToQueryString params: [String: String]) -> String {
+    func encode(parametersToQueryString params: [String: String]) -> String {
         var paramString = ""
         for (key, value) in params {
             let escapedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -127,7 +61,7 @@ class APIManager: NSObject {
 //        return paramString
 //    }
     
-    private func makeQueryRequest(host: String = "https://api.cheddarapp.com/",
+    func makeQueryRequest(host: String = "https://api.cheddarapp.com/",
                              endpoint: String,
                              params: [String: String]?) -> URLRequest {
 
@@ -142,7 +76,7 @@ class APIManager: NSObject {
     }
     
     // Make an authenticated post request using generic parameters.
-    private func makeAuthenticatedRequest(host: String = "https://api.cheddarapp.com/",
+    func makeAuthenticatedRequest(host: String = "https://api.cheddarapp.com/",
                                           endpoint: String,
                                           params: [String: String]?) -> URLRequest {
         

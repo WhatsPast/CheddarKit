@@ -1,5 +1,5 @@
 //
-//  CDUser.swift
+//  CDKUser.swift
 //  CheddarKit
 //
 //  Created by Karl Weber on 9/10/17.
@@ -10,7 +10,7 @@ import UIKit
 
 
 // AuthorizeUser
-struct CDAuthorizeUser: Codable {
+struct CDKAuthorizeUser: Codable {
 //    let username: String
 //    let password: String
     let clientID: String
@@ -19,14 +19,14 @@ struct CDAuthorizeUser: Codable {
 }
 
 // Login User
-struct CDLoginUser: Codable {
+struct CDKLoginUser: Codable {
     let username: String
     let password: String
 }
 
 
 // response objects
-struct CDAuthCode: Codable {
+struct CDKAuthCode: Codable {
     let code: String
     let response: String
     let message: String

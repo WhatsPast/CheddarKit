@@ -1,5 +1,5 @@
 //
-//  CDResponseTypes.swift
+//  CDKResponseTypes.swift
 //  CheddarKit
 //
 //  Created by Karl Weber on 9/10/17.
@@ -11,11 +11,11 @@
 import UIKit
 
 // example: {"error":"invalid_client"}
-struct CDSimpleError: Codable {
+struct CDKSimpleError: Codable {
     let error: String
 }
 
-// CDTokenResponse
+// CDKToken
 // This is the codable response that is returned when turning an authorization code
 // into an authorization Token. Sample JSON is shown below.
 
@@ -39,25 +39,25 @@ struct CDSimpleError: Codable {
 //        "username": "kow"
 //    }
 //}
-struct CDTokenResponse: Codable {
+struct CDKToken: Codable {
     let access_token: String
     let token_type: String
-    let user: CDUser
+    let user: CDKUser
 }
 
-struct CDUser: Codable {
+struct CDKUser: Codable {
     let created_at: String
     let first_name: String?
     let has_plus: Bool
     let id: Int
     let last_name: String?
-    let socket: CDSocket
+    let socket: CDKSocket
     let updated_at: String
     let url: String
     let username: String
 }
 
-struct CDSocket: Codable {
+struct CDKSocket: Codable {
     let api_key: String
     let app_id: String
     let auth_url: String

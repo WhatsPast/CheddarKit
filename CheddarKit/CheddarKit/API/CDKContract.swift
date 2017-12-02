@@ -1,5 +1,5 @@
 //
-//  APIContract.swift
+//  CDKContract.swift
 //  CheddarKit
 //
 //  Created by Karl Weber on 9/11/17.
@@ -8,27 +8,33 @@
 
 import UIKit
 
-protocol CDAPIManagerProtocol {
+protocol CDKAPIManagerProtocol {
 
 }
 
+// Constants
+let CDKSessionKey = "cheddarkit-serialized-usersession"
+
 // Authentication
-protocol CDAuthenticationProtocol {
-    
+protocol CDKAuthenticationProtocol {
     // generate an authorizeUser URLRequest for a webview to consume.
     func authorizeUser() -> URLRequest
     // Convert an Authorization code into an Auth Token.
-    func convertCodeToToken(code: String, callback: (_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ()?)
+    func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> ()?)
+    // sets a user's session from a token response
+    @discardableResult func setUserSessionWith(_ tokenResponse: CDKToken) -> Bool
+    // get's the user's session or nothing.
+    func getUserSession() -> CDKToken?
 }
 
 // Users
-protocol CDUsersProtocol {
+protocol CDKUsersProtocol {
     // show an authenticated user
-    func user() // broadcasts .didGetUser2
+    func user() // broadcasts .didGetUser
     // show a user's invitations
 }
 
-protocol CDListsProtocol {
+protocol CDKListsProtocol {
     // Lists
         // show all lists
         // show a list

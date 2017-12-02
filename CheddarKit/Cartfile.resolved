@@ -1,1 +1,1 @@
-github "kishikawakatsumi/KeychainAccess" "v3.0.2"
+github "auth0/SimpleKeychain" "0.8.0"

@@ -82,7 +82,7 @@ class LoginViewController: UIViewController {
         
     }
     
-    func signIn()  {
+    @objc func signIn()  {
         print("signin")
     }
 

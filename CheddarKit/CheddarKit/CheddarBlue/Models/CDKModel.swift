@@ -1,5 +1,5 @@
 //
-//  Models.swift
+//  CDKModel.swift
 //  CheddarKit
 //
 //  Created by Karl Weber on 9/11/17.
@@ -11,8 +11,8 @@
 
 import UIKit
 
-class CDModel: NSObject {
-    static let sharedInstance = CDModel.init(singleton: true)
+class CDKModel: NSObject {
+    static let sharedInstance = CDKModel.init(singleton: true)
 
     fileprivate init(singleton: Bool) {
         super.init()
@@ -39,17 +39,11 @@ class CDModel: NSObject {
 
     // Models
     // Authentication
-    @discardableResult func setUserToken(_ token: String) -> Bool {
-        return set(token, forKey: "user_token")
-    }
-    func getUserToken() -> (Bool, String) {
-        return get(forKey: "user_token")
-    }
-    
-    // Save the entire user Session
-    @discardableResult func setUserSessionWith(tokenResponse: CDTokenResponse) -> Bool {
-        
-        return false
-    }
+//    @discardableResult func setUserToken(_ token: String) -> Bool {
+//        return set(token, forKey: "user_token")
+//    }
+//    func getUserToken() -> (Bool, String) {
+//        return get(forKey: "user_token")
+//    }
 
 }
