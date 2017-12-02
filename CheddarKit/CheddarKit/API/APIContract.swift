@@ -18,13 +18,14 @@ protocol CDAuthenticationProtocol {
     // generate an authorizeUser URLRequest for a webview to consume.
     func authorizeUser() -> URLRequest
     // Convert an Authorization code into an Auth Token.
-    func convertCodeToToken(code: String, callback: (token: CDTokenResponse?, error: CDSimpleError?)?)
+    func convertCodeToToken(code: String, callback: (_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ()?)
 }
 
+// Users
 protocol CDUsersProtocol {
-    // Users
-        // show an authenticated user
-        // show a user's invitations
+    // show an authenticated user
+    func user() // broadcasts .didGetUser2
+    // show a user's invitations
 }
 
 protocol CDListsProtocol {
@@ -66,5 +67,6 @@ protocol CDListsProtocol {
             // tasks reordered
         // User Events
             // User updated
+
     
 

@@ -20,11 +20,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window?.rootViewController = UINavigationController()
 //        (window?.rootViewController as! UINavigationController).pushViewController(LoginViewController(), animated: true)
 //        window?.rootViewController = LoginViewController()
-        window?.rootViewController = CDWebView()
+        let webView = CDWebView()
+        window?.rootViewController = webView
+        
+        webView.authCodeCallback = { (code, error) -> () in
+            if code != nil {
+                self.handleAuth(code: code!)
+            }
+        }
+        
+//        webView.tokenCallback = { (auth, error) -> () in
+//            // do stuff
+//        }
+        
+//        var authCodeCallback: ((_ authCode: String?, _ error: CDSimpleError?) -> ())?
+//        var tokenCallback: ((_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ())?
+//                              (token: CDTokenResponse?, error: CDSimpleError?)
         
         window?.makeKeyAndVisible()
-        
         return true
+    }
+    
+    func handleAuth(code: String) {
+        APIManager.sharedInstance.convertCodeToToken(code: code, callback:  { (token: CDTokenResponse?, error: CDSimpleError?) -> () in
+            print("I love it here.")
+            self.handleToken(token: code)
+            return
+        })
+    }
+    
+    func handleToken(token: String) {
+        // save that there token
+        CDModel.sharedInstance.setUserToken(token)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

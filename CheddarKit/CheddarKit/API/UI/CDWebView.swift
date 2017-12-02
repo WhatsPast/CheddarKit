@@ -14,8 +14,8 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
     var webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
     var initialRequest: URLRequest?
     var authDelegate: CDWebViewDelegate?
-    var authCodeCallback: (authCode: String?, error: CDSimpleError?)?
-    var tokenCallback: (token: CDTokenResponse?, error: CDSimpleError?)?
+    var authCodeCallback: ((_ authCode: String?, _ error: CDSimpleError?) -> ())?
+    var tokenCallback: ((_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ())?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -72,10 +72,13 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
                         let response = CDAuthCode(code: code,
                                                   response: "success",
                                                   message: "Successfully did it!")
-//                        self.authDelegate?.CheddarAuthResponse(codeResponse: response)
-                        self.cheddarAuthResponse(codeResponse: response)
+                        
+                        // this worked, now send back the response.
+                        self.cheddarAuthResponse(codeResponse: response, error: nil)
                         decisionHandler(.cancel)
                         return
+                    } else {
+                        // it didn't work so we have got to figure this out.
                     }
                 }
                 
@@ -103,22 +106,27 @@ class CDWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
 // The CDWebViewDelegate does 1 thing, it either returns a code for successfull authentication.
 // or it returns an error.
 protocol CDWebViewDelegate {
-    func cheddarAuthResponse(codeResponse: CDAuthCode)
+    func cheddarAuthResponse(codeResponse: CDAuthCode, error: CDSimpleError?)
 }
 
 extension CDWebView: CDWebViewDelegate {
     
-    func cheddarAuthResponse(codeResponse: CDAuthCode) {
+    func cheddarAuthResponse(codeResponse: CDAuthCode, error: CDSimpleError?) {
         if codeResponse.response == "success" {
             // it worked
             // parse that code and try to get an auth token.
             print(codeResponse.code)
-            APIManager.sharedInstance.convertCodeToToken(code: codeResponse.code, callback: nil)
+            
+            if let acb = authCodeCallback {
+                acb(codeResponse.code, nil)
+            }            
+//            APIManager.sharedInstance.convertCodeToToken(code: codeResponse.code, callback: nil)
         } else {
-            // post errors
+            if let acb = authCodeCallback {
+                acb(nil, error)
+            }
         }
     }
-    
 }
 
 // Thanks to: https://stackoverflow.com/questions/41421686/swift-get-url-parameters

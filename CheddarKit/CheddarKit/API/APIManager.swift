@@ -21,6 +21,7 @@ class APIManager: NSObject {
     
     required override init() {
         // nothing to see here.
+        fatalError("Just stop it. Please just stop. This has to be used as a Singleton.")
     }
     
     // Authenticated Request
@@ -45,19 +46,17 @@ class APIManager: NSObject {
     // convertCodeToToken
     // get's a token from the authorize code that we already have.
     // API Endpoint: oath/token
-    func convertCodeToToken(code: String, callback: (token: CDTokenResponse?, error: CDSimpleError?)? ) {
+    func convertCodeToToken(code: String, callback: @escaping (_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ()?) {
         
         let params = ["grant_type": "authorization_code", "code": code]
         let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/token", params: params)
         
-        let session = URLSession(configuration: .default)
+        let session = getSession()
         
         session.dataTask(with: request) { (data, response, error) in
             
             if let data = data {
-                // we got us some data
-                
-                // to spit out whatever is coming from the api ucomment below
+                // to spit out whatever is coming from the api uncomment below
 //                if let returnData = String(data: data, encoding: .utf8) {
 //                    print(returnData)
 //                }
@@ -68,6 +67,7 @@ class APIManager: NSObject {
                     let decoded = try decoder.decode(CDTokenResponse.self, from: data)
                     print("decoded: \(decoded)")
                     // success!
+                    callback(decoded, nil)
                     
                 } catch {
                     
@@ -75,6 +75,7 @@ class APIManager: NSObject {
                         let decoded = try decoder.decode(CDSimpleError.self, from:data)
                         print("We've got an error.")
                         print("\(decoded.error)")
+                        callback(nil, decoded)
                     } catch {
                         do {
                             if let returnData = String(data: data, encoding: .utf8) {
@@ -126,7 +127,7 @@ class APIManager: NSObject {
 //        return paramString
 //    }
     
-    private func makeQueryRequest(host: String?,
+    private func makeQueryRequest(host: String = "https://api.cheddarapp.com/",
                              endpoint: String,
                              params: [String: String]?) -> URLRequest {
 
@@ -135,18 +136,13 @@ class APIManager: NSObject {
             paramString = encode(parametersToQueryString: params)
         }
         
-        var h = "https://api.cheddarapp.com/"
-        if let hi = host  {
-            h = hi
-        }
-        
-        let request = URLRequest(url: URL(string: h + endpoint + "?" + paramString)!)
+        let request = URLRequest(url: URL(string: host + endpoint + "?" + paramString)!)
 
         return request
     }
     
     // Make an authenticated post request using generic parameters.
-    private func makeAuthenticatedRequest(host: String?,
+    private func makeAuthenticatedRequest(host: String = "https://api.cheddarapp.com/",
                                           endpoint: String,
                                           params: [String: String]?) -> URLRequest {
         
@@ -155,16 +151,11 @@ class APIManager: NSObject {
             paramString = encode(parametersToQueryString: params)
         }
         
-        var h = "https://api.cheddarapp.com/"
-        if let hi = host  {
-            h = hi
-        }
-        
         let loginString = String(format: "%@:%@", clientID, clientSecret)
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()
         
-        var request = URLRequest(url: URL(string: h + endpoint)!)
+        var request = URLRequest(url: URL(string: host + endpoint)!)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
         request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
@@ -177,12 +168,3 @@ class APIManager: NSObject {
         return request
     }
 }
-
-
-
-
-
-
-
-
-

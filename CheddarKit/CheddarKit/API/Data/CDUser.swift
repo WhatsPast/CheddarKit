@@ -24,13 +24,6 @@ struct CDLoginUser: Codable {
     let password: String
 }
 
-// User
-//struct CDUser: Codable {
-//    let username: String
-//    let password: String
-//}
-
-
 
 // response objects
 struct CDAuthCode: Codable {
