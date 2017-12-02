@@ -17,28 +17,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.backgroundColor = UIColor.white
-//        window?.rootViewController = UINavigationController()
-//        (window?.rootViewController as! UINavigationController).pushViewController(LoginViewController(), animated: true)
-//        window?.rootViewController = LoginViewController()
-        let webView = CDKWebView()
-        window?.rootViewController = webView
+
         
-        webView.authCodeCallback = { (code, error) -> () in
-            if code != nil {
-                self.handleAuth(code: code!)
+        if CheddarKit.sharedInstance.getUserSession() == nil {
+            let webView = CDKWebView()
+            window?.rootViewController = webView
+            
+            webView.authCodeCallback = { (code, error) -> () in
+                if code != nil {
+                    self.handleAuth(code: code!)
+                }
             }
+        } else {
+            let session = CheddarKit.sharedInstance.getUserSession()
+            print("We have a session, access_token: \(session!.access_token)")
+            loadApplication()
         }
-        
-//        webView.tokenCallback = { (auth, error) -> () in
-//            // do stuff
-//        }
-        
-//        var authCodeCallback: ((_ authCode: String?, _ error: CDSimpleError?) -> ())?
-//        var tokenCallback: ((_ token: CDTokenResponse?, _ error: CDSimpleError?) -> ())?
-//                              (token: CDTokenResponse?, error: CDSimpleError?)
         
         window?.makeKeyAndVisible()
         return true
+    }
+    
+    func loadApplication() {
+        window?.rootViewController = UINavigationController()
+        (window?.rootViewController as! UINavigationController).pushViewController(ListsViewController(), animated: true)
     }
     
     func handleAuth(code: String) {
@@ -55,7 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func handleToken(token: CDKToken) {
         // save that there token
-        CheddarKit.sharedInstance.setUserSessionWith(token)
+        if CheddarKit.sharedInstance.setUserSessionWith(token) {
+            // we're officially logged in so let's show us some lists.
+            DispatchQueue.main.sync {
+                loadApplication()
+            }
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

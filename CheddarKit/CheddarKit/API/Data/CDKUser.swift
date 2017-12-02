@@ -8,23 +8,6 @@
 
 import UIKit
 
-
-// AuthorizeUser
-struct CDKAuthorizeUser: Codable {
-//    let username: String
-//    let password: String
-    let clientID: String
-    let redirectURI: String
-    let state: String
-}
-
-// Login User
-struct CDKLoginUser: Codable {
-    let username: String
-    let password: String
-}
-
-
 // response objects
 struct CDKAuthCode: Codable {
     let code: String

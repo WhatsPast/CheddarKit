@@ -15,19 +15,21 @@ extension CheddarKit: CDKAuthenticationProtocol {
     // Authorize a User
     // Returns a URL Request to load into a webview so that we can authorize a user.
     // API Endpoint: oauth/authorize
-    func authorizeUser() -> URLRequest {
-        
-        let user = CDKAuthorizeUser(clientID: clientID,
-                                   redirectURI: "https://cheddarapp.com",
-                                   state: "Cheddar Blue")
-        let params = ["client_id": user.clientID]
+    func authorizeUser(clientID: String, redirectURI: String?, state: String?) -> URLRequest {
+        var params = ["client_id": clientID]
+        if let redirectURI = redirectURI {
+            params["redirect_uri"] = redirectURI
+        }
+        if let state = state {
+            params["state"] = state
+        }
         let request = makeQueryRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/authorize", params: params)
         return request
     }
     
     // convertCodeToToken
     // get's a token from the authorize code that we already have.
-    // API Endpoint: oath/token
+    // API Endpoint: oauth/token
     func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> ()?) {
         
         let params = ["grant_type": "authorization_code", "code": code]

@@ -34,7 +34,9 @@ class CDKWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         super.viewDidLoad()
         
         let manager = CheddarKit.sharedInstance
-        let request = manager.authorizeUser()
+//        let request = manager.authorizeUser(clientID: manager.clientID, redirectURI: "https://cheddarapp.com", state: "Cheddar Blue")
+        let request = manager.authorizeUser(clientID: manager.clientID, redirectURI: nil, state: nil)
+        
         // Do any additional setup after loading the view.
         setupWebView()
         webView.load(request)

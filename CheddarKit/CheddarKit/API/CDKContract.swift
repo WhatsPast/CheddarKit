@@ -18,7 +18,7 @@ let CDKSessionKey = "cheddarkit-serialized-usersession"
 // Authentication
 protocol CDKAuthenticationProtocol {
     // generate an authorizeUser URLRequest for a webview to consume.
-    func authorizeUser() -> URLRequest
+    func authorizeUser(clientID: String, redirectURI: String?, state: String?) -> URLRequest
     // Convert an Authorization code into an Auth Token.
     func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> ()?)
     // sets a user's session from a token response

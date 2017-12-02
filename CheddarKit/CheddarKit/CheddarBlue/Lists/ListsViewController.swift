@@ -9,8 +9,6 @@
 import UIKit
 
 class ListsViewController: UIViewController {
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +16,7 @@ class ListsViewController: UIViewController {
         // setupTableView
         // load all that important data
         // other stuff.
+        view.backgroundColor = .blue
     }
 
     override func didReceiveMemoryWarning() {
