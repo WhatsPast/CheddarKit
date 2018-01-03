@@ -12,12 +12,15 @@
 		930341BB1F64B24C00C7A5F1 /* UIButton+Blue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */; };
 		930341BE1F64CB9700C7A5F1 /* CheddarKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930341BD1F64CB9700C7A5F1 /* CheddarKit.swift */; };
 		930341C41F64F92A00C7A5F1 /* CDKLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930341C31F64F92A00C7A5F1 /* CDKLogin.swift */; };
+		9306A1A71FFC3EAD009BB18E /* ListsViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */; };
 		931639D41F658B5B00C5B5D6 /* CDKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D31F658B0E00C5B5D6 /* CDKUser.swift */; };
 		931639D51F658B5B00C5B5D6 /* CDKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D01F658AC100C5B5D6 /* CDKWebView.swift */; };
 		931639D91F6603D200C5B5D6 /* CDKResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D81F6603D200C5B5D6 /* CDKResponseTypes.swift */; };
 		931639DD1F664F0C00C5B5D6 /* CDKContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639DC1F664F0C00C5B5D6 /* CDKContract.swift */; };
 		931639DF1F66C9BD00C5B5D6 /* CDKModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639DE1F66C9BD00C5B5D6 /* CDKModel.swift */; };
 		931639E21F66CCFE00C5B5D6 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639E11F66CCFE00C5B5D6 /* ListsViewController.swift */; };
+		93584A7F1FFC2FF5007465F7 /* CommonDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */; };
+		93584A811FFC313E007465F7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93584A801FFC313E007465F7 /* ListCell.swift */; };
 		93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FEE71F6491D60036D68E /* AppDelegate.swift */; };
 		93A0FEEF1F6491D60036D68E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEEE1F6491D60036D68E /* Assets.xcassets */; };
 		93A0FEF21F6491D60036D68E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEF01F6491D60036D68E /* LaunchScreen.storyboard */; };
@@ -49,12 +52,15 @@
 		930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Blue.swift"; sourceTree = "<group>"; };
 		930341BD1F64CB9700C7A5F1 /* CheddarKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheddarKit.swift; sourceTree = "<group>"; };
 		930341C31F64F92A00C7A5F1 /* CDKLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKLogin.swift; sourceTree = "<group>"; };
+		9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewLayout.swift; sourceTree = "<group>"; };
 		931639D01F658AC100C5B5D6 /* CDKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKWebView.swift; sourceTree = "<group>"; };
 		931639D31F658B0E00C5B5D6 /* CDKUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKUser.swift; sourceTree = "<group>"; };
 		931639D81F6603D200C5B5D6 /* CDKResponseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKResponseTypes.swift; sourceTree = "<group>"; };
 		931639DC1F664F0C00C5B5D6 /* CDKContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKContract.swift; sourceTree = "<group>"; };
 		931639DE1F66C9BD00C5B5D6 /* CDKModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKModel.swift; sourceTree = "<group>"; };
 		931639E11F66CCFE00C5B5D6 /* ListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
+		93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDefinitions.swift; sourceTree = "<group>"; };
+		93584A801FFC313E007465F7 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		93A0FEE41F6491D60036D68E /* CheddarKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheddarKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A0FEE71F6491D60036D68E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A0FEEE1F6491D60036D68E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 				930341B51F649FC000C7A5F1 /* Login */,
 				930341B81F64ADE000C7A5F1 /* UITextField+Blue.swift */,
 				930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */,
+				93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */,
 			);
 			path = CheddarBlue;
 			sourceTree = "<group>";
@@ -156,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				931639E11F66CCFE00C5B5D6 /* ListsViewController.swift */,
+				9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */,
+				93584A801FFC313E007465F7 /* ListCell.swift */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -378,8 +387,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9306A1A71FFC3EAD009BB18E /* ListsViewLayout.swift in Sources */,
 				931639DF1F66C9BD00C5B5D6 /* CDKModel.swift in Sources */,
 				931639D41F658B5B00C5B5D6 /* CDKUser.swift in Sources */,
+				93584A7F1FFC2FF5007465F7 /* CommonDefinitions.swift in Sources */,
+				93584A811FFC313E007465F7 /* ListCell.swift in Sources */,
 				931639E21F66CCFE00C5B5D6 /* ListsViewController.swift in Sources */,
 				931639D51F658B5B00C5B5D6 /* CDKWebView.swift in Sources */,
 				930341C41F64F92A00C7A5F1 /* CDKLogin.swift in Sources */,
