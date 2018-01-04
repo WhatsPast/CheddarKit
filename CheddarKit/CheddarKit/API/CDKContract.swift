@@ -29,12 +29,17 @@ protocol CDKAuthenticationProtocol {
 
 // Users
 protocol CDKUsersProtocol {
-    // show an authenticated user
+    // get an authenticated user
     func user() // broadcasts .didGetUser
-    // show a user's invitations
+    // get a user's invitations
 }
 
 protocol CDKListsProtocol {
+    // get all of a user's lists even the archived ones
+    func lists(callback: @escaping (_ list: CDKLists?, _ error: CDKSimpleError?) -> ()?)
+    // get a specific user lit
+//    func list(id: Int)
+    
     // Lists
         // show all lists
         // show a list

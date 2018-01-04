@@ -32,8 +32,7 @@ extension CheddarKit: CDKAuthenticationProtocol {
     // API Endpoint: oauth/token
     func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> ()?) {
         
-        let params = ["grant_type": "authorization_code", "code": code]
-        let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/token", params: params)
+        let request = makeTokenRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/token", code: code)
         
         let session = getSession()
         

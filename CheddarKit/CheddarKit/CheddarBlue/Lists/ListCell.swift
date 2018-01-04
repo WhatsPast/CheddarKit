@@ -16,7 +16,6 @@ class ListCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.frame = frame
-        print("Frame width: \(frame.width)")
         setupViews()
     }
     
@@ -25,7 +24,6 @@ class ListCell: UICollectionViewCell {
     }
     
     func setupViews() {
-        
         
         // title
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -37,8 +35,7 @@ class ListCell: UICollectionViewCell {
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         titleLabel.textColor = .black
         titleLabel.textAlignment = .left
-        titleLabel.text = "Whatever is happening I do not like. Why is it doing this? I do not understand."
-        
+        titleLabel.text = "Whatever"
         
         // border
         border.translatesAutoresizingMaskIntoConstraints = false
@@ -48,16 +45,17 @@ class ListCell: UICollectionViewCell {
         border.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0.0).isActive = true
         border.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         border.backgroundColor = .gray
-        
-        contentView.backgroundColor = .green
     }
     
-    
 //    contentView
-    
     // this will accept a CDKList object to configure
-    func configure() {
-        
+    func configure(indexPath: IndexPath, list: CDKList) {
+        border.backgroundColor = .gray
+        if indexPath.row == 0 {
+            border.backgroundColor = .white
+        }
+//        titleLabel.text = "Row: \(indexPath.row + 1) "
+        titleLabel.text = list.title
     }
     
     //

@@ -77,13 +77,39 @@ class CheddarKit: NSObject {
     
     // Make an authenticated post request using generic parameters.
     func makeAuthenticatedRequest(host: String = "https://api.cheddarapp.com/",
-                                          endpoint: String,
-                                          params: [String: String]?) -> URLRequest {
+                              endpoint: String,
+                                method: String = "GET",
+                                params: [String: String]?,
+                                 token: String) -> URLRequest {
         
+        print("Our Token: \(token)")
+        print("URL: \(host)\(endpoint)")
+
+        // headers
+        var request = URLRequest(url: URL(string: host + endpoint)!)
+        request.httpMethod = method
+        // Token Header
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        
+        // parameters
         var paramString = ""
         if let params = params {
             paramString = encode(parametersToQueryString: params)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
+            request.httpBody = paramString.data(using: .utf8)
         }
+        
+        return request
+    }
+    
+    
+    // Make an authenticated post request using generic parameters.
+    func makeTokenRequest(host: String = "https://api.cheddarapp.com/",
+                                      endpoint: String,
+                                          code: String) -> URLRequest {
+        
+        let params = ["grant_type": "authorization_code", "code": code]
+        let paramString = encode(parametersToQueryString: params)
         
         let loginString = String(format: "%@:%@", clientID, clientSecret)
         let loginData = loginString.data(using: String.Encoding.utf8)!
@@ -95,9 +121,9 @@ class CheddarKit: NSObject {
         request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
         request.httpBody = paramString.data(using: .utf8)
         
-//        if let token = token {
-//            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//        }
+        //        if let token = token {
+        //            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        //        }
         
         return request
     }

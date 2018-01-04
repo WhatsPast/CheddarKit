@@ -13,6 +13,7 @@
 		930341BE1F64CB9700C7A5F1 /* CheddarKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930341BD1F64CB9700C7A5F1 /* CheddarKit.swift */; };
 		930341C41F64F92A00C7A5F1 /* CDKLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930341C31F64F92A00C7A5F1 /* CDKLogin.swift */; };
 		9306A1A71FFC3EAD009BB18E /* ListsViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */; };
+		9306A1A91FFD9DB0009BB18E /* CDKLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9306A1A81FFD9DB0009BB18E /* CDKLists.swift */; };
 		931639D41F658B5B00C5B5D6 /* CDKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D31F658B0E00C5B5D6 /* CDKUser.swift */; };
 		931639D51F658B5B00C5B5D6 /* CDKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D01F658AC100C5B5D6 /* CDKWebView.swift */; };
 		931639D91F6603D200C5B5D6 /* CDKResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639D81F6603D200C5B5D6 /* CDKResponseTypes.swift */; };
@@ -53,6 +54,7 @@
 		930341BD1F64CB9700C7A5F1 /* CheddarKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheddarKit.swift; sourceTree = "<group>"; };
 		930341C31F64F92A00C7A5F1 /* CDKLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKLogin.swift; sourceTree = "<group>"; };
 		9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewLayout.swift; sourceTree = "<group>"; };
+		9306A1A81FFD9DB0009BB18E /* CDKLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKLists.swift; sourceTree = "<group>"; };
 		931639D01F658AC100C5B5D6 /* CDKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKWebView.swift; sourceTree = "<group>"; };
 		931639D31F658B0E00C5B5D6 /* CDKUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKUser.swift; sourceTree = "<group>"; };
 		931639D81F6603D200C5B5D6 /* CDKResponseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKResponseTypes.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				931639DC1F664F0C00C5B5D6 /* CDKContract.swift */,
 				930341BD1F64CB9700C7A5F1 /* CheddarKit.swift */,
 				930341C31F64F92A00C7A5F1 /* CDKLogin.swift */,
+				9306A1A81FFD9DB0009BB18E /* CDKLists.swift */,
 				931639D11F658ACC00C5B5D6 /* Data */,
 				931639CF1F658AC100C5B5D6 /* UI */,
 			);
@@ -397,6 +400,7 @@
 				930341C41F64F92A00C7A5F1 /* CDKLogin.swift in Sources */,
 				930341B71F649FDD00C7A5F1 /* LoginViewController.swift in Sources */,
 				93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */,
+				9306A1A91FFD9DB0009BB18E /* CDKLists.swift in Sources */,
 				930341BE1F64CB9700C7A5F1 /* CheddarKit.swift in Sources */,
 				930341B91F64ADE000C7A5F1 /* UITextField+Blue.swift in Sources */,
 				931639DD1F664F0C00C5B5D6 /* CDKContract.swift in Sources */,

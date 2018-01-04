@@ -64,3 +64,73 @@ struct CDKSocket: Codable {
     let channel: String
 }
 
+
+// CDKLists
+// This is the codable response when requesting all of a user's lists.
+// Sample JSON:
+
+//[
+//    {
+//        "active_completed_tasks_count": 0,
+//        "active_tasks_count": 5,
+//        "active_uncompleted_tasks_count": 5,
+//        "archived_at": null,
+//        "archived_completed_tasks_count": 15,
+//        "archived_tasks_count": 15,
+//        "archived_uncompleted_tasks_count": 0,
+//        "created_at": "2017-08-12T07:50:00Z",
+//        "id": 145701,
+//        "invitation_count": 0,
+//        "invitations": [],
+//        "member_count": 1,
+//        "position": 1,
+//        "slug": "4E95",
+//        "title": "Snap Auctions",
+//        "updated_at": "2017-12-14T01:45:02Z",
+//        "url": "https://api.cheddarapp.com/v1/lists/145701",
+//        "user": {
+//            "created_at": "2016-09-03T05:59:07Z",
+//            "first_name": "Karl",
+//            "has_plus": false,
+//            "id": 67750,
+//            "last_name": "Weber",
+//            "socket": {
+//                "api_key": "675f10a650f18b4eb0a8",
+//                "app_id": "15197",
+//                "auth_url": "https://api.cheddarapp.com/pusher/auth",
+//                "channel": "private-user-67750"
+//            },
+//            "updated_at": "2017-01-18T15:53:40Z",
+//            "url": "https://api.cheddarapp.com/v1/users/67750",
+//            "username": "kow"
+//        },
+//        "users": [
+//
+//        ]
+//    },
+//    { … }
+//]
+
+typealias CDKLists = Array<CDKList>
+
+struct CDKList: Codable {
+    let active_completed_tasks_count: Int
+    let active_tasks_count: Int
+    let active_uncompleted_tasks_count: Int
+    let archived_at: String?
+    let archived_completed_tasks_count: Int
+    let archived_tasks_count: Int
+    let archived_uncompleted_tasks_count: Int
+    let created_at: String
+    let id: Int
+    let invitation_count: Int
+    let invitations: [String?]
+    let member_count: Int
+    let position: Int
+    let slug: String
+    let title: String
+    let updated_at: String
+    let url: String
+    let user: CDKUser
+    let users: [CDKUser]
+}
