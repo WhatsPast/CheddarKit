@@ -10,8 +10,9 @@ import UIKit
 
 class ListCell: UICollectionViewCell {
     
-    let titleLabel   = UILabel()
-    let border  = UIView()
+    let titleLabel = UILabel()
+    let border     = UIView()
+    let activeTasksLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +46,20 @@ class ListCell: UICollectionViewCell {
         border.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0.0).isActive = true
         border.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         border.backgroundColor = .gray
+        
+        // Task Number
+        activeTasksLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(activeTasksLabel)
+        activeTasksLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
+        activeTasksLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
+        activeTasksLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
+        activeTasksLabel.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
+        activeTasksLabel.font = UIFont.systemFont(ofSize: 10.0, weight: .regular)
+        activeTasksLabel.textAlignment = .center
+        activeTasksLabel.backgroundColor = .gray
+        activeTasksLabel.layer.cornerRadius = 15.0
+        activeTasksLabel.text = "0"
+        
     }
     
 //    contentView
@@ -56,8 +71,10 @@ class ListCell: UICollectionViewCell {
         }
 //        titleLabel.text = "Row: \(indexPath.row + 1) "
         titleLabel.text = list.title
+        activeTasksLabel.text = "\(list.active_uncompleted_tasks_count)"
     }
     
-    //
-    
 }
+
+
+
