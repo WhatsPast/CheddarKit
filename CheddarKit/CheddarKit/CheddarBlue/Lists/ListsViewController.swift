@@ -14,12 +14,14 @@ class ListsViewController: UIViewController {
     var layout = ListsViewLayout()
     var activeLists: [CDKList]?
     var archivedLists: [CDKList]?
+    var newListInput = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Lists"
         view.backgroundColor = .clear
         setupCollectionView()
+        setupNewListInput()
         CheddarKit.sharedInstance.lists(callback: { (lists, error) in
             print("It worked")
             if let lists = lists {
@@ -43,8 +45,6 @@ class ListsViewController: UIViewController {
         collectionView!.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
         collectionView!.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         
-        
-//        layout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 44.0)
         collectionView!.frame = self.view.frame
         self.view.addSubview(collectionView!)
         collectionView!.dataSource = self
@@ -75,6 +75,18 @@ class ListsViewController: UIViewController {
             layout.storedLayouts = nil
             collectionView?.reloadData()
         }
+    }
+    
+    func setupNewListInput() {
+        newListInput.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(newListInput)
+        newListInput.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0).isActive = true
+        newListInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
+        newListInput.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
+        newListInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        newListInput.backgroundColor = .gray
+        newListInput.layer.cornerRadius = 13.0
+        
     }
 
 }
