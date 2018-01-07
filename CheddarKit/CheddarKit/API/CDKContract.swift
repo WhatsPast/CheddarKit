@@ -38,7 +38,7 @@ protocol CDKListsProtocol {
     // get all of a user's lists even the archived ones
     func lists(callback: @escaping (_ list: CDKLists?, _ error: CDKSimpleError?) -> ()?)
     // get a specific user lit
-//    func list(id: Int)
+    func list(id: Int)
     
     // Lists
         // show all lists

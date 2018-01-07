@@ -48,6 +48,7 @@ class ListsViewController: UIViewController {
         collectionView!.frame = self.view.frame
         self.view.addSubview(collectionView!)
         collectionView!.dataSource = self
+        collectionView!.delegate = self
         collectionView!.backgroundColor = .white
         collectionView!.register(ListCell.self, forCellWithReuseIdentifier: cells.listCell)
         collectionView!.alwaysBounceVertical = true
@@ -118,3 +119,13 @@ extension ListsViewController: UICollectionViewDataSource {
     
 }
 
+extension ListsViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let activeLists = activeLists {
+            let list = activeLists[indexPath.row]
+            CheddarKit.sharedInstance.list(id: list.id)
+        }
+    }
+    
+}
