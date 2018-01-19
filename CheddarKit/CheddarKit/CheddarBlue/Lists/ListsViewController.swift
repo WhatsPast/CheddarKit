@@ -124,7 +124,8 @@ extension ListsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeLists = activeLists {
             let list = activeLists[indexPath.row]
-            CheddarKit.sharedInstance.list(id: list.id)
+//            CheddarKit.sharedInstance.list(id: list.id)
+            CheddarKit.sharedInstance.updateList(id: list.id, title: "Whatever", archive: false)
         }
     }
     
