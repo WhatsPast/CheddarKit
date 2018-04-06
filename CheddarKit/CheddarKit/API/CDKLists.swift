@@ -84,6 +84,46 @@ extension CheddarKit: CDKListsProtocol {
         }
     }
     
+    func createList(title: String, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?) {
+        if let userSession = CheddarKit.sharedInstance.getUserSession() {
+            var params = [String: String]()
+            
+            // title
+            params["list[title]"] = title
+            
+            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/",
+                                                   endpoint: "/v1/lists/",
+                                                   method: "POST",
+                                                   params: params,
+                                                   token: userSession.access_token)
+            
+            getSession().dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    if let returnData = String(data: data, encoding: .utf8) {
+                        print(returnData)
+                    }
+                    
+                    let decoder = JSONDecoder()
+                    decoder.dataDecodingStrategy = .deferredToData
+                    do {
+                        let decoded = try decoder.decode(CDKList.self, from: data)
+                        callback?(decoded, nil)
+                    } catch {
+                        
+                        do {
+                            let decoded = try decoder.decode(CDKSimpleError.self, from:data)
+                            print("We've got an error.")
+                            print("\(decoded.error)")
+                            callback?(nil, decoded)
+                        } catch {
+                            
+                        }
+                    }
+                } // End Data
+            }.resume()
+        }
+    }
+    
     func updateList(id: Int, title: String?, archive: Bool?, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())? ) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
             
@@ -152,6 +192,41 @@ extension CheddarKit: CDKListsProtocol {
             
         }
         
+    }
+    
+    func reorderList(lists: [Int], callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?) {
+        if let userSession = CheddarKit.sharedInstance.getUserSession() {
+            
+            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/reorder", method: "GET", params: nil, token: userSession.access_token)
+            
+            getSession().dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    //                    if let returnData = String(data: data, encoding: .utf8) {
+                    //                        print(returnData)
+                    //                    }
+                    print("We got some valid JSON! Now let's decode it.")
+                    
+                    let decoder = JSONDecoder()
+                    decoder.dataDecodingStrategy = .deferredToData
+                    do {
+                        let decoded = try decoder.decode(CDKLists.self, from: data)
+                        //                        print("decoded: \(decoded)")
+                        // success!
+                        callback?(decoded, nil)
+                    } catch {
+                        
+                        do {
+                            let decoded = try decoder.decode(CDKSimpleError.self, from:data)
+                            print("We've got an error.")
+                            print("\(decoded.error)")
+                            callback?(nil, decoded)
+                        } catch {
+                            
+                        }
+                    }
+                } // End Data
+            }.resume()
+        }
     }
     
 }

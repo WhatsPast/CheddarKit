@@ -41,37 +41,50 @@ class ListCell: UICollectionViewCell {
         // border
         border.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(border)
-        border.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15.0).isActive = true
-        border.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
+        border.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0.0).isActive = true
+        border.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -0.0).isActive = true
         border.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0.0).isActive = true
         border.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        border.backgroundColor = .gray
+        border.backgroundColor = .whiteFour
+        
+        let randomView = UIView()
+//        randomView.frame = CGRect(x: 10, y: 10, width: 30, height: 16)
+        randomView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(randomView)
+        randomView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
+        randomView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
+        randomView.heightAnchor.constraint(equalToConstant: 16.0).isActive = true
+        randomView.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        randomView.layer.cornerRadius = 4.0
+        randomView.backgroundColor = .whiteFour
+        
         
         // Task Number
         activeTasksLabel.translatesAutoresizingMaskIntoConstraints = false
+        activeTasksLabel.font = UIFont.systemFont(ofSize: 10.0, weight: .regular)
+        activeTasksLabel.textAlignment = .center
+        activeTasksLabel.backgroundColor = .clear
+        activeTasksLabel.layer.cornerRadius = 4.0
+        activeTasksLabel.textColor = .blackThree
         contentView.addSubview(activeTasksLabel)
         activeTasksLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
         activeTasksLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
-        activeTasksLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
-        activeTasksLabel.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
-        activeTasksLabel.font = UIFont.systemFont(ofSize: 10.0, weight: .regular)
-        activeTasksLabel.textAlignment = .center
-        activeTasksLabel.backgroundColor = .gray
-        activeTasksLabel.layer.cornerRadius = 15.0
+        activeTasksLabel.heightAnchor.constraint(equalToConstant: 16.0).isActive = true
+        activeTasksLabel.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        
         activeTasksLabel.text = "0"
         
+        self.contentView.backgroundColor = .white
     }
     
-//    contentView
-    // this will accept a CDKList object to configure
     func configure(indexPath: IndexPath, list: CDKList) {
-        border.backgroundColor = .gray
+        border.backgroundColor = .whiteFour
         if indexPath.row == 0 {
             border.backgroundColor = .white
         }
-//        titleLabel.text = "Row: \(indexPath.row + 1) "
         titleLabel.text = list.title
         activeTasksLabel.text = "\(list.active_uncompleted_tasks_count)"
+        activeTasksLabel.layer.cornerRadius = 4.0
     }
     
 }

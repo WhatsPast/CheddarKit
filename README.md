@@ -22,7 +22,7 @@ You should be good.
     * [x] Get all Lists
     * [x] Get a list
     * [x] Update a list
-    * [ ] Create a list
+    * [x] Create a list
     * [ ] Reorder lists
     * [ ] share a list
     * [ ] show a list's members
@@ -40,8 +40,17 @@ You should be good.
     * [ ] Archive completed tasks in a list
 
 * [ ] Blue: The sample app
+
   * [ ] Login interface
   * [ ] Lists CollectionView
-    * [ ] New List floating text field
+    * [x] New List floating text field
     * [ ] Edit List Name
     * [ ] Archive List with Swipe
+
+* [ ] TESTS!!!!
+  * [ ] Authentication
+  * [ ] Users
+  * [ ] Lists
+  * [ ] Tasks
+
+  * [ ] Get it consumable with Carthage.

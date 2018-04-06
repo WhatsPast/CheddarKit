@@ -29,6 +29,7 @@
 		93A0FF081F6491D60036D68E /* CheddarKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FF071F6491D60036D68E /* CheddarKitUITests.swift */; };
 		93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32A42076B59700902307 /* NewListDelegate.swift */; };
 		93BC32AB2076B8A900902307 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AA2076B8A900902307 /* Colors.swift */; };
+		93BC32AE2078286600902307 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AD2078286600902307 /* TasksViewController.swift */; };
 		93CB249D1FD2CC5C0000BEDB /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		93A0FF091F6491D60036D68E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93BC32A42076B59700902307 /* NewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListDelegate.swift; sourceTree = "<group>"; };
 		93BC32AA2076B8A900902307 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		93BC32AD2078286600902307 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +112,7 @@
 		930341B41F649FA800C7A5F1 /* CheddarBlue */ = {
 			isa = PBXGroup;
 			children = (
+				93BC32AC2078283600902307 /* Tasks */,
 				93BC32A92076B78400902307 /* Views */,
 				93BC32A82076B76C00902307 /* Common */,
 				93DD7C301FD2BF6F00535748 /* Models */,
@@ -244,6 +247,14 @@
 				930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		93BC32AC2078283600902307 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				93BC32AD2078286600902307 /* TasksViewController.swift */,
+			);
+			path = Tasks;
 			sourceTree = "<group>";
 		};
 		93DD7C301FD2BF6F00535748 /* Models */ = {
@@ -427,6 +438,7 @@
 				9306A1A91FFD9DB0009BB18E /* CDKLists.swift in Sources */,
 				930341BE1F64CB9700C7A5F1 /* CheddarKit.swift in Sources */,
 				930341B91F64ADE000C7A5F1 /* UITextField+Blue.swift in Sources */,
+				93BC32AE2078286600902307 /* TasksViewController.swift in Sources */,
 				931639DD1F664F0C00C5B5D6 /* CDKContract.swift in Sources */,
 				930341BB1F64B24C00C7A5F1 /* UIButton+Blue.swift in Sources */,
 				931639D91F6603D200C5B5D6 /* CDKResponseTypes.swift in Sources */,

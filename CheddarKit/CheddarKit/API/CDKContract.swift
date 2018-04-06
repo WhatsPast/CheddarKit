@@ -42,9 +42,11 @@ protocol CDKListsProtocol {
     // Update a Specific List, update it's title or archive it.
     // leaving archive nil will do nothing, setting it to true will archive it, setting it to false will unarchive it.
     func updateList(id: Int, title: String?, archive: Bool?, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
+    // Creates a list
+    func createList(title: String, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
+    // Reorder a List
+    func reorderList(id: Int, callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
     // Lists
-        // update a list
-        // create a list
         // reorder lists
         // share a list
         // show a list's members

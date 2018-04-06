@@ -17,6 +17,12 @@ class ListsViewController: UIViewController {
     var newListInput = TextField()
     var newListDelegate = NewListDelegate()
     
+    // for moving cells
+    var longPress = UILongPressGestureRecognizer()
+    var snapshot: UIView?
+    var sourceIndexPath: IndexPath?
+    var dontrecognizeMovement = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Lists"
@@ -32,6 +38,9 @@ class ListsViewController: UIViewController {
             }
             return nil
         })
+        
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized))
+        self.collectionView?.addGestureRecognizer(longPress)
     }
     
     func setupCollectionView() {
@@ -53,11 +62,6 @@ class ListsViewController: UIViewController {
         collectionView!.backgroundColor = .white
         collectionView!.register(ListCell.self, forCellWithReuseIdentifier: cells.listCell)
         collectionView!.alwaysBounceVertical = true
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func populateLists(_ lists: CDKLists) {
@@ -84,11 +88,12 @@ class ListsViewController: UIViewController {
         view.addSubview(newListInput)
         newListInput.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0).isActive = true
         newListInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
-        newListInput.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
         newListInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
         newListInput.backgroundColor = .whiteThree
         newListInput.layer.cornerRadius = 13.0
         newListInput.delegate = newListDelegate
+        newListDelegate.textField = newListInput
+        newListDelegate.setupConstraints()
     }
 
 }
@@ -131,3 +136,132 @@ extension ListsViewController: UICollectionViewDelegate {
     }
     
 }
+
+
+// Long Press to move this stuff things.
+extension ListsViewController {
+    /* Animate all them rows to move like crazy talk. */
+    @objc func longPressGestureRecognized(sender:UILongPressGestureRecognizer) {
+        
+        
+        let lp = sender as UILongPressGestureRecognizer
+        let state = lp.state
+        let location = longPress.location(in: self.collectionView)
+        var indexPath = self.collectionView?.indexPathForItem(at: location)
+        
+        print("indexPath: \(indexPath?.section):\(indexPath?.row)")
+        print("sourceIndexPath: \(sourceIndexPath?.section):\(sourceIndexPath?.row)")
+        
+        if let path = indexPath {
+            // alright, only allow out of bounds when its not changed or began.
+            if (path.section != 0) {
+                sender.isEnabled = false
+                sender.isEnabled = true
+                return
+            }
+        }
+        
+        switch state {
+        case .began:
+            if ((indexPath != nil) && (dontrecognizeMovement == false)) {
+//                print("budget.items.count: \(budget.items.count)")
+                print("indexPath - \(indexPath!.section):\(indexPath!.item)")
+                
+                sourceIndexPath = indexPath!
+                
+//                if sourceIndexPath!.section > 0 {
+//                    // Mark this one as just never gonna happen.
+//                    sender.state = .ended;
+//                    break
+//                }
+                
+                let cell = self.collectionView?.cellForItem(at: indexPath!)
+                snapshot = self.customSnapshotFromView(inputView: cell!)
+                
+                // Add the Snapshot as a Subview
+                var center = cell?.center
+                snapshot?.center = center!
+                snapshot?.alpha = 0.0
+                self.collectionView?.addSubview(snapshot!)
+                UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+                    
+                    center!.y = location.y
+                    self.snapshot?.center = center!
+                    self.snapshot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                    self.snapshot?.alpha = 0.98
+                    
+                    cell!.alpha = 0.0
+                    
+                }, completion: { (isTrue: Bool) in
+                    cell!.isHidden = true
+                })
+                
+            }
+            break
+        case .changed:
+            var center = self.snapshot?.center
+            center?.y = location.y
+            snapshot?.center = center!
+            
+            // Is destination valid and is it different from source?
+            if indexPath == nil { // alright if it's too far out of bounds, send it back!
+                indexPath = sourceIndexPath
+            }
+            if (!(indexPath == sourceIndexPath) && (indexPath!.section < 1)) {
+                
+                // ... move the rows.
+                collectionView?.moveItem(at: self.sourceIndexPath!, to: indexPath!)
+                
+                // ... update data source.
+//                BudgetModel.moveItemIn(budget: budget, from: (sourceIndexPath?.row)!, to: indexPath!.row)
+                
+                // ... and update source so it is in sync with UI changes.
+                sourceIndexPath = indexPath!
+            }
+            break
+            
+        default:
+            // Clean up
+            let cell = collectionView?.cellForItem(at: sourceIndexPath!)
+            cell?.isHidden = false
+            cell?.alpha = 0.0
+            
+            UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+                
+                self.snapshot?.center = cell!.center
+                self.snapshot?.transform = CGAffineTransform.identity
+                self.snapshot?.alpha = 0.0
+                
+                cell!.alpha = 1.0
+                
+            }, completion: { (isTrue: Bool) in
+                
+                self.sourceIndexPath = nil
+                self.snapshot?.removeFromSuperview()
+                self.snapshot = nil
+            })
+            break
+        }
+    }
+    
+    // Utility function for moving this thing.
+    func customSnapshotFromView(inputView: UIView) -> UIView {
+        
+        // make an image from the input view
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let snapshot = UIImageView(image: image)
+        snapshot.layer.masksToBounds = true
+        snapshot.layer.cornerRadius = 0.0
+        snapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        snapshot.layer.shadowRadius = 5.0
+        snapshot.layer.shadowOpacity = 0.4
+        
+        return snapshot
+    }
+    
+}
+
