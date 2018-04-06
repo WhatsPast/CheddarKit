@@ -20,7 +20,6 @@ extension CheddarKit: CDKListsProtocol {
             
             getSession().dataTask(with: request) { (data, response, error) in
                 if let data = data {
-                    // to spit out whatever is coming from the api uncomment below
                     // if let returnData = String(data: data, encoding: .utf8) {
                     //    print(returnData)
                     // }
@@ -52,14 +51,13 @@ extension CheddarKit: CDKListsProtocol {
         }
     }
     
-    func list(id: Int) {
+    func list(id: Int, callback: @escaping (_ list: CDKList?, _ error: CDKSimpleError?) -> ()?) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
-            
+        
             let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/\(id)", method: "GET", params: nil, token: userSession.access_token)
             
             getSession().dataTask(with: request) { (data, response, error) in
                 if let data = data {
-                    // to spit out whatever is coming from the api uncomment below
 //                    if let returnData = String(data: data, encoding: .utf8) {
 //                        print(returnData)
 //                    }
@@ -69,16 +67,14 @@ extension CheddarKit: CDKListsProtocol {
                     decoder.dataDecodingStrategy = .deferredToData
                     do {
                         let decoded = try decoder.decode(CDKList.self, from: data)
-                        //                        print("decoded: \(decoded)")
-                        // success!
-//                        callback(decoded, nil)
+                        callback(decoded, nil)
                     } catch {
                         
                         do {
                             let decoded = try decoder.decode(CDKSimpleError.self, from:data)
                             print("We've got an error.")
                             print("\(decoded.error)")
-//                            callback(nil, decoded)
+                            callback(nil, decoded)
                         } catch {
 
                         }
@@ -88,7 +84,7 @@ extension CheddarKit: CDKListsProtocol {
         }
     }
     
-    func updateList(id: Int, title: String?, archive: Bool?) {
+    func updateList(id: Int, title: String?, archive: Bool?, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())? ) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
             
             var params = [String: String]()
@@ -112,7 +108,8 @@ extension CheddarKit: CDKListsProtocol {
                     let dateString = dateFormatter.string(from: date)
                     
                     params["list[archived_at]"] = dateString
-                    print("datString: \(dateString).")
+                    print("archived_at: \(dateString).")
+                    
                 } else {
                     params["list[archived_at]"] = ""
                 }
@@ -126,26 +123,25 @@ extension CheddarKit: CDKListsProtocol {
             
             getSession().dataTask(with: request) { (data, response, error) in
                 if let data = data {
-                    // to spit out whatever is coming from the api uncomment below
-                    if let returnData = String(data: data, encoding: .utf8) {
-                        print(returnData)
-                    }
+//                    if let returnData = String(data: data, encoding: .utf8) {
+//                        print(returnData)
+//                    }
                     print("We got some valid JSON! Now let's decode it.")
                     
                     let decoder = JSONDecoder()
                     decoder.dataDecodingStrategy = .deferredToData
                     do {
                         let decoded = try decoder.decode(CDKList.self, from: data)
-                        print("decoded: \(decoded)")
+//                        print("decoded: \(decoded)")
                         // success!
-                        //                        callback(decoded, nil)
+                        callback?(decoded, nil)
                     } catch {
                         
                         do {
                             let decoded = try decoder.decode(CDKSimpleError.self, from:data)
                             print("We've got an error.")
                             print("\(decoded.error)")
-                            //                            callback(nil, decoded)
+                            callback?(nil, decoded)
                         } catch {
                             
                         }

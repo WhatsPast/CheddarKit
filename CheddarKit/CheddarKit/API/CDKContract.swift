@@ -38,10 +38,10 @@ protocol CDKListsProtocol {
     // get all of a user's lists even the archived ones
     func lists(callback: @escaping (_ list: CDKLists?, _ error: CDKSimpleError?) -> ()?)
     // get a specific user list
-    func list(id: Int)
+    func list(id: Int, callback: @escaping (_ list: CDKList?, _ error: CDKSimpleError?) -> ()?)
     // Update a Specific List, update it's title or archive it.
     // leaving archive nil will do nothing, setting it to true will archive it, setting it to false will unarchive it.
-    func updateList(id: Int, title: String?, archive: Bool?)
+    func updateList(id: Int, title: String?, archive: Bool?, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
     // Lists
         // update a list
         // create a list

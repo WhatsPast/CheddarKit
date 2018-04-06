@@ -14,7 +14,8 @@ class ListsViewController: UIViewController {
     var layout = ListsViewLayout()
     var activeLists: [CDKList]?
     var archivedLists: [CDKList]?
-    var newListInput = UITextField()
+    var newListInput = TextField()
+    var newListDelegate = NewListDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +86,9 @@ class ListsViewController: UIViewController {
         newListInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
         newListInput.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0).isActive = true
         newListInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        newListInput.backgroundColor = .gray
+        newListInput.backgroundColor = .whiteThree
         newListInput.layer.cornerRadius = 13.0
-        
+        newListInput.delegate = newListDelegate
     }
 
 }
@@ -124,8 +125,8 @@ extension ListsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeLists = activeLists {
             let list = activeLists[indexPath.row]
-//            CheddarKit.sharedInstance.list(id: list.id)
-            CheddarKit.sharedInstance.updateList(id: list.id, title: "Whatever", archive: false)
+//            func updateList(id: Int, title: String?, archive: Bool?) {
+            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
         }
     }
     

@@ -27,6 +27,8 @@
 		93A0FEF21F6491D60036D68E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEF01F6491D60036D68E /* LaunchScreen.storyboard */; };
 		93A0FEFD1F6491D60036D68E /* CheddarKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FEFC1F6491D60036D68E /* CheddarKitTests.swift */; };
 		93A0FF081F6491D60036D68E /* CheddarKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FF071F6491D60036D68E /* CheddarKitUITests.swift */; };
+		93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32A42076B59700902307 /* NewListDelegate.swift */; };
+		93BC32AB2076B8A900902307 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AA2076B8A900902307 /* Colors.swift */; };
 		93CB249D1FD2CC5C0000BEDB /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,8 @@
 		93A0FF031F6491D60036D68E /* CheddarKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheddarKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A0FF071F6491D60036D68E /* CheddarKitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheddarKitUITests.swift; sourceTree = "<group>"; };
 		93A0FF091F6491D60036D68E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93BC32A42076B59700902307 /* NewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListDelegate.swift; sourceTree = "<group>"; };
+		93BC32AA2076B8A900902307 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,12 +110,11 @@
 		930341B41F649FA800C7A5F1 /* CheddarBlue */ = {
 			isa = PBXGroup;
 			children = (
+				93BC32A92076B78400902307 /* Views */,
+				93BC32A82076B76C00902307 /* Common */,
 				93DD7C301FD2BF6F00535748 /* Models */,
 				931639E01F66CCF000C5B5D6 /* Lists */,
 				930341B51F649FC000C7A5F1 /* Login */,
-				930341B81F64ADE000C7A5F1 /* UITextField+Blue.swift */,
-				930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */,
-				93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */,
 			);
 			path = CheddarBlue;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				931639E11F66CCFE00C5B5D6 /* ListsViewController.swift */,
+				93BC32A42076B59700902307 /* NewListDelegate.swift */,
 				9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */,
 				93584A801FFC313E007465F7 /* ListCell.swift */,
 			);
@@ -222,6 +226,24 @@
 				93A0FF091F6491D60036D68E /* Info.plist */,
 			);
 			path = CheddarKitUITests;
+			sourceTree = "<group>";
+		};
+		93BC32A82076B76C00902307 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */,
+				93BC32AA2076B8A900902307 /* Colors.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		93BC32A92076B78400902307 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				930341B81F64ADE000C7A5F1 /* UITextField+Blue.swift */,
+				930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		93DD7C301FD2BF6F00535748 /* Models */ = {
@@ -390,6 +412,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */,
+				93BC32AB2076B8A900902307 /* Colors.swift in Sources */,
 				9306A1A71FFC3EAD009BB18E /* ListsViewLayout.swift in Sources */,
 				931639DF1F66C9BD00C5B5D6 /* CDKModel.swift in Sources */,
 				931639D41F658B5B00C5B5D6 /* CDKUser.swift in Sources */,
