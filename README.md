@@ -23,7 +23,8 @@ You should be good.
     * [x] Get a list
     * [x] Update a list
     * [x] Create a list
-    * [ ] Reorder lists
+    * [x] Reorder lists
+    * [x] Archive a list
     * [ ] share a list
     * [ ] show a list's members
     * [ ] Remove a member from a list
@@ -48,6 +49,7 @@ You should be good.
     * [ ] Archive List with Swipe
 
 * [ ] TESTS!!!!
+
   * [ ] Authentication
   * [ ] Users
   * [ ] Lists

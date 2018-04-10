@@ -47,39 +47,43 @@ protocol CDKListsProtocol {
     // Reorder a List
     func reorder(lists: [CDKList], callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
     // Lists
-        // reorder lists
         // share a list
         // show a list's members
         // remove member's from a list
         // delete an invitation
         // accept an invitation
 }
-    
+
+protocol CDKTasksProtocol {
     // Tasks
         // show all tasks in a List
+        func tasks(fromList list_id: Int, callback: @escaping (_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ()?)
         // show a task
+        func task(withId task_id: Int, callback: @escaping (_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ()?)
         // update a task
         // create a task
         // move a task to a new list
         // reorder tasks in a list
         // archive all tasks in a list
         // archive completed tasks in a list
-    
+}
+
+protocol CDKEntitiesProtocol {
     // Entities
+}
     
+protocol CDKRealtimeProtocol {
     // Realtime Events
-        // List Events
-            // list created
-            // list updated
-            // lists reordered
-            // invitation accepted
-            // member removed from a list
-        // Task Events
-            // task created
-            // task updated
-            // tasks reordered
-        // User Events
-            // User updated
-
-    
-
+    // List Events
+    // list created
+    // list updated
+    // lists reordered
+    // invitation accepted
+    // member removed from a list
+    // Task Events
+    // task created
+    // task updated
+    // tasks reordered
+    // User Events
+    // User updated
+}

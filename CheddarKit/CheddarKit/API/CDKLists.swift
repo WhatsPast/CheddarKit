@@ -202,7 +202,6 @@ extension CheddarKit: CDKListsProtocol {
             let params = encode(arrayToQueryString: orderedLists)
             print("params: \(params)")
             
-            // TODO:
             let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/reorder", method: "POST", paramString: params, token: userSession.access_token)
             
             getSession().dataTask(with: request) { (data, response, error) in
@@ -210,18 +209,17 @@ extension CheddarKit: CDKListsProtocol {
                     if let returnData = String(data: data, encoding: .utf8) {
                         print(returnData)
                     }
-                    print("We got some valid JSON! Now let's decode it.")
                     
                 }
                 if let response = response {
                     let httpResponse = (response as! HTTPURLResponse)
                     if httpResponse.statusCode == 204 {
                         // that's good
-                        print("Reordering was successful.")
+//                        print("Reordering was successful.")
                     } else {
                         // that's bad
-                        print("Reordering was a failure.")
-                        print("\(httpResponse.statusCode)")
+//                        print("Reordering was a failure.")
+//                        print("\(httpResponse.statusCode)")
                     }
                 }
             }.resume()

@@ -134,3 +134,91 @@ struct CDKList: Codable {
     let user: CDKUser
     let users: [CDKUser]
 }
+
+typealias CDKTasks = Array<CDKTask>
+
+struct CDKTask: Codable {
+    let archived_at: String?
+    let completed_at: String?
+    let created_at: String
+    let display_html: String?
+    let display_text: String?
+    let entities: [CDKEntity]
+}
+
+struct CDKEntity: Codable {
+    // TODO: Make this a true enum
+    let type: String // Making this a true enum would be a lot of work see here: https://stackoverflow.com/questions/47139768/swift-codable-protocol-with-recursive-enums
+    let text: String
+    let indices: [Int]
+    let display_text: String
+    let display_indices: [Int]
+}
+
+struct CDKTag: Codable {
+    let id: Int
+    let name: String
+}
+
+enum CDKEntityType: CustomStringConvertible {
+    case tag
+    case link
+    case emphasis
+    case double_emphasis
+    case triple_emphasis
+    case strikethrough
+    case code
+    case emoji
+    
+    var description: String {
+        switch self {
+        case .tag:
+            return "tag"
+        case .link:
+            return "link"
+        case .emphasis:
+            return "emphasis"
+        case .double_emphasis:
+            return "double_emphasis"
+        case .triple_emphasis:
+            return "triple_emphasis"
+        case .strikethrough:
+            return "strikethrough"
+        case .code:
+            return "code"
+        case .emoji:
+            return "emoji"
+        default:
+            return "emphasis"
+        }
+    }
+    
+    func from(string: String) -> CDKEntityType {
+        switch string {
+        case "tag":
+            return .tag
+        case "link":
+            return .link
+        case "emphasis":
+            return .emphasis
+        case "double_emphasis":
+            return .double_emphasis
+        case "triple_emphasis":
+            return .triple_emphasis
+        case "strikethrough":
+            return .strikethrough
+        case "code":
+            return .code
+        case "emoji":
+            return .emoji
+        default:
+            return .emphasis
+        }
+    }
+}
+
+
+
+
+
+

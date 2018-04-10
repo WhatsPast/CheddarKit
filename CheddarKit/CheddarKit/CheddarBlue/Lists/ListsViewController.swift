@@ -137,7 +137,10 @@ extension ListsViewController: UICollectionViewDelegate {
         if let activeLists = activeLists {
             let list = activeLists[indexPath.row]
 //            func updateList(id: Int, title: String?, archive: Bool?) {
-            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
+//            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
+            // open taskViewController
+            let taskVC = TasksViewController()
+            self.navigationController?.pushViewController(taskVC, animated: true)
         }
     }
     
@@ -155,9 +158,6 @@ extension ListsViewController {
         let location = longPress.location(in: self.collectionView)
         var indexPath = self.collectionView?.indexPathForItem(at: location)
         
-        print("indexPath: \(indexPath?.section):\(indexPath?.row)")
-        print("sourceIndexPath: \(sourceIndexPath?.section):\(sourceIndexPath?.row)")
-        
         if let path = indexPath {
             // alright, only allow out of bounds when its not changed or began.
             if (path.section != 0) {
@@ -170,16 +170,8 @@ extension ListsViewController {
         switch state {
         case .began:
             if ((indexPath != nil) && (dontrecognizeMovement == false)) {
-//                print("budget.items.count: \(budget.items.count)")
-                print("indexPath - \(indexPath!.section):\(indexPath!.item)")
                 
                 sourceIndexPath = indexPath!
-                
-//                if sourceIndexPath!.section > 0 {
-//                    // Mark this one as just never gonna happen.
-//                    sender.state = .ended;
-//                    break
-//                }
                 
                 let cell = self.collectionView?.cellForItem(at: indexPath!)
                 snapshot = self.customSnapshotFromView(inputView: cell!)
@@ -218,11 +210,7 @@ extension ListsViewController {
                 // ... move the rows.
                 collectionView?.moveItem(at: self.sourceIndexPath!, to: indexPath!)
                 
-                // figure out the new order and send that network request change.
-                // rewire every position starting with the drop.
-
                 var reorderedLists = activeLists!
-//                var reorderedLists = [CDKList]()
                 let element = reorderedLists.remove(at: self.sourceIndexPath!.row)
                 reorderedLists.insert(element, at: indexPath!.row)
                 
@@ -233,6 +221,7 @@ extension ListsViewController {
                 }
                 print("Reordering.....")
                 CheddarKit.sharedInstance.reorder(lists: reorderedLists, callback: nil)
+                activeLists = reorderedLists
                 
                 // ... update data source.
 //                BudgetModel.moveItemIn(budget: budget, from: (sourceIndexPath?.row)!, to: indexPath!.row)

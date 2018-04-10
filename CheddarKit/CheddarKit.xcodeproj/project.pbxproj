@@ -30,6 +30,7 @@
 		93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32A42076B59700902307 /* NewListDelegate.swift */; };
 		93BC32AB2076B8A900902307 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AA2076B8A900902307 /* Colors.swift */; };
 		93BC32AE2078286600902307 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AD2078286600902307 /* TasksViewController.swift */; };
+		93BC32B0207D62C500902307 /* CDKTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AF207D62C500902307 /* CDKTasks.swift */; };
 		93CB249D1FD2CC5C0000BEDB /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		93BC32A42076B59700902307 /* NewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListDelegate.swift; sourceTree = "<group>"; };
 		93BC32AA2076B8A900902307 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		93BC32AD2078286600902307 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
+		93BC32AF207D62C500902307 /* CDKTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKTasks.swift; sourceTree = "<group>"; };
 		93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 				930341BD1F64CB9700C7A5F1 /* CheddarKit.swift */,
 				930341C31F64F92A00C7A5F1 /* CDKLogin.swift */,
 				9306A1A81FFD9DB0009BB18E /* CDKLists.swift */,
+				93BC32AF207D62C500902307 /* CDKTasks.swift */,
 				931639D11F658ACC00C5B5D6 /* Data */,
 				931639CF1F658AC100C5B5D6 /* UI */,
 			);
@@ -428,6 +431,7 @@
 				9306A1A71FFC3EAD009BB18E /* ListsViewLayout.swift in Sources */,
 				931639DF1F66C9BD00C5B5D6 /* CDKModel.swift in Sources */,
 				931639D41F658B5B00C5B5D6 /* CDKUser.swift in Sources */,
+				93BC32B0207D62C500902307 /* CDKTasks.swift in Sources */,
 				93584A7F1FFC2FF5007465F7 /* CommonDefinitions.swift in Sources */,
 				93584A811FFC313E007465F7 /* ListCell.swift in Sources */,
 				931639E21F66CCFE00C5B5D6 /* ListsViewController.swift in Sources */,
