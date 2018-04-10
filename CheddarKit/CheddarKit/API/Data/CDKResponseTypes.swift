@@ -123,12 +123,12 @@ struct CDKList: Codable {
     let archived_uncompleted_tasks_count: Int
     let created_at: String
     let id: Int
-    let invitation_count: Int
-    let invitations: [String?]
-    let member_count: Int
-    let position: Int
+    var invitation_count: Int
+    var invitations: [String?]
+    var member_count: Int
+    var position: Int
     let slug: String
-    let title: String
+    var title: String
     let updated_at: String
     let url: String
     let user: CDKUser

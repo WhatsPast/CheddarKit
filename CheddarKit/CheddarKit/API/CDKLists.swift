@@ -188,43 +188,42 @@ extension CheddarKit: CDKListsProtocol {
                     }
                 } // End Data
             }.resume()
-            
-            
         }
         
     }
     
-    func reorderList(lists: [Int], callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?) {
+    func reorder(lists: [CDKList], callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
             
-            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/reorder", method: "GET", params: nil, token: userSession.access_token)
+            var orderedLists = [String]()
+            for list in lists {
+                orderedLists.append("list[]=\(list.id)")
+            }
+            let params = encode(arrayToQueryString: orderedLists)
+            print("params: \(params)")
+            
+            // TODO:
+            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/reorder", method: "POST", paramString: params, token: userSession.access_token)
             
             getSession().dataTask(with: request) { (data, response, error) in
                 if let data = data {
-                    //                    if let returnData = String(data: data, encoding: .utf8) {
-                    //                        print(returnData)
-                    //                    }
+                    if let returnData = String(data: data, encoding: .utf8) {
+                        print(returnData)
+                    }
                     print("We got some valid JSON! Now let's decode it.")
                     
-                    let decoder = JSONDecoder()
-                    decoder.dataDecodingStrategy = .deferredToData
-                    do {
-                        let decoded = try decoder.decode(CDKLists.self, from: data)
-                        //                        print("decoded: \(decoded)")
-                        // success!
-                        callback?(decoded, nil)
-                    } catch {
-                        
-                        do {
-                            let decoded = try decoder.decode(CDKSimpleError.self, from:data)
-                            print("We've got an error.")
-                            print("\(decoded.error)")
-                            callback?(nil, decoded)
-                        } catch {
-                            
-                        }
+                }
+                if let response = response {
+                    let httpResponse = (response as! HTTPURLResponse)
+                    if httpResponse.statusCode == 204 {
+                        // that's good
+                        print("Reordering was successful.")
+                    } else {
+                        // that's bad
+                        print("Reordering was a failure.")
+                        print("\(httpResponse.statusCode)")
                     }
-                } // End Data
+                }
             }.resume()
         }
     }

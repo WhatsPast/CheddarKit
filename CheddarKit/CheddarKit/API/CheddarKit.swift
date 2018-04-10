@@ -39,6 +39,17 @@ class CheddarKit: NSObject {
         return paramString
     }
     
+    func encode(arrayToQueryString params: [String]) -> String {
+        var paramString = ""
+        for item in params {
+//            let escapedValue = item.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+//            paramString = paramString + "\(escapedValue)&"
+            paramString = paramString + "\(item)&"
+        }
+        
+        return paramString
+    }
+    
 //    private func encode(parametersToStrings params: [String: String]) -> [String] {
 //        var paramStrings: [String]
 //        var paramString = ""
@@ -95,6 +106,31 @@ class CheddarKit: NSObject {
         var paramString = ""
         if let params = params {
             paramString = encode(parametersToQueryString: params)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
+            request.httpBody = paramString.data(using: .utf8)
+        }
+        
+        return request
+    }
+    
+    // Make an authenticated post request using generic parameters.
+    func makeAuthenticatedRequest(host: String = "https://api.cheddarapp.com/",
+                                  endpoint: String,
+                                  method: String = "GET",
+                                  paramString: String?,
+                                  token: String) -> URLRequest {
+        
+        print("Our Token: \(token)")
+        print("URL: \(host)\(endpoint)")
+        
+        // headers
+        var request = URLRequest(url: URL(string: host + endpoint)!)
+        request.httpMethod = method
+        // Token Header
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        
+        // parameters
+        if let paramString = paramString {
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
             request.httpBody = paramString.data(using: .utf8)
         }

@@ -45,7 +45,7 @@ protocol CDKListsProtocol {
     // Creates a list
     func createList(title: String, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
     // Reorder a List
-    func reorderList(id: Int, callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
+    func reorder(lists: [CDKList], callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
     // Lists
         // reorder lists
         // share a list

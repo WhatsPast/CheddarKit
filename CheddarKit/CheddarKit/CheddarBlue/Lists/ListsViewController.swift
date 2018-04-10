@@ -77,6 +77,12 @@ class ListsViewController: UIViewController {
             }
         }
         
+        // sort active lists
+        let otherLists = activeLists?.sorted(by: { (l1, l2) -> Bool in
+            l1.position < l2.position
+        })
+        activeLists = otherLists
+        
         DispatchQueue.main.sync {
             layout.storedLayouts = nil
             collectionView?.reloadData()
@@ -212,6 +218,22 @@ extension ListsViewController {
                 // ... move the rows.
                 collectionView?.moveItem(at: self.sourceIndexPath!, to: indexPath!)
                 
+                // figure out the new order and send that network request change.
+                // rewire every position starting with the drop.
+
+                var reorderedLists = activeLists!
+//                var reorderedLists = [CDKList]()
+                let element = reorderedLists.remove(at: self.sourceIndexPath!.row)
+                reorderedLists.insert(element, at: indexPath!.row)
+                
+                var index: Int = 0
+                for _ in reorderedLists {
+                    reorderedLists[index].position = index
+                    index = index + 1
+                }
+                print("Reordering.....")
+                CheddarKit.sharedInstance.reorder(lists: reorderedLists, callback: nil)
+                
                 // ... update data source.
 //                BudgetModel.moveItemIn(budget: budget, from: (sourceIndexPath?.row)!, to: indexPath!.row)
                 
@@ -264,4 +286,3 @@ extension ListsViewController {
     }
     
 }
-
