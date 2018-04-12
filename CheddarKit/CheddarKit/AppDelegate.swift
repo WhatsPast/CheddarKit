@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("I love it here.")
             if let token = token {
                 self.handleToken(token: token)
-            } else if let error = error {
+            } else if let _ = error {
                 // handle the error
             }
             return

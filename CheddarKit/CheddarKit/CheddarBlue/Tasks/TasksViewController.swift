@@ -10,8 +10,17 @@ import UIKit
 
 class TasksViewController: UIViewController {
     
+    var list_id: Int = 0
+    
     var collectionView: UICollectionView?
     var layout = ListsViewLayout()
+    var activeTasks: CDKTasks?
+    var archivedTasks: CDKTasks?
+    
+    convenience init(withListId listId: Int) {
+        self.init(nibName: nil, bundle: nil)
+        list_id = listId
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,16 +28,16 @@ class TasksViewController: UIViewController {
         view.backgroundColor = .clear
         setupCollectionView()
 
-        // Do any additional setup after loading the view.
+//        setupNewTaskInput()
+        CheddarKit.sharedInstance.tasks(fromList: list_id, callback: { (tasks, error) in
+            if let tasks = tasks {
+                self.populateTasks(tasks)
+            }
+        })
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // Setup Functions
-    
     func setupCollectionView() {
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         
@@ -46,8 +55,34 @@ class TasksViewController: UIViewController {
         collectionView!.dataSource = self
         collectionView!.delegate = self
         collectionView!.backgroundColor = .white
-        collectionView!.register(ListCell.self, forCellWithReuseIdentifier: cells.listCell)
+        collectionView!.register(TaskCell.self, forCellWithReuseIdentifier: cells.task)
         collectionView!.alwaysBounceVertical = true
+    }
+    
+    
+    func populateTasks(_ tasks: CDKTasks) {
+        print("populatingTasks")
+        activeTasks = []; archivedTasks = []
+        for task in tasks as Array {
+            if task.archived_at == nil { // this task is not archived
+//                print("\(task.title)")
+                activeTasks?.append(task)
+            } else { // this list is archived
+                archivedTasks?.append(task)
+//                print("These be archived!")
+            }
+        }
+        
+        // sort active lists
+        let otherTasks = activeTasks?.sorted(by: { (l1, l2) -> Bool in
+            l1.position < l2.position
+        })
+        activeTasks = otherTasks
+        
+        DispatchQueue.main.sync {
+            layout.storedLayouts = nil
+            collectionView?.reloadData()
+        }
     }
 
 }
@@ -59,16 +94,17 @@ extension TasksViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if let activeLists = activeLists {
-//            return activeLists.count
-//        } else {
+        if let activeTasks = activeTasks {
+            print("total number of activeTasksL \(activeTasks.count)")
+            return activeTasks.count
+        } else {
             return 0
-//        }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = UICollectionViewCell()
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells.listCell, for: indexPath)
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells.task, for: indexPath)
 //        if let activeLists = activeLists {
 //            (cell as! ListCell).configure(indexPath: indexPath, list: activeLists[indexPath.row])
 //        }

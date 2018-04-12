@@ -144,6 +144,13 @@ struct CDKTask: Codable {
     let display_html: String?
     let display_text: String?
     let entities: [CDKEntity]
+    let id: Int
+    let list_id: Int
+    let position: Int
+    let tags: [CDKTag]?
+    let text: String
+    let updated_at: String
+    let url: String
 }
 
 struct CDKEntity: Codable {
@@ -176,8 +183,6 @@ enum CDKEntityType: CustomStringConvertible {
             return "tag"
         case .link:
             return "link"
-        case .emphasis:
-            return "emphasis"
         case .double_emphasis:
             return "double_emphasis"
         case .triple_emphasis:
@@ -216,9 +221,3 @@ enum CDKEntityType: CustomStringConvertible {
         }
     }
 }
-
-
-
-
-
-

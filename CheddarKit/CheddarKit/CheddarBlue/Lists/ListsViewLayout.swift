@@ -24,9 +24,9 @@ class ListsViewLayout: UICollectionViewLayout {
     // Returns the layout attributes for all of the cells and views in the specified rectangle.
     // I would say that A little math here wouldn't hurt.
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var myRect = rect
+//        var myRect = rect
         // always make the rect bigger.
-        myRect = CGRect(x: rect.origin.x, y: 0, width: rect.width, height: rect.height)
+//        myRect = CGRect(x: rect.origin.x, y: 0, width: rect.width, height: rect.height)
         
         var attributes = [UICollectionViewLayoutAttributes]()
         

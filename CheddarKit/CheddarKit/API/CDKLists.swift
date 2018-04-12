@@ -209,7 +209,6 @@ extension CheddarKit: CDKListsProtocol {
                     if let returnData = String(data: data, encoding: .utf8) {
                         print(returnData)
                     }
-                    
                 }
                 if let response = response {
                     let httpResponse = (response as! HTTPURLResponse)

@@ -10,6 +10,7 @@ import UIKit
 
 struct Cells {
     let listCell = "listCell"
+    let task = "task"
 }
 
 let cells = Cells()

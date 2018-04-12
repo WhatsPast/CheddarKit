@@ -95,7 +95,6 @@ extension UITextField {
             self.layer.add(shadowAnimation, forKey: "shadowOpacity")
         })
         animator.startAnimation()
-        
     }
     
     // remove orange shadow

@@ -57,7 +57,7 @@ protocol CDKListsProtocol {
 protocol CDKTasksProtocol {
     // Tasks
         // show all tasks in a List
-        func tasks(fromList list_id: Int, callback: @escaping (_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ()?)
+        func tasks(fromList list_id: Int, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
         // show a task
         func task(withId task_id: Int, callback: @escaping (_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ()?)
         // update a task

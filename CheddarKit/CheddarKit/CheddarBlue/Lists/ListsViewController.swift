@@ -12,8 +12,8 @@ class ListsViewController: UIViewController {
     
     var collectionView: UICollectionView?
     var layout = ListsViewLayout()
-    var activeLists: [CDKList]?
-    var archivedLists: [CDKList]?
+    var activeLists: CDKLists?
+    var archivedLists: CDKLists?
     var newListInput = TextField()
     var newListDelegate = NewListDelegate()
     
@@ -136,10 +136,8 @@ extension ListsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeLists = activeLists {
             let list = activeLists[indexPath.row]
-//            func updateList(id: Int, title: String?, archive: Bool?) {
-//            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
             // open taskViewController
-            let taskVC = TasksViewController()
+            let taskVC = TasksViewController(withListId: list.id)
             self.navigationController?.pushViewController(taskVC, animated: true)
         }
     }

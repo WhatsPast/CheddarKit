@@ -27,6 +27,8 @@
 		93A0FEF21F6491D60036D68E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEF01F6491D60036D68E /* LaunchScreen.storyboard */; };
 		93A0FEFD1F6491D60036D68E /* CheddarKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FEFC1F6491D60036D68E /* CheddarKitTests.swift */; };
 		93A0FF081F6491D60036D68E /* CheddarKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FF071F6491D60036D68E /* CheddarKitUITests.swift */; };
+		93A92755207ED8D700EDEED9 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A92754207ED8D700EDEED9 /* TaskCell.swift */; };
+		93A92757207F1D6800EDEED9 /* CheckButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A92756207F1D6800EDEED9 /* CheckButtonViewController.swift */; };
 		93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32A42076B59700902307 /* NewListDelegate.swift */; };
 		93BC32AB2076B8A900902307 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AA2076B8A900902307 /* Colors.swift */; };
 		93BC32AE2078286600902307 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AD2078286600902307 /* TasksViewController.swift */; };
@@ -78,6 +80,8 @@
 		93A0FF031F6491D60036D68E /* CheddarKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheddarKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A0FF071F6491D60036D68E /* CheddarKitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheddarKitUITests.swift; sourceTree = "<group>"; };
 		93A0FF091F6491D60036D68E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93A92754207ED8D700EDEED9 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		93A92756207F1D6800EDEED9 /* CheckButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButtonViewController.swift; sourceTree = "<group>"; };
 		93BC32A42076B59700902307 /* NewListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListDelegate.swift; sourceTree = "<group>"; };
 		93BC32AA2076B8A900902307 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		93BC32AD2078286600902307 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 			children = (
 				930341B81F64ADE000C7A5F1 /* UITextField+Blue.swift */,
 				930341BA1F64B24C00C7A5F1 /* UIButton+Blue.swift */,
+				93A92756207F1D6800EDEED9 /* CheckButtonViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				93BC32AD2078286600902307 /* TasksViewController.swift */,
+				93A92754207ED8D700EDEED9 /* TaskCell.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */,
+				93A92755207ED8D700EDEED9 /* TaskCell.swift in Sources */,
 				93BC32AB2076B8A900902307 /* Colors.swift in Sources */,
 				9306A1A71FFC3EAD009BB18E /* ListsViewLayout.swift in Sources */,
 				931639DF1F66C9BD00C5B5D6 /* CDKModel.swift in Sources */,
@@ -442,6 +449,7 @@
 				9306A1A91FFD9DB0009BB18E /* CDKLists.swift in Sources */,
 				930341BE1F64CB9700C7A5F1 /* CheddarKit.swift in Sources */,
 				930341B91F64ADE000C7A5F1 /* UITextField+Blue.swift in Sources */,
+				93A92757207F1D6800EDEED9 /* CheckButtonViewController.swift in Sources */,
 				93BC32AE2078286600902307 /* TasksViewController.swift in Sources */,
 				931639DD1F664F0C00C5B5D6 /* CDKContract.swift in Sources */,
 				930341BB1F64B24C00C7A5F1 /* UIButton+Blue.swift in Sources */,

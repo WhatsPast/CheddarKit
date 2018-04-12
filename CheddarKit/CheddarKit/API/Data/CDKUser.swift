@@ -14,6 +14,3 @@ struct CDKAuthCode: Codable {
     let response: String
     let message: String
 }
-
-
-
