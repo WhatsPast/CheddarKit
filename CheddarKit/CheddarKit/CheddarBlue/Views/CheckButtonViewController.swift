@@ -50,10 +50,10 @@ class CheckButtonViewController: UIViewController {
         set {
             if newValue == true {
                 state = .complete
-                self.check(animated: true)
+//                self.check(animated: true)
             } else {
                 state = .incomplete
-                self.uncheck(animated: false)
+//                self.uncheck(animated: false)
             }
         }
     }
@@ -152,18 +152,10 @@ extension CheckButtonViewController {
                 // we switch the opacity of the objects and change what's checked.
                 if isChecked {
                     // transform to uncheckedUp and uncheck it
-                    checkedView.layer.opacity = 0.0
-                    uncheckedView.layer.opacity = 1.0
-                    uncheckedView.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
-                    transformToUnCheckedUp(animated: true)
-                    isChecked = false
+                    setState(complete: false, animated: true)
                 } else {
                     // transform to Checked Up and check it.
-                    uncheckedView.layer.opacity = 0.0
-                    checkedView.layer.opacity = 1.0
-                    checkedView.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
-                    transformToUnCheckedUp(animated: true)
-                    isChecked = true
+                    setState(complete: true, animated: true)
                 }
             } else {
                 // we essentially do nothing because we don't need to.
@@ -256,20 +248,32 @@ extension CheckButtonViewController: CheckButtonProtocol {
         if complete { state = .complete }
 
         if complete {
-            transformToCheckedUp(animated: animated)
+            uncheckedView.layer.opacity = 0.0
+            checkedView.layer.opacity = 1.0
+            checkedView.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
+            transformToCheckedUp(animated: true)
+            isChecked = true
             delegate?.buttonWasChecked(for: indexPath)
         } else {
-            transformToUnCheckedUp(animated: animated)
+            checkedView.layer.opacity = 0.0
+            uncheckedView.layer.opacity = 1.0
+            uncheckedView.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
+            transformToUnCheckedUp(animated: true)
+            isChecked = false
             delegate?.buttonWasUnChecked(for: indexPath)
         }
     }
     
     func check(animated: Bool) {
-        setState(complete: true, animated: animated)
+        DispatchQueue.main.async {
+            self.setState(complete: true, animated: animated)
+        }
     }
     
     func uncheck(animated: Bool) {
-        setState(complete: false, animated: animated)
+        DispatchQueue.main.async {
+            self.setState(complete: false, animated: animated)
+        }
     }
 }
 

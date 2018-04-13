@@ -39,6 +39,9 @@ class TasksViewController: UIViewController {
 
     // Setup Functions
     func setupCollectionView() {
+        
+        layout.delegate = self
+        
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         
         print("Frame width: \(self.view.frame.height)")
@@ -105,9 +108,9 @@ extension TasksViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = UICollectionViewCell()
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells.task, for: indexPath)
-//        if let activeLists = activeLists {
-//            (cell as! ListCell).configure(indexPath: indexPath, list: activeLists[indexPath.row])
-//        }
+        if let activeTasks = activeTasks {
+            (cell as! TaskCell).configure(indexPath: indexPath, task: activeTasks[indexPath.row])
+        }
         return cell
     }
     
@@ -122,6 +125,25 @@ extension TasksViewController: UICollectionViewDelegate {
 //            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
 //        }
         print("Tapped.")
+    }
+    
+}
+
+extension TasksViewController: ListsViewLayoutDelegate {
+    
+    func textFor(indexPath: IndexPath) -> String {
+        if let activeTasks = activeTasks {
+            let task = activeTasks[indexPath.row]
+            return task.display_text!
+        }
+        return ""
+    }
+    
+    func numberofItems() -> Int {
+        if let activeTasks = activeTasks {
+            return activeTasks.count
+        }
+        return 0
     }
     
 }

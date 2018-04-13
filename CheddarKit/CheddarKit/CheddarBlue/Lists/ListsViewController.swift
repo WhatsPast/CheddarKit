@@ -44,6 +44,9 @@ class ListsViewController: UIViewController {
     }
     
     func setupCollectionView() {
+        
+        layout.delegate = self
+        
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         
         print("Frame width: \(self.view.frame.height)")
@@ -270,6 +273,25 @@ extension ListsViewController {
         snapshot.layer.shadowOpacity = 0.4
         
         return snapshot
+    }
+    
+}
+
+extension ListsViewController: ListsViewLayoutDelegate {
+    
+    func textFor(indexPath: IndexPath) -> String {
+        if let activeLists = activeLists {
+            let list = activeLists[indexPath.row]
+            return list.title
+        }
+        return ""
+    }
+    
+    func numberofItems() -> Int {
+        if let activeLists = activeLists {
+            return activeLists.count
+        }
+        return 0
     }
     
 }

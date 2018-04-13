@@ -58,7 +58,7 @@ class NewListDelegate: NSObject, UITextFieldDelegate {
     func setToActiveState() {
         textField?.activeState()
         // animate up because of the keyboard
-        UIView.animate(withDuration: 0.23) {
+        UIView.animate(withDuration: 0.20) {
             self.bottomConstraint?.constant = -(self.keyboardHeight + 16)
             self.textField?.layoutIfNeeded()
             self.textField?.superview?.layoutIfNeeded()
@@ -97,12 +97,5 @@ class NewListDelegate: NSObject, UITextFieldDelegate {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
     
 }

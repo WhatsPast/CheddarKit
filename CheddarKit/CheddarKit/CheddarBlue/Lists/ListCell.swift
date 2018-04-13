@@ -36,6 +36,8 @@ class ListCell: UICollectionViewCell {
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         titleLabel.textColor = .black
         titleLabel.textAlignment = .left
+        titleLabel.lineBreakMode = .byWordWrapping
+        titleLabel.numberOfLines = 0
         titleLabel.text = "Whatever"
         
         // border
@@ -71,7 +73,7 @@ class ListCell: UICollectionViewCell {
         activeTasksLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
         activeTasksLabel.heightAnchor.constraint(equalToConstant: 16.0).isActive = true
         activeTasksLabel.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
-        
+
         activeTasksLabel.text = "0"
         
         self.contentView.backgroundColor = .white
