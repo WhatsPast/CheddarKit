@@ -83,6 +83,7 @@ class NewTaskDelegate: NSObject, UITextFieldDelegate {
                 }
             }
             if task != nil {
+                print("TASK CREATED!!!!")
                 DispatchQueue.main.async {
                     self.textField?.text = ""
                     self.setToInactiveState()
