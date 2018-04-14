@@ -163,4 +163,12 @@ class CheddarKit: NSObject {
         
         return request
     }
+    
+    
+    // Stuff to handle Dates
+    func dateFormatter() -> DateFormatter { // 2012-07-02T18:50:53Z
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        return formatter
+    }
 }

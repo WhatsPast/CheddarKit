@@ -45,7 +45,7 @@ protocol CDKListsProtocol {
     // Creates a list
     func createList(title: String, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
     // Reorder a List
-    func reorder(lists: [CDKList], callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
+    func reorder(lists: CDKLists, callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
     // Lists
         // share a list
         // show a list's members
@@ -59,13 +59,20 @@ protocol CDKTasksProtocol {
         // show all tasks in a List
         func tasks(fromList list_id: Int, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
         // show a task
-        func task(withId task_id: Int, callback: @escaping (_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ()?)
+        func task(withId task_id: Int, callback: ((_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // update a task
+        func update(task: CDKTask, withText text: String?, archive: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // create a task
+        func create(taskWithText text: String, forList list_id: Int, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)    
         // move a task to a new list
+        func move(task: CDKTask, toList list: CDKList, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // reorder tasks in a list
+        func reorder(tasks: CDKTasks, inList list: CDKList, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
         // archive all tasks in a list
+        func archive(allTasksInList list: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // archive completed tasks in a list
+        func archive(completedTasksInList list: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+    
 }
 
 protocol CDKEntitiesProtocol {
