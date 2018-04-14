@@ -15,3 +15,4 @@ struct Cells {
 
 let cells = Cells()
 
+let checkMark: String = "✓"

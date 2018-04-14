@@ -22,6 +22,7 @@
 		931639E21F66CCFE00C5B5D6 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931639E11F66CCFE00C5B5D6 /* ListsViewController.swift */; };
 		93584A7F1FFC2FF5007465F7 /* CommonDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */; };
 		93584A811FFC313E007465F7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93584A801FFC313E007465F7 /* ListCell.swift */; };
+		93786458208284D800C5570F /* NewTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93786457208284D800C5570F /* NewTaskDelegate.swift */; };
 		93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FEE71F6491D60036D68E /* AppDelegate.swift */; };
 		93A0FEEF1F6491D60036D68E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEEE1F6491D60036D68E /* Assets.xcassets */; };
 		93A0FEF21F6491D60036D68E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEF01F6491D60036D68E /* LaunchScreen.storyboard */; };
@@ -69,6 +70,7 @@
 		931639E11F66CCFE00C5B5D6 /* ListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
 		93584A7E1FFC2FF5007465F7 /* CommonDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDefinitions.swift; sourceTree = "<group>"; };
 		93584A801FFC313E007465F7 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		93786457208284D800C5570F /* NewTaskDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskDelegate.swift; sourceTree = "<group>"; };
 		93A0FEE41F6491D60036D68E /* CheddarKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheddarKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A0FEE71F6491D60036D68E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A0FEEE1F6491D60036D68E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				93BC32AD2078286600902307 /* TasksViewController.swift */,
 				93A92754207ED8D700EDEED9 /* TaskCell.swift */,
+				93786457208284D800C5570F /* NewTaskDelegate.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				931639E21F66CCFE00C5B5D6 /* ListsViewController.swift in Sources */,
 				931639D51F658B5B00C5B5D6 /* CDKWebView.swift in Sources */,
 				930341C41F64F92A00C7A5F1 /* CDKLogin.swift in Sources */,
+				93786458208284D800C5570F /* NewTaskDelegate.swift in Sources */,
 				930341B71F649FDD00C7A5F1 /* LoginViewController.swift in Sources */,
 				93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */,
 				9306A1A91FFD9DB0009BB18E /* CDKLists.swift in Sources */,

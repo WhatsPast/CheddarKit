@@ -215,7 +215,7 @@ extension CheddarKit: CDKTasksProtocol {
                     } else {
                     }
                 }
-                }.resume()
+            }.resume()
         }
     }
     

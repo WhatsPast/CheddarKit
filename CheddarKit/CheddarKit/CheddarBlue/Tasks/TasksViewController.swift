@@ -16,6 +16,8 @@ class TasksViewController: UIViewController {
     var layout = ListsViewLayout()
     var activeTasks: CDKTasks?
     var archivedTasks: CDKTasks?
+    var newTaskInput = TextField()
+    var newTaskDelegate = NewTaskDelegate()
     
     convenience init(withListId listId: Int) {
         self.init(nibName: nil, bundle: nil)
@@ -27,8 +29,7 @@ class TasksViewController: UIViewController {
         title = "Tasks"
         view.backgroundColor = .clear
         setupCollectionView()
-
-//        setupNewTaskInput()
+        setupNewTaskInput()
         CheddarKit.sharedInstance.tasks(fromList: list_id, callback: { (tasks, error) in
             if let tasks = tasks {
                 self.populateTasks(tasks)
@@ -114,16 +115,35 @@ extension TasksViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func setupNewTaskInput() {
+        newTaskInput.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(newTaskInput)
+        newTaskInput.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0).isActive = true
+        newTaskInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
+        newTaskInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        newTaskInput.backgroundColor = .whiteThree
+        newTaskInput.layer.cornerRadius = 13.0
+        newTaskInput.delegate = newTaskDelegate
+        newTaskDelegate.list_id = list_id
+        newTaskDelegate.textField = newTaskInput
+        newTaskDelegate.setupConstraints()
+    }
+    
 }
 
 extension TasksViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if let activeLists = activeLists {
-//            let list = activeLists[indexPath.row]
-//            //            func updateList(id: Int, title: String?, archive: Bool?) {
+        if let activeTasks = activeTasks {
+            let task = activeTasks[indexPath.row]
+            CheddarKit.sharedInstance.task(withId: task.id, callback: { (task, error) in
+                if task != nil {
+                    print("Yep! we got ourselves a task!")
+                    print("\(task!.list_id):\(task!.id) - \(task!.text)")
+                }
+            })
 //            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
-//        }
+        }
         print("Tapped.")
     }
     
