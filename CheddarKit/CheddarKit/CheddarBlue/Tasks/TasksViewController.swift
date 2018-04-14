@@ -143,9 +143,9 @@ extension TasksViewController: UICollectionViewDelegate {
 //                }
 //            })
             
-            CheddarKit.sharedInstance.update(task: task, withText: nil, archive: false, complete: true, callback: { (task, error) in
+            CheddarKit.sharedInstance.update(task: task, withText: nil, archive: true, complete: nil, callback: { (task, error) in
                 if task != nil {
-                    print("Completed a task")
+                    print("Archived a task")
                     print("\(task!.list_id):\(task!.id) - \(task!.text)")
                 }
             })

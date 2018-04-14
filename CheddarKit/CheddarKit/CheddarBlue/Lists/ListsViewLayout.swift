@@ -33,8 +33,6 @@ class ListsViewLayout: UICollectionViewLayout {
     
     func initialLayoutAttributes() {
         
-        print("creating ")
-        
         storedLayouts = [UICollectionViewLayoutAttributes]()
         var attributes = [UICollectionViewLayoutAttributes]()
         
