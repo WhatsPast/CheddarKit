@@ -61,7 +61,7 @@ protocol CDKTasksProtocol {
         // show a task
         func task(withId task_id: Int, callback: ((_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // update a task
-        func update(task: CDKTask, withText text: String?, archive: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        func update(task: CDKTask, withText text: String?, archive: Bool?, complete: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // create a task
         func create(taskWithText text: String, forList list_id: Int, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)    
         // move a task to a new list

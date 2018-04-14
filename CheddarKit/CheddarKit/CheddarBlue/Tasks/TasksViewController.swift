@@ -99,7 +99,7 @@ extension TasksViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let activeTasks = activeTasks {
-            print("total number of activeTasksL \(activeTasks.count)")
+            print("total number of activeTasks \(activeTasks.count)")
             return activeTasks.count
         } else {
             return 0
@@ -143,9 +143,9 @@ extension TasksViewController: UICollectionViewDelegate {
 //                }
 //            })
             
-            CheddarKit.sharedInstance.update(task: task, withText: "\(task.text) + Hi Friends.", archive: false, callback: { (task, error) in
+            CheddarKit.sharedInstance.update(task: task, withText: nil, archive: false, complete: true, callback: { (task, error) in
                 if task != nil {
-                    print("Yep! we updated a task!")
+                    print("Completed a task")
                     print("\(task!.list_id):\(task!.id) - \(task!.text)")
                 }
             })

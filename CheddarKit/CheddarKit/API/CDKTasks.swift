@@ -60,7 +60,7 @@ extension CheddarKit: CDKTasksProtocol {
         } // End Session
     }
     
-    func update(task: CDKTask, withText text: String?, archive: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?) {
+    func update(task: CDKTask, withText text: String?, archive: Bool?, complete: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
             var params = [String: String]()
             if let text = text {
@@ -72,6 +72,14 @@ extension CheddarKit: CDKTasksProtocol {
                     params["task[archived_at]"] = self.dateFormatter().string(from: Date())
                 } else {
                     params["task[archived_at]"] = ""
+                }
+            }
+            
+            if let complete = complete {
+                if complete == true {
+                    params["task[completed]"] = "true"
+                } else {
+                    params["task[completed]"] = "false"
                 }
             }
             
