@@ -60,9 +60,6 @@ class TaskCell: UICollectionViewCell {
     }
     
     func configure(indexPath: IndexPath, task: CDKTask) {
-        
-        print("configure called")
-        
         border.backgroundColor = .whiteFour
         if indexPath.row == 0 {
             border.backgroundColor = .white
@@ -70,7 +67,6 @@ class TaskCell: UICollectionViewCell {
         textLabel.text = task.display_text
         
         // set the checbox to checked or not.
-        print("completed_at: \(task.completed_at)")
         if task.completed_at != nil {
             checkBox.check(animated: false)
         } else {

@@ -136,13 +136,20 @@ extension TasksViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeTasks = activeTasks {
             let task = activeTasks[indexPath.row]
-            CheddarKit.sharedInstance.task(withId: task.id, callback: { (task, error) in
+//            CheddarKit.sharedInstance.task(withId: task.id, callback: { (task, error) in
+//                if task != nil {
+//                    print("Yep! we got ourselves a task!")
+//                    print("\(task!.list_id):\(task!.id) - \(task!.text)")
+//                }
+//            })
+            
+            CheddarKit.sharedInstance.update(task: task, withText: "\(task.text) + Hi Friends.", archive: false, callback: { (task, error) in
                 if task != nil {
-                    print("Yep! we got ourselves a task!")
+                    print("Yep! we updated a task!")
                     print("\(task!.list_id):\(task!.id) - \(task!.text)")
                 }
             })
-//            CheddarKit.sharedInstance.updateList(id: list.id, title: list.title, archive: true, callback: nil)
+            
         }
         print("Tapped.")
     }
