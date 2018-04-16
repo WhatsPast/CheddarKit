@@ -46,12 +46,7 @@ protocol CDKListsProtocol {
     func createList(title: String, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
     // Reorder a List
     func reorder(lists: CDKLists, callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
-    // Lists
-        // share a list
-        // show a list's members
-        // remove member's from a list
-        // delete an invitation
-        // accept an invitation
+
 }
 
 protocol CDKTasksProtocol {
@@ -67,7 +62,7 @@ protocol CDKTasksProtocol {
         // move a task to a new list
         func move(task: CDKTask, toList list: CDKList, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // reorder tasks in a list
-        func reorder(tasks: CDKTasks, inList list: CDKList, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
+        func reorder(tasks: CDKTasks, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
         // archive all tasks in a list
         func archive(allTasksInList list: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // archive completed tasks in a list
@@ -78,7 +73,26 @@ protocol CDKTasksProtocol {
 protocol CDKEntitiesProtocol {
     // Entities
 }
+
+protocol CDKMembersProtocol {
+    // Sharing
+        // share a list
+        func share(list: CDKList)
+        // show a list's members
+        func members(inList: CDKList)
+        // remove member's from a list
+        func remove(member: CDKUser, fromList: CDKList)
     
+    // invitations
+        // Get Invitations for a user.
+        func invitations(forUser: CDKUser)
+        // delete an invitation
+        func delete(invitation: CDKInvitation)
+        // accept an invitation
+        func accept(invitation: CDKInvitation)
+    
+}
+
 protocol CDKRealtimeProtocol {
     // Realtime Events
     // List Events

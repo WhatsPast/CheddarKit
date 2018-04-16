@@ -156,7 +156,7 @@ extension CheddarKit: CDKTasksProtocol {
         } // End Session
     }
     
-    func reorder(tasks: CDKTasks, inList list: CDKList, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?) {
+    func reorder(tasks: CDKTasks, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
             
             var orderedTasks = [String]()
@@ -166,7 +166,7 @@ extension CheddarKit: CDKTasksProtocol {
             let params = encode(arrayToQueryString: orderedTasks)
 //            print("params: \(params)")
             
-            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/\(list.id)/tasks/reorder", method: "POST", paramString: params, token: userSession.access_token)
+            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/\(tasks[0].list_id)/tasks/reorder", method: "POST", paramString: params, token: userSession.access_token)
             
             getSession().dataTask(with: request) { (data, response, error) in
                 if let data = data {

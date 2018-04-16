@@ -146,9 +146,9 @@ struct CDKTask: Codable {
     let entities: [CDKEntity]
     let id: Int
     let list_id: Int
-    let position: Int
+    var position: Int
     let tags: [CDKTag]?
-    let text: String
+    var text: String
     let updated_at: String
     let url: String
 }
@@ -220,4 +220,10 @@ enum CDKEntityType: CustomStringConvertible {
             return .emphasis
         }
     }
+}
+
+// Invitations
+struct CDKInvitation: Codable {
+    let id: Int
+    let name: String
 }

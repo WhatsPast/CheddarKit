@@ -19,6 +19,12 @@ class TasksViewController: UIViewController {
     var newTaskInput = TextField()
     var newTaskDelegate = NewTaskDelegate()
     
+    // for moving cells
+    var longPress = UILongPressGestureRecognizer()
+    var snapshot: UIView?
+    var sourceIndexPath: IndexPath?
+    var dontrecognizeMovement = false
+    
     convenience init(withListId listId: Int) {
         self.init(nibName: nil, bundle: nil)
         list_id = listId
@@ -35,7 +41,9 @@ class TasksViewController: UIViewController {
                 self.populateTasks(tasks)
             }
         })
-        
+     
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized))
+        self.collectionView?.addGestureRecognizer(longPress)
     }
 
     // Setup Functions
@@ -136,25 +144,153 @@ extension TasksViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeTasks = activeTasks {
             let task = activeTasks[indexPath.row]
-//            CheddarKit.sharedInstance.task(withId: task.id, callback: { (task, error) in
+            
+//            CheddarKit.sharedInstance.update(task: task, withText: nil, archive: true, complete: nil, callback: { (task, error) in
 //                if task != nil {
-//                    print("Yep! we got ourselves a task!")
+//                    print("Archived a task")
 //                    print("\(task!.list_id):\(task!.id) - \(task!.text)")
 //                }
 //            })
             
-            CheddarKit.sharedInstance.update(task: task, withText: nil, archive: true, complete: nil, callback: { (task, error) in
-                if task != nil {
-                    print("Archived a task")
-                    print("\(task!.list_id):\(task!.id) - \(task!.text)")
-                }
-            })
+            let moveVC = MoveTaskViewController(withTask: task)
+            self.navigationController?.pushViewController(moveVC, animated: true)
             
         }
         print("Tapped.")
     }
     
 }
+
+// Long Press to move this stuff things.
+extension TasksViewController {
+    /* Animate all them rows to move like crazy talk. */
+    @objc func longPressGestureRecognized(sender:UILongPressGestureRecognizer) {
+        
+        let lp = sender as UILongPressGestureRecognizer
+        let state = lp.state
+        let location = longPress.location(in: self.collectionView)
+        var indexPath = self.collectionView?.indexPathForItem(at: location)
+        
+        if let path = indexPath {
+            // alright, only allow out of bounds when its not changed or began.
+            if (path.section != 0) {
+                sender.isEnabled = false
+                sender.isEnabled = true
+                return
+            }
+        }
+        
+        switch state {
+        case .began:
+            if ((indexPath != nil) && (dontrecognizeMovement == false)) {
+                
+                sourceIndexPath = indexPath!
+                
+                let cell = self.collectionView?.cellForItem(at: indexPath!)
+                snapshot = self.customSnapshotFromView(inputView: cell!)
+                
+                // Add the Snapshot as a Subview
+                var center = cell?.center
+                snapshot?.center = center!
+                snapshot?.alpha = 0.0
+                self.collectionView?.addSubview(snapshot!)
+                UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+                    
+                    center!.y = location.y
+                    self.snapshot?.center = center!
+                    self.snapshot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                    self.snapshot?.alpha = 0.98
+                    
+                    cell!.alpha = 0.0
+                    
+                }, completion: { (isTrue: Bool) in
+                    cell!.isHidden = true
+                })
+                
+            }
+            break
+        case .changed:
+            var center = self.snapshot?.center
+            center?.y = location.y
+            snapshot?.center = center!
+            
+            // Is destination valid and is it different from source?
+            if indexPath == nil { // alright if it's too far out of bounds, send it back!
+                indexPath = sourceIndexPath
+            }
+            if (!(indexPath == sourceIndexPath) && (indexPath!.section < 1)) {
+                
+                // ... move the rows.
+                collectionView?.moveItem(at: self.sourceIndexPath!, to: indexPath!)
+                
+                var reorderedTasks = activeTasks!
+                let element = reorderedTasks.remove(at: self.sourceIndexPath!.row)
+                reorderedTasks.insert(element, at: indexPath!.row)
+                
+                var index: Int = 0
+                for _ in reorderedTasks {
+                    reorderedTasks[index].position = index
+                    index = index + 1
+                }
+                print("Reordering.....")
+                CheddarKit.sharedInstance.reorder(tasks: reorderedTasks, callback: nil)
+                activeTasks = reorderedTasks
+                
+                // ... update data source.
+                //                BudgetModel.moveItemIn(budget: budget, from: (sourceIndexPath?.row)!, to: indexPath!.row)
+                
+                // ... and update source so it is in sync with UI changes.
+                sourceIndexPath = indexPath!
+            }
+            break
+            
+        default:
+            // Clean up
+            let cell = collectionView?.cellForItem(at: sourceIndexPath!)
+            cell?.isHidden = false
+            cell?.alpha = 0.0
+            
+            UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+                
+                self.snapshot?.center = cell!.center
+                self.snapshot?.transform = CGAffineTransform.identity
+                self.snapshot?.alpha = 0.0
+                
+                cell!.alpha = 1.0
+                
+            }, completion: { (isTrue: Bool) in
+                
+                self.sourceIndexPath = nil
+                self.snapshot?.removeFromSuperview()
+                self.snapshot = nil
+            })
+            break
+        }
+    }
+    
+    // Utility function for moving this thing.
+    func customSnapshotFromView(inputView: UIView) -> UIView {
+        
+        // make an image from the input view
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let snapshot = UIImageView(image: image)
+        snapshot.layer.masksToBounds = true
+        snapshot.layer.cornerRadius = 0.0
+        snapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        snapshot.layer.shadowRadius = 5.0
+        snapshot.layer.shadowOpacity = 0.4
+        
+        return snapshot
+    }
+    
+}
+
+
+
 
 extension TasksViewController: ListsViewLayoutDelegate {
     
