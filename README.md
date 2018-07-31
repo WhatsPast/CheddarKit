@@ -31,12 +31,12 @@ You should be good.
     * [ ] Delete an invitation
     * [ ] Accept an invitation
   * [ ] Tasks
-    * [ ] Show all tasks in a list
-    * [ ] show a task
-    * [ ] update a task
-    * [ ] Create a task
-    * [ ] Move a task to a new list
-    * [ ] Reorder tasks in a list
+    * [x] Show all tasks in a list
+    * [x] show a task
+    * [x] update a task
+    * [x] Create a task
+    * [x] Move a task to a new list
+    * [x] Reorder tasks in a list
     * [ ] Archive all tasks in a list
     * [ ] Archive completed tasks in a list
 
@@ -47,6 +47,12 @@ You should be good.
     * [x] New List floating text field
     * [ ] Edit List Name
     * [ ] Archive List with Swipe
+  * [ ] Tasks CollectionView
+    * [ ] Fancy Update a task interface
+    * [ ] Better Add a task interface (Text Editor)
+  * [ ] IAP
+    * [ ] Add In App purchases page
+    * [ ] Integrate with the API and record the purchases
 
 * [ ] TESTS!!!!
 
@@ -54,5 +60,6 @@ You should be good.
   * [ ] Users
   * [ ] Lists
   * [ ] Tasks
-
-  * [ ] Get it consumable with Carthage.
+* [ ] Launch CheddarKit
+* [ ] Get it consumable with Carthage.
+* [ ] Hide the Client key and make it outside of Repo.

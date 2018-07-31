@@ -148,7 +148,7 @@ extension ListsViewController: UICollectionViewDelegate {
 }
 
 
-// Long Press to move this stuff things.
+// Long Press to move items.
 extension ListsViewController {
     /* Animate all them rows to move like crazy talk. */
     @objc func longPressGestureRecognized(sender:UILongPressGestureRecognizer) {

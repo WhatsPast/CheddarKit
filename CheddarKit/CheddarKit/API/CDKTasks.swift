@@ -164,7 +164,6 @@ extension CheddarKit: CDKTasksProtocol {
                 orderedTasks.append("task[]=\(task.id)")
             }
             let params = encode(arrayToQueryString: orderedTasks)
-//            print("params: \(params)")
             
             let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/\(tasks[0].list_id)/tasks/reorder", method: "POST", paramString: params, token: userSession.access_token)
             

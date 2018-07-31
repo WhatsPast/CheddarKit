@@ -120,6 +120,8 @@ extension MoveTaskViewController: UICollectionViewDelegate {
             CheddarKit.sharedInstance.move(task: task!, toList: list, callback: { (task, error) in
                 if task != nil {
                     print("MOVED THE TASK!!!! YAY!")
+                } else {
+                    print("something went wrong when moving the task.")
                 }
             })
         }

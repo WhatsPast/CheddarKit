@@ -79,7 +79,7 @@ class TasksViewController: UIViewController {
             if task.archived_at == nil { // this task is not archived
 //                print("\(task.title)")
                 activeTasks?.append(task)
-            } else { // this list is archived
+            } else { // this task is archived
                 archivedTasks?.append(task)
 //                print("These be archived!")
             }
