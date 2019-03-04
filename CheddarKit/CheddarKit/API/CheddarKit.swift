@@ -12,8 +12,8 @@ class CheddarKit: NSObject {
 
     static let sharedInstance = CheddarKit.init(singleton: true)
     
-    let clientID = "65415c5a8311383d2e73a324f362a1a3"
-    let clientSecret = "66c8ba7060d13612debcbec386e515a3"
+    let clientID = "167a530bee50379854f469b8f9b07b7d"
+    let clientSecret = "22b9bff290a692da4e14eddb787a8d31"
     
     private init(singleton: Bool) {
         super.init()
@@ -35,6 +35,7 @@ class CheddarKit: NSObject {
             let escapedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             let escapedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             paramString = paramString + "\(escapedKey)=\(escapedValue)&"
+            print("supposed paramString: \(paramString)")
         }
         return paramString
     }

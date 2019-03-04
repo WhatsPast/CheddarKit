@@ -67,10 +67,12 @@ class CDKWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         let myScheme = "cheddar"
         
         if let url = url {
+            print("url: \(url)")
             if url.scheme == myScheme && app.canOpenURL(url) {
 
                 if let values = url.queryParameters {
                     if let code = values["code"]  {
+                        print("code was present! \(code)")
                         let response = CDKAuthCode(code: code,
                                                   response: "success",
                                                   message: "Successfully did it!")
@@ -80,6 +82,7 @@ class CDKWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
                         decisionHandler(.cancel)
                         return
                     } else {
+                        print("code was not present.")
                         // it didn't work so we have got to figure this out.
                     }
                 }
@@ -94,9 +97,9 @@ class CDKWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             } else {
-//                print("scheme didn't match.")
-//                print("scheme: \(String(describing: url.scheme))")
-//                print("\(url.absoluteString)")
+                print("scheme didn't match.")
+                print("scheme: \(String(describing: url.scheme))")
+                print("\(url.absoluteString)")
             }
         }
 
@@ -124,6 +127,7 @@ extension CDKWebView: CDKWebViewDelegate {
             }            
 //            APIManager.sharedInstance.convertCodeToToken(code: codeResponse.code, callback: nil)
         } else {
+            print("Yeah this authorization failed.")
             if let acb = authCodeCallback {
                 acb(nil, error)
             }
