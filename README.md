@@ -25,9 +25,12 @@ You should be good.
     * [x] Create a list
     * [x] Reorder lists
     * [x] Archive a list
-    * [ ] share a list
+    * [x] share a list
+  * [ ] Members
     * [ ] show a list's members
     * [ ] Remove a member from a list
+  * [ ] Invitations
+    * [ ] Get invitations for a user
     * [ ] Delete an invitation
     * [ ] Accept an invitation
   * [ ] Tasks
@@ -37,8 +40,8 @@ You should be good.
     * [x] Create a task
     * [x] Move a task to a new list
     * [x] Reorder tasks in a list
-    * [ ] Archive all tasks in a list
-    * [ ] Archive completed tasks in a list
+    * [x] Archive all tasks in a list
+    * [x] Archive completed tasks in a list
 
 * [ ] Blue: The sample app
 
@@ -47,7 +50,7 @@ You should be good.
     * [x] New List floating text field
     * [ ] Edit List Name
     * [ ] Archive List with Swipe
-  * [ ] Tasks CollectionView
+  * [x] Tasks CollectionView
     * [ ] Fancy Update a task interface
     * [ ] Better Add a task interface (Text Editor)
   * [ ] IAP
@@ -60,6 +63,7 @@ You should be good.
   * [ ] Users
   * [ ] Lists
   * [ ] Tasks
-* [ ] Launch CheddarKit
-* [ ] Get it consumable with Carthage.
 * [ ] Hide the Client key and make it outside of Repo.
+* [ ] Get it consumable with Carthage.
+* [ ] Get it consumable with CocoaPods
+* [ ] Launch CheddarKit

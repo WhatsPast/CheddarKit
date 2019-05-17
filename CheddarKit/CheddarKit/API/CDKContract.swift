@@ -87,10 +87,6 @@ protocol CDKTasksProtocol {
     
 }
 
-protocol CDKEntitiesProtocol {
-    // Entities
-}
-
 protocol CDKMembersProtocol {
     // Members
         // show a list's members
@@ -106,6 +102,10 @@ protocol CDKMembersProtocol {
         // accept an invitation
         func accept(invitation: CDKInvitation)
     
+}
+
+protocol CDKEntitiesProtocol {
+    // Entities
 }
 
 protocol CDKRealtimeProtocol {
