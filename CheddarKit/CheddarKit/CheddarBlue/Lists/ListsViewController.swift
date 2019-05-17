@@ -29,14 +29,15 @@ class ListsViewController: UIViewController {
         view.backgroundColor = .clear
         setupCollectionView()
         setupNewListInput()
-        CheddarKit.sharedInstance.lists(callback: { (lists, error) in
-            print("It worked")
-            if let lists = lists {
-                self.populateLists(lists)
-            } else {
-                print("We actually didn't get lists.")
+        CheddarKit.sharedInstance.lists(callback: { result in
+            switch result {
+            case .success(let lists):
+                DispatchQueue.main.async {
+                    self.populateLists(lists)
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription).")
             }
-            return nil
         })
         
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized))
@@ -86,9 +87,9 @@ class ListsViewController: UIViewController {
         })
         activeLists = otherLists
         
-        DispatchQueue.main.sync {
-            layout.storedLayouts = nil
-            collectionView?.reloadData()
+        DispatchQueue.main.async {
+            self.layout.storedLayouts = nil
+            self.collectionView?.reloadData()
         }
     }
     
@@ -182,7 +183,7 @@ extension ListsViewController {
                 snapshot?.center = center!
                 snapshot?.alpha = 0.0
                 self.collectionView?.addSubview(snapshot!)
-                UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+                UIView.animate(withDuration: 0.25, delay:0.0, options:UIView.AnimationOptions(), animations: {
                     
                     center!.y = location.y
                     self.snapshot?.center = center!
@@ -221,7 +222,29 @@ extension ListsViewController {
                     index = index + 1
                 }
                 print("Reordering.....")
-                CheddarKit.sharedInstance.reorder(lists: reorderedLists, callback: nil)
+                CheddarKit.sharedInstance.reorder(lists: reorderedLists, callback: { result in
+                    switch result {
+                    case .success(let lists):
+                        DispatchQueue.main.async {
+                            self.activeLists = lists
+                        }
+                    case .failure(let error):
+                        print("Error: \(error.localizedDescription).")
+                    }
+                })
+                
+//                CheddarKit.sharedInstance.lists(callback: { result in
+//                    switch result {
+//                    case .success(let lists):
+//                        DispatchQueue.main.async {
+//                            self.populateLists(lists)
+//                        }
+//                    case .failure(let error):
+//                        print("Error: \(error.localizedDescription).")
+//                    }
+//                })
+                
+                
                 activeLists = reorderedLists
                 
                 // ... update data source.
@@ -238,7 +261,7 @@ extension ListsViewController {
             cell?.isHidden = false
             cell?.alpha = 0.0
             
-            UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 0.25, delay:0.0, options:UIView.AnimationOptions(), animations: {
                 
                 self.snapshot?.center = cell!.center
                 self.snapshot?.transform = CGAffineTransform.identity

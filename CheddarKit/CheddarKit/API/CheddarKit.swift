@@ -12,10 +12,15 @@ class CheddarKit: NSObject {
 
     static let sharedInstance = CheddarKit.init(singleton: true)
     
-    let clientID = "65415c5a8311383d2e73a324f362a1a3"
-    let clientSecret = "66c8ba7060d13612debcbec386e515a3"
+    // Set up the Shared Session
+    let session: URLSession
+    var baseURL = URL(string: "https://api.cheddarapp.com/v1/")!
+    
+    var clientID = "167a530bee50379854f469b8f9b07b7d"
+    var clientSecret = "22b9bff290a692da4e14eddb787a8d31"
     
     private init(singleton: Bool) {
+        self.session = URLSession.shared
         super.init()
     }
     
@@ -26,7 +31,7 @@ class CheddarKit: NSObject {
     
     // utilities
     func getSession() -> URLSession {
-        return URLSession(configuration: URLSessionConfiguration.default)
+        return session
     }
     
     func encode(parametersToQueryString params: [String: String]) -> String {
@@ -50,28 +55,6 @@ class CheddarKit: NSObject {
         return paramString
     }
     
-//    private func encode(parametersToStrings params: [String: String]) -> [String] {
-//        var paramStrings: [String]
-//        var paramString = ""
-//        for (key, value) in params {
-//            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//            let escapedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//            paramString = "\(escapedKey)=\(escapedValue)"
-//            paramStrings.append(paramString)
-//        }
-//        return paramStrings
-//    }
-    
-//    private func encode(parametersToJSON params: [String: String]) -> String {
-//        var paramString = ""
-//        for (key, value) in params {
-//            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//            let escapedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//            paramString = paramString + "\(escapedKey)=\(escapedValue)&"
-//        }
-//        return paramString
-//    }
-    
     func makeQueryRequest(host: String = "https://api.cheddarapp.com/",
                              endpoint: String,
                              params: [String: String]?) -> URLRequest {
@@ -93,8 +76,8 @@ class CheddarKit: NSObject {
                                 params: [String: String]?,
                                  token: String) -> URLRequest {
         
-        print("Our Token: \(token)")
-        print("URL: \(host)\(endpoint)")
+//        print("Our Token: \(token)")
+//        print("URL: \(host)\(endpoint)")
 
         // headers
         var request = URLRequest(url: URL(string: host + endpoint)!)
@@ -120,8 +103,8 @@ class CheddarKit: NSObject {
                                   paramString: String?,
                                   token: String) -> URLRequest {
         
-        print("Our Token: \(token)")
-        print("URL: \(host)\(endpoint)")
+//        print("Our Token: \(token)")
+//        print("URL: \(host)\(endpoint)")
         
         // headers
         var request = URLRequest(url: URL(string: host + endpoint)!)
@@ -157,18 +140,92 @@ class CheddarKit: NSObject {
         request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
         request.httpBody = paramString.data(using: .utf8)
         
-        //        if let token = token {
-        //            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-        //        }
-        
         return request
     }
-    
     
     // Stuff to handle Dates
     func dateFormatter() -> DateFormatter { // 2012-07-02T18:50:53Z
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         return formatter
+    }
+    
+    /***
+     *  Parse Decodable
+     *
+     *  So Parse Decodable literally just parses the Decodable stuff into a desired object.
+     */
+    func parseDecodable<T : Decodable>(completion: @escaping (Result<T, CDKAPIError>) -> Void) -> (Result<Data, CDKAPIError>) -> Void {
+        return { result in
+            switch result {
+            case .success(let data):
+                print("parsing data!")
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let object = try jsonDecoder.decode(T.self, from: data)
+                    DispatchQueue.main.async {
+                        print("so this should be successful?")
+                        completion(.success(object))
+                    }
+                } catch let decodingError as DecodingError {
+                    DispatchQueue.main.async {
+                        print("Decoding error was significant")
+                        completion(.failure(.decodingError(decodingError)))
+                    }
+                } catch {
+                    fatalError("A totally invalid response from the server")
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    /***
+     *  Perfom
+     *
+     *  So much of this api is standard and perform executes the standard stuff.
+     */
+    func perform(request: URLRequest, completion: @escaping (Result<Data, CDKAPIError>) -> Void) {
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("We encountered a networking error.")
+                completion(.failure(.networkingError(error)))
+                return
+            }
+            
+            // yeah let's Guard Let our data and http codes.
+            guard let http = response as? HTTPURLResponse, let data = data else {
+                print("invalidResponse.")
+                completion(.failure(.invalidResponse))
+                return
+            }
+            
+            // Switch through what we got.
+            switch http.statusCode {
+            case 200:
+                print("200 series result")
+                completion(.success(data))
+            
+            case 300...399:
+                print("300 series result")
+                let body = String(data: data, encoding: .utf8)
+                completion(.failure(.requestError(http.statusCode, body ?? "<no body>")))
+                
+            case 400...499:
+                let body = String(data: data, encoding: .utf8)
+                completion(.failure(.requestError(http.statusCode, body ?? "<no body>")))
+                
+            case 500...599:
+                completion(.failure(.serverError))
+                
+            default:
+                fatalError("Unhandled HTTP Code. Ya'll done goofed.")
+            }
+        }
+        task.resume() // it says resume, but really we're just getting started.
     }
 }

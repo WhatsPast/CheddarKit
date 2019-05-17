@@ -8,6 +8,14 @@
 
 import UIKit
 
+enum CDKAPIError : Error {
+    case networkingError(Error)
+    case serverError // 500 responses
+    case requestError(Int, String) // HTTP 4xx serires errors
+    case invalidResponse // a Catch All error.
+    case decodingError(DecodingError)
+}
+
 protocol CDKAPIManagerProtocol {
 
 }
@@ -36,37 +44,46 @@ protocol CDKUsersProtocol {
 
 protocol CDKListsProtocol {
     // get all of a user's lists even the archived ones
-    func lists(callback: @escaping (_ list: CDKLists?, _ error: CDKSimpleError?) -> ()?)
+    func lists(callback: @escaping (Result<CDKLists, CDKAPIError>) -> Void)
     // get a specific user list
-    func list(id: Int, callback: @escaping (_ list: CDKList?, _ error: CDKSimpleError?) -> ()?)
+    func list(id: Int, callback: @escaping (Result<CDKList, CDKAPIError>) -> Void )
     // Update a Specific List, update it's title or archive it.
     // leaving archive nil will do nothing, setting it to true will archive it, setting it to false will unarchive it.
     func updateList(id: Int, title: String?, archive: Bool?, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
     // Creates a list
-    func createList(title: String, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())?)
+    func createList(title: String, callback: @escaping (Result<CDKList, CDKAPIError>) -> Void)
     // Reorder a List
-    func reorder(lists: CDKLists, callback: ((_ list: CDKLists?, _ error: CDKSimpleError?) -> ())?)
+    func reorder(lists: CDKLists, callback: @escaping (Result<CDKLists, CDKAPIError>) -> Void)
+    
+    // Sharing
+    func share(list: CDKList, withEmails: [String], callback: @escaping (Result<CDKSuccess, CDKAPIError>) -> Void)
+//    func unshare
+//    func members
 
 }
 
 protocol CDKTasksProtocol {
     // Tasks
         // show all tasks in a List
-        func tasks(fromList list_id: Int, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
+        func tasks(fromList: Int, callback: @escaping (Result<CDKTasks, CDKAPIError>) -> Void)
         // show a task
-        func task(withId task_id: Int, callback: ((_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        func task(withId: Int, callback: ((_ tasks: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // update a task
-        func update(task: CDKTask, withText text: String?, archive: Bool?, complete: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        func update(task: CDKTask, withText: String?, archive: Bool?, complete: Bool?, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        // archive a specific task
+        func archive(task: CDKTask, callback: @escaping (Result<CDKTask, CDKAPIError>) -> Void)
+        //  unarchive a specific task
+        func unarchive(task: CDKTask, callback: @escaping (Result<CDKTask, CDKAPIError>) -> Void)
         // create a task
-        func create(taskWithText text: String, forList list_id: Int, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)    
+        func create(taskWithText: String, forList: Int, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // move a task to a new list
-        func move(task: CDKTask, toList list: CDKList, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        func move(task: CDKTask, toList: CDKList, callback: ((_ list: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // reorder tasks in a list
         func reorder(tasks: CDKTasks, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?)
         // archive all tasks in a list
-        func archive(allTasksInList list: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        func archive(allTasksInList: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
         // archive completed tasks in a list
-        func archive(completedTasksInList list: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
+        func archive(completedTasksInList: CDKList, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?)
     
 }
 
@@ -75,11 +92,9 @@ protocol CDKEntitiesProtocol {
 }
 
 protocol CDKMembersProtocol {
-    // Sharing
-        // share a list
-        func share(list: CDKList)
+    // Members
         // show a list's members
-        func members(inList: CDKList)
+        func members(inList: CDKList, callback: @escaping (Result<CDKMembers, CDKAPIError>) -> Void)
         // remove member's from a list
         func remove(member: CDKUser, fromList: CDKList)
     

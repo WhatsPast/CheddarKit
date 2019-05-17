@@ -21,13 +21,12 @@ class NewListDelegate: NSObject, UITextFieldDelegate {
     
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
 //        setupConstraints()
     }
     
     @objc func keyboardWillShow(_ notification: NSNotification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
         }
@@ -77,25 +76,22 @@ class NewListDelegate: NSObject, UITextFieldDelegate {
         }
     }
     
-    
     // MARK: Database and Network stuff.
     func cheddarMakeList(_ title: String) {
-        CheddarKit.sharedInstance.createList(title: title) { (list, error) in
-            if let error = error {
-                print("error: \(error.error)")
-                DispatchQueue.main.async {
-                    self.setToActiveState()
-                }
-            }
-            if list != nil {
-                print("We've got a new list!!!!")
-                
+        CheddarKit.sharedInstance.createList(title: title, callback: { result in
+            switch result {
+            case .success:
                 DispatchQueue.main.async {
                     self.textField?.text = ""
                     self.setToInactiveState()
                 }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("Error: \(error.localizedDescription).")
+                    self.setToActiveState()
+                }
             }
-        }
+        })
     }
     
 }

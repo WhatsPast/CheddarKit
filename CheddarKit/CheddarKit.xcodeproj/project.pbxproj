@@ -37,6 +37,7 @@
 		93BC32AB2076B8A900902307 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AA2076B8A900902307 /* Colors.swift */; };
 		93BC32AE2078286600902307 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AD2078286600902307 /* TasksViewController.swift */; };
 		93BC32B0207D62C500902307 /* CDKTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BC32AF207D62C500902307 /* CDKTasks.swift */; };
+		93BE1B952123FC4000D47125 /* MembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BE1B942123FC4000D47125 /* MembersViewController.swift */; };
 		93CB249D1FD2CC5C0000BEDB /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		93BC32AA2076B8A900902307 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		93BC32AD2078286600902307 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		93BC32AF207D62C500902307 /* CDKTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKTasks.swift; sourceTree = "<group>"; };
+		93BE1B942123FC4000D47125 /* MembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersViewController.swift; sourceTree = "<group>"; };
 		93CB249C1FD2CC5C0000BEDB /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -278,12 +280,21 @@
 		93BC32AC2078283600902307 /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
+				93BE1B932123FC1C00D47125 /* MembersViewController */,
 				93BC32AD2078286600902307 /* TasksViewController.swift */,
 				93A92754207ED8D700EDEED9 /* TaskCell.swift */,
 				93786457208284D800C5570F /* NewTaskDelegate.swift */,
 				9378645C2082AD5100C5570F /* MoveTaskViewController */,
 			);
 			path = Tasks;
+			sourceTree = "<group>";
+		};
+		93BE1B932123FC1C00D47125 /* MembersViewController */ = {
+			isa = PBXGroup;
+			children = (
+				93BE1B942123FC4000D47125 /* MembersViewController.swift */,
+			);
+			path = MembersViewController;
 			sourceTree = "<group>";
 		};
 		93DD7C301FD2BF6F00535748 /* Models */ = {
@@ -388,6 +399,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -453,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93BC32A52076B59700902307 /* NewListDelegate.swift in Sources */,
+				93BE1B952123FC4000D47125 /* MembersViewController.swift in Sources */,
 				93A92755207ED8D700EDEED9 /* TaskCell.swift in Sources */,
 				93BC32AB2076B8A900902307 /* Colors.swift in Sources */,
 				9378645E2082AD6B00C5570F /* MoveTaskListCell.swift in Sources */,
@@ -643,7 +656,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.karlweber.CheddarKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -661,7 +674,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.karlweber.CheddarKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

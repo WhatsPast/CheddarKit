@@ -1,2 +1,4 @@
 .DS_Store
 Carthage/
+CheddarKit/Build/
+CheddarKit/Index/

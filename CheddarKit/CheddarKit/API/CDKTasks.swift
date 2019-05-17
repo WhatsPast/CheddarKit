@@ -13,29 +13,16 @@ import SimpleKeychain
 // CDKTasks
 extension CheddarKit: CDKTasksProtocol {
     
-    // get all the tasks from a list
-    func tasks(fromList list_id: Int, callback: ((_ tasks: CDKTasks?, _ error: CDKSimpleError?) -> ())?) {
+    func tasks(fromList list_id: Int, callback: @escaping (Result<CDKTasks, CDKAPIError>) -> Void) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
-            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/", endpoint: "v1/lists/\(list_id)/tasks", method: "GET", params: nil, token: userSession.access_token)
-            
-            getSession().dataTask(with: request) { (data, response, error) in
-                if let data = data {
-                    if let returnData = String(data: data, encoding: .utf8) { print(returnData) } // To Debug
-                    let decoder = JSONDecoder(); decoder.dataDecodingStrategy = .deferredToData
-                    do {
-                        let decoded = try decoder.decode(CDKTasks.self, from: data)
-                        callback?(decoded, nil)
-                    } catch {
-                        do {
-                            let decoded = try decoder.decode(CDKSimpleError.self, from:data)
-                            callback?(nil, decoded)
-                        } catch {
-                        }
-                    }
-                } // End Data
-            }.resume()
-        } // End Session
+            let path = "lists/\(list_id)/tasks"
+//            let url = baseURL.appendingPathComponent(path)
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: path, method: "GET", params: nil, token: userSession.access_token)
+            perform(request: request, completion: parseDecodable(completion: callback))
+        }
     }
+    
+    // get all the tasks from a list
     
     func task(withId task_id: Int, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
@@ -102,6 +89,22 @@ extension CheddarKit: CDKTasksProtocol {
                 } // End Data
             }.resume()
         } // End Session
+    }
+    
+    func archive(task: CDKTask, callback: @escaping (Result<CDKTask, CDKAPIError>) -> Void) {
+        if let userSession = CheddarKit.sharedInstance.getUserSession() {
+            let params = ["task[archived_at]": self.dateFormatter().string(from: Date())]
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: "tasks/\(task.id)", method: "PUT", params: params, token: userSession.access_token)
+            perform(request: request, completion: parseDecodable(completion: callback))
+        }
+    }
+    
+    func unarchive(task: CDKTask, callback: @escaping (Result<CDKTask, CDKAPIError>) -> Void) {
+        if let userSession = CheddarKit.sharedInstance.getUserSession() {
+            let params = ["task[archived_at]": ""]
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: "tasks/\(task.id)", method: "PUT", params: params, token: userSession.access_token)
+            perform(request: request, completion: parseDecodable(completion: callback))
+        }
     }
     
     func create(taskWithText text: String, forList list_id: Int, callback: ((_ task: CDKTask?, _ error: CDKSimpleError?) -> ())?) {

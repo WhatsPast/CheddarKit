@@ -15,6 +15,10 @@ struct CDKSimpleError: Codable {
     let error: String
 }
 
+struct CDKSuccess: Codable {
+    let success = "success"
+}
+
 // CDKToken
 // This is the codable response that is returned when turning an authorization code
 // into an authorization Token. Sample JSON is shown below.
@@ -45,6 +49,8 @@ struct CDKToken: Codable {
     let user: CDKUser
 }
 
+
+// Users
 struct CDKUser: Codable {
     let created_at: String
     let first_name: String?
@@ -113,7 +119,7 @@ struct CDKSocket: Codable {
 
 typealias CDKLists = Array<CDKList>
 
-struct CDKList: Codable {
+struct CDKList: Decodable {
     let active_completed_tasks_count: Int
     let active_tasks_count: Int
     let active_uncompleted_tasks_count: Int
@@ -124,7 +130,7 @@ struct CDKList: Codable {
     let created_at: String
     let id: Int
     var invitation_count: Int
-    var invitations: [String?]
+    var invitations: CDKInvitations
     var member_count: Int
     var position: Int
     let slug: String
@@ -135,6 +141,8 @@ struct CDKList: Codable {
     let users: [CDKUser]
 }
 
+
+// Tasks
 typealias CDKTasks = Array<CDKTask>
 
 struct CDKTask: Codable {
@@ -223,7 +231,19 @@ enum CDKEntityType: CustomStringConvertible {
 }
 
 // Invitations
-struct CDKInvitation: Codable {
+struct CDKInvitation: Decodable {
     let id: Int
-    let name: String
+    let email: String
+    let list_id: Int
+    let created_at: String
+    let list_title: String
+    let user_name: String
+}
+
+typealias CDKInvitations = Array<CDKInvitation>
+
+// Members
+struct CDKMembers: Decodable {
+    let members: [CDKUser]
+    let pending: CDKInvitations
 }

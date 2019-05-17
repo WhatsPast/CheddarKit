@@ -93,8 +93,6 @@ extension CheddarKit: CDKAuthenticationProtocol {
         let json = A0SimpleKeychain().string(forKey: CDKSessionKey)
         let decoder = JSONDecoder()
         do {
-            // The following line Crashes for some reason
-            print("We're gonna try to decode.")
             if let jsonStuff = json?.data(using: .utf8) {
                 let token = try decoder.decode(CDKToken.self, from: jsonStuff)
                 return token

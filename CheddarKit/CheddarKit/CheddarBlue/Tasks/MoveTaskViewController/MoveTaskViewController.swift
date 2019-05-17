@@ -27,14 +27,14 @@ class MoveTaskViewController: UIViewController {
         title = "Move Task"
         view.backgroundColor = .clear
         setupCollectionView()
-        CheddarKit.sharedInstance.lists(callback: { (lists, error) in
-            print("It worked")
-            if let lists = lists {
+        CheddarKit.sharedInstance.lists(callback: { result in
+            switch result {
+            case .success(let lists):
                 self.populateLists(lists)
-            } else {
-                print("We actually didn't get lists.")
+            case .failure(let error):
+                print("Uh Oh Spaghettio!")
+                print("Error: \(error.localizedDescription).")
             }
-            return nil
         })
     }
     

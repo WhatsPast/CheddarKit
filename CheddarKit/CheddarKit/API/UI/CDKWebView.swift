@@ -40,7 +40,6 @@ class CDKWebView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         // Do any additional setup after loading the view.
         setupWebView()
         webView.load(request)
-        print("load request!")
     }
     
     func setupWebView() {

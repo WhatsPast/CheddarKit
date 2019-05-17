@@ -36,9 +36,16 @@ class TasksViewController: UIViewController {
         view.backgroundColor = .clear
         setupCollectionView()
         setupNewTaskInput()
-        CheddarKit.sharedInstance.tasks(fromList: list_id, callback: { (tasks, error) in
-            if let tasks = tasks {
-                self.populateTasks(tasks)
+        CheddarKit.sharedInstance.tasks(fromList: list_id, callback: { result in
+            switch result {
+            case .success(let tasks):
+                print("populateTasks")
+                DispatchQueue.main.async {
+                    self.populateTasks(tasks)
+                }
+            case .failure(let error):
+                // we got error
+                break
             }
         })
      
@@ -91,9 +98,9 @@ class TasksViewController: UIViewController {
         })
         activeTasks = otherTasks
         
-        DispatchQueue.main.sync {
-            layout.storedLayouts = nil
-            collectionView?.reloadData()
+        DispatchQueue.main.async {
+            self.layout.storedLayouts = nil
+            self.collectionView?.reloadData()
         }
     }
 
@@ -194,7 +201,7 @@ extension TasksViewController {
                 snapshot?.center = center!
                 snapshot?.alpha = 0.0
                 self.collectionView?.addSubview(snapshot!)
-                UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+                UIView.animate(withDuration: 0.25, delay:0.0, options:UIView.AnimationOptions(), animations: {
                     
                     center!.y = location.y
                     self.snapshot?.center = center!
@@ -250,7 +257,7 @@ extension TasksViewController {
             cell?.isHidden = false
             cell?.alpha = 0.0
             
-            UIView.animate(withDuration: 0.25, delay:0.0, options:UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 0.25, delay:0.0, options:UIView.AnimationOptions(), animations: {
                 
                 self.snapshot?.center = cell!.center
                 self.snapshot?.transform = CGAffineTransform.identity

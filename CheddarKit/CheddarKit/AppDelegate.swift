@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.backgroundColor = UIColor.white
@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         } else {
             let session = CheddarKit.sharedInstance.getUserSession()
-            print("We have a session, access_token: \(session!.access_token)")
             loadApplication()
         }
         
@@ -44,14 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleAuth(code: String) {
-        CheddarKit.sharedInstance.convertCodeToToken(code: code, callback:  { (token: CDKToken?, error: CDKSimpleError?) -> () in
+        CheddarKit.sharedInstance.convertCodeToToken(code: code, callback:  { (token: CDKToken?, error: CDKSimpleError?) -> Void in
             print("I love it here.")
             if let token = token {
                 self.handleToken(token: token)
             } else if let _ = error {
                 // handle the error
             }
-            return
         })
     }
     

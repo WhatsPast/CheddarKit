@@ -136,7 +136,7 @@ class ListsViewLayout: UICollectionViewLayout {
         
         let size = CGSize(width: width, height: height)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.light)]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.light)]
         
         return NSString(string: text).boundingRect(with: size, options: options, attributes: attributes, context: nil)
     }

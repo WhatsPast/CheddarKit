@@ -14,15 +14,16 @@ class TextField: UITextField {
     let padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10);
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by: padding)
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by: padding)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by: padding)
+//        return UIEdgeInsetsInsetRect(bounds, padding)
     }
 
 }
@@ -43,7 +44,7 @@ extension UITextField {
         self.layer.borderWidth = 2.0
         self.layer.borderColor = UIColor.orangeOne.cgColor
         let borderAnimation = CABasicAnimation(keyPath: "borderWidth")
-        borderAnimation.fillMode = kCAFillModeForwards
+        borderAnimation.fillMode = CAMediaTimingFillMode.forwards
         borderAnimation.isRemovedOnCompletion = false
         borderAnimation.fromValue = 2.0
         borderAnimation.toValue = 0.0
@@ -59,7 +60,7 @@ extension UITextField {
         self.layer.borderWidth = 0.0
         self.layer.borderColor = UIColor.orangeOne.cgColor
         let borderAnimation = CABasicAnimation(keyPath: "borderWidth")
-        borderAnimation.fillMode = kCAFillModeForwards
+        borderAnimation.fillMode = CAMediaTimingFillMode.forwards
         borderAnimation.isRemovedOnCompletion = false
         borderAnimation.fromValue = 0.0
         borderAnimation.toValue = 2.0
@@ -85,7 +86,7 @@ extension UITextField {
         
         
         let shadowAnimation = CABasicAnimation(keyPath: "shadowOpacity")
-        shadowAnimation.fillMode = kCAFillModeForwards
+        shadowAnimation.fillMode = CAMediaTimingFillMode.forwards
         shadowAnimation.isRemovedOnCompletion = false
         shadowAnimation.fromValue = 0.0
         shadowAnimation.toValue = 0.5
@@ -108,7 +109,7 @@ extension UITextField {
         self.layer.rasterizationScale = UIScreen.main.scale
         
         let shadowAnimation = CABasicAnimation(keyPath: "shadowOpacity")
-        shadowAnimation.fillMode = kCAFillModeForwards
+        shadowAnimation.fillMode = CAMediaTimingFillMode.forwards
         shadowAnimation.isRemovedOnCompletion = false
         shadowAnimation.fromValue = 0.5
         shadowAnimation.toValue = 0.0
