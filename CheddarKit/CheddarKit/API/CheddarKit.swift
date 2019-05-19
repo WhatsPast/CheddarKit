@@ -21,6 +21,8 @@ class CheddarKit: NSObject {
     
     private init(singleton: Bool) {
         self.session = URLSession.shared
+        var clientID = CDKSecrets.clientID()
+        var clientSecret = CDKSecrets.clientSecret()
         super.init()
     }
     
@@ -47,8 +49,6 @@ class CheddarKit: NSObject {
     func encode(arrayToQueryString params: [String]) -> String {
         var paramString = ""
         for item in params {
-//            let escapedValue = item.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//            paramString = paramString + "\(escapedValue)&"
             paramString = paramString + "\(item)&"
         }
         
@@ -75,9 +75,6 @@ class CheddarKit: NSObject {
                                 method: String = "GET",
                                 params: [String: String]?,
                                  token: String) -> URLRequest {
-        
-//        print("Our Token: \(token)")
-//        print("URL: \(host)\(endpoint)")
 
         // headers
         var request = URLRequest(url: URL(string: host + endpoint)!)
@@ -102,9 +99,6 @@ class CheddarKit: NSObject {
                                   method: String = "GET",
                                   paramString: String?,
                                   token: String) -> URLRequest {
-        
-//        print("Our Token: \(token)")
-//        print("URL: \(host)\(endpoint)")
         
         // headers
         var request = URLRequest(url: URL(string: host + endpoint)!)
@@ -146,14 +140,24 @@ class CheddarKit: NSObject {
     // Stuff to handle Dates
     func dateFormatter() -> DateFormatter { // 2012-07-02T18:50:53Z
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        // EX: "2012-07-02T18:50:53Z"
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" // not sure of the difference between the above and this one.
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
+    }
+    
+    func nowDateString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.date(from: "")
+        return dateFormatter.string(from: Date(timeIntervalSinceNow: 0))
     }
     
     /***
      *  Parse Decodable
      *
-     *  So Parse Decodable literally just parses the Decodable stuff into a desired object.
+     *  Parses the Decodable stuff into a desired object.
      */
     func parseDecodable<T : Decodable>(completion: @escaping (Result<T, CDKAPIError>) -> Void) -> (Result<Data, CDKAPIError>) -> Void {
         return { result in
@@ -206,7 +210,7 @@ class CheddarKit: NSObject {
             
             // Switch through what we got.
             switch http.statusCode {
-            case 200:
+            case 200...299:
                 print("200 series result")
                 completion(.success(data))
             

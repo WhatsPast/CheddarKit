@@ -15,9 +15,9 @@ You should be good.
     * [x] Convert a code to a Token
     * [x] Set a user Session Token
     * [x] Return the current user Session
+    * [ ] Rewrite the Authentication portion of the library
   * [ ] User
     * [ ] Get an authenticated User
-    * [ ] Get a user's invitations
   * [ ] Lists
     * [x] Get all Lists
     * [x] Get a list
@@ -46,6 +46,10 @@ You should be good.
 * [ ] Blue: The sample app
 
   * [ ] Login interface
+    * [ ] Username + Password Flow
+    * [ ] Sign Up Flow
+    * [ ] Forgot Password Flow
+    * [ ] Tested on all phone sizes
   * [ ] Lists CollectionView
     * [x] New List floating text field
     * [ ] Edit List Name

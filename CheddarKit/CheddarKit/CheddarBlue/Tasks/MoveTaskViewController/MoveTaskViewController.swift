@@ -113,20 +113,19 @@ extension MoveTaskViewController: UICollectionViewDataSource {
 }
 
 extension MoveTaskViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeLists = activeLists {
             let list = activeLists[indexPath.row]
-            CheddarKit.sharedInstance.move(task: task!, toList: list, callback: { (task, error) in
-                if task != nil {
-                    print("MOVED THE TASK!!!! YAY!")
-                } else {
-                    print("something went wrong when moving the task.")
-                }
-            })
+                CheddarKit.sharedInstance.move(task: task!, toList: list, callback: {result in
+                    switch result {
+                    case .success(let task):
+                        print("task moved: \(task.id).")
+                    case .failure(let error):
+                        print("moving task failed: \(error.localizedDescription)")
+                    }
+                })
         }
     }
-
 }
 
 extension MoveTaskViewController: ListsViewLayoutDelegate {

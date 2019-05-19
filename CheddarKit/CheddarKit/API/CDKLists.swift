@@ -14,95 +14,42 @@ extension CheddarKit: CDKListsProtocol {
     
     func lists(callback: @escaping (Result<CDKLists, CDKAPIError>) -> Void) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
-            let path = "lists/"
-            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: path, method: "GET", params: nil, token: userSession.access_token)
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: "lists/", method: "GET", params: nil, token: userSession.access_token)
             perform(request: request, completion: parseDecodable(completion: callback))
         }
     }
     
     func list(id: Int, callback: @escaping (Result<CDKList, CDKAPIError>) -> Void) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
-            let path = "lists/\(id)"
-            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: path, method: "GET", params: nil, token: userSession.access_token)
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: "lists/\(id)", method: "GET", params: nil, token: userSession.access_token)
             perform(request: request, completion: parseDecodable(completion: callback))
         }
     }
     
     func createList(title: String, callback: @escaping (Result<CDKList, CDKAPIError>) -> Void) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
-            let path = "lists/"
-            let params = ["list[title]": title]
-            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: path, method: "POST", params: params, token: userSession.access_token)
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: "lists/", method: "POST", params: ["list[title]": title], token: userSession.access_token)
             perform(request: request, completion: parseDecodable(completion: callback))
         }
     }
     
-    func updateList(id: Int, title: String?, archive: Bool?, callback: ((_ list: CDKList?, _ error: CDKSimpleError?) -> ())? ) {
+    func update(list: CDKList, archive: Bool?, callback: @escaping(Result<CDKList, CDKAPIError>) -> Void) {
         if let userSession = CheddarKit.sharedInstance.getUserSession() {
-            
             var params = [String: String]()
-            
-            // title
-            if let title = title {
-                params["list[title]"] = title
-            }
+            params["list[title]"] = list.title
             
             // archive
             if let archive = archive {
                 if archive {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                    // EX: "2012-07-02T18:50:53Z"
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                    dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                    dateFormatter.date(from: "")
-                    
-                    let date = Date(timeIntervalSinceNow: 0)
-                    let dateString = dateFormatter.string(from: date)
-                    
-                    params["list[archived_at]"] = dateString
-                    print("archived_at: \(dateString).")
-                    
+                    params["list[archived_at]"] = nowDateString()
                 } else {
                     params["list[archived_at]"] = ""
                 }
             }
             
-            let request = makeAuthenticatedRequest(host: "https://api.cheddarapp.com/",
-                                                   endpoint: "v1/lists/\(id)",
-                                                   method: "PUT",
-                                                   params: params,
-                                                   token: userSession.access_token)
-            
-            getSession().dataTask(with: request) { (data, response, error) in
-                if let data = data {
-//                    if let returnData = String(data: data, encoding: .utf8) {
-//                        print(returnData)
-//                    }
-                    print("We got some valid JSON! Now let's decode it.")
-                    
-                    let decoder = JSONDecoder()
-                    decoder.dataDecodingStrategy = .deferredToData
-                    do {
-                        let decoded = try decoder.decode(CDKList.self, from: data)
-//                        print("decoded: \(decoded)")
-                        // success!
-                        callback?(decoded, nil)
-                    } catch {
-                        
-                        do {
-                            let decoded = try decoder.decode(CDKSimpleError.self, from:data)
-                            print("We've got an error.")
-                            print("\(decoded.error)")
-                            callback?(nil, decoded)
-                        } catch {
-                            
-                        }
-                    }
-                } // End Data
-            }.resume()
+            let request = makeAuthenticatedRequest(host: baseURL.absoluteString, endpoint: "lists/\(list.id)", method: "PUT", params: params, token: userSession.access_token)
+            perform(request: request, completion: parseDecodable(completion: callback))
         }
-        
     }
     
     func reorder(lists: CDKLists, callback: @escaping (Result<CDKLists, CDKAPIError>) -> Void) {

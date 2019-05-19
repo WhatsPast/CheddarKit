@@ -240,7 +240,15 @@ extension TasksViewController {
                     index = index + 1
                 }
                 print("Reordering.....")
-                CheddarKit.sharedInstance.reorder(tasks: reorderedTasks, callback: nil)
+                CheddarKit.sharedInstance.reorder(tasks: reorderedTasks, callback: {result in
+                    print("We don't really need to worrry about this result right here yet.")
+                    switch result {
+                    case .success(let tasks):
+                        print("Tasks reordered successfully.")
+                    case .failure(let error):
+                        print("Task reordering failed: \(error.localizedDescription).")
+                    }
+                })
                 activeTasks = reorderedTasks
                 
                 // ... update data source.
@@ -295,9 +303,6 @@ extension TasksViewController {
     }
     
 }
-
-
-
 
 extension TasksViewController: ListsViewLayoutDelegate {
     

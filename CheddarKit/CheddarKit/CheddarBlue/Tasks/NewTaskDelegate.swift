@@ -74,22 +74,21 @@ class NewTaskDelegate: NSObject, UITextFieldDelegate {
     
     // MARK: Database and Network stuff.
     func cheddarMakeTask(_ text: String) {
-        
-        CheddarKit.sharedInstance.create(taskWithText: text, forList: list_id) { (task, error) in
-            if let error = error {
-                print("error: \(error.error)")
-                DispatchQueue.main.async {
-                    self.setToActiveState()
-                }
-            }
-            if task != nil {
-                print("TASK CREATED!!!!")
+        CheddarKit.sharedInstance.create(taskWithText: text, forList: list_id, callback: {result in
+            switch result {
+            case .success:
+                print("Task Created!")
                 DispatchQueue.main.async {
                     self.textField?.text = ""
                     self.setToInactiveState()
                 }
+            case .failure(let error):
+                print("ERROR: \(error.localizedDescription).")
+                DispatchQueue.main.async {
+                    self.setToActiveState()
+                }
             }
-        }
+        })
     }
     
 }

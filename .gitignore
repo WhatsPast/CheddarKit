@@ -2,3 +2,4 @@
 Carthage/
 CheddarKit/Build/
 CheddarKit/Index/
+CheddarKit/CheddarKit/API/CDKSecrets.swift
