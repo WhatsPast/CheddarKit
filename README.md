@@ -16,6 +16,7 @@ You should be good.
     * [x] Set a user Session Token
     * [x] Return the current user Session
     * [ ] Rewrite the Authentication portion of the library
+    * [x] Username/Password Grant_type Flow
   * [ ] User
     * [ ] Get an authenticated User
   * [ ] Lists
@@ -46,7 +47,7 @@ You should be good.
 * [ ] Blue: The sample app
 
   * [ ] Login interface
-    * [ ] Username + Password Flow
+    * [x] Username + Password Flow
     * [ ] Sign Up Flow
     * [ ] Forgot Password Flow
     * [ ] Tested on all phone sizes

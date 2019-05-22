@@ -63,7 +63,7 @@ class ListsViewController: UIViewController {
         self.view.addSubview(collectionView!)
         collectionView!.dataSource = self
         collectionView!.delegate = self
-        collectionView!.backgroundColor = .white
+        collectionView!.backgroundColor = .whiteFive
         collectionView!.register(ListCell.self, forCellWithReuseIdentifier: cells.listCell)
         collectionView!.alwaysBounceVertical = true
     }

@@ -28,11 +28,14 @@ protocol CDKAuthenticationProtocol {
     // generate an authorizeUser URLRequest for a webview to consume.
     func authorizeUser(clientID: String, redirectURI: String?, state: String?) -> URLRequest
     // Convert an Authorization code into an Auth Token.
-    func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> ()?)
+    func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> Void)
     // sets a user's session from a token response
     @discardableResult func setUserSessionWith(_ tokenResponse: CDKToken) -> Bool
     // get's the user's session or nothing.
     func getUserSession() -> CDKToken?
+    
+    // Username / Password Login Flow, only authorized apps can actually use this flow
+    func login(username: String, password: String, callback: @escaping (Result<CDKToken, CDKAPIError>) -> Void)
 }
 
 // Users

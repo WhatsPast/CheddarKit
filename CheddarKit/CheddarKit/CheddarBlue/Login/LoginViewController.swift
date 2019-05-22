@@ -29,25 +29,26 @@ class LoginViewController: UIViewController {
     
     func setupViews() {
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .appBackgroundColor
         
         self.view.addSubview(usernameLabel)
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         usernameLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100).isActive = true
-        usernameLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        usernameLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
         usernameLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
         usernameLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         usernameLabel.text = "Username"
+        usernameLabel.font = UIFont.systemFont(ofSize: 12)
         usernameLabel.textColor = .black
         
         self.view.addSubview(usernameField)
         usernameField.translatesAutoresizingMaskIntoConstraints = false
         usernameField.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 5).isActive = true
-        usernameField.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        usernameField.heightAnchor.constraint(equalToConstant: 32).isActive = true
         usernameField.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
         usernameField.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         usernameField.layer.cornerRadius = 10
-        usernameField.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        usernameField.backgroundColor = .whiteTwo
         
         self.view.addSubview(passwordLabel)
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,34 +57,54 @@ class LoginViewController: UIViewController {
         passwordLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
         passwordLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         passwordLabel.text = "Password"
+        passwordLabel.font = UIFont.systemFont(ofSize: 12)
         passwordLabel.textColor = .black
         
         self.view.addSubview(passwordField)
         passwordField.translatesAutoresizingMaskIntoConstraints = false
         passwordField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 5).isActive = true
-        passwordField.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        passwordField.heightAnchor.constraint(equalToConstant: 32).isActive = true
         passwordField.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
         passwordField.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         passwordField.layer.cornerRadius = 10
-        passwordField.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        passwordField.backgroundColor = .whiteTwo
         passwordField.isSecureTextEntry = true
         
         self.view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 50).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        button.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 50).isActive = true
-        button.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -50).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 120.0).isActive = true
+        button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         button.layer.cornerRadius = 10
         button.setTitle("Sign In", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(red: 25/255, green: 142/255, blue: 255/255, alpha: 1.0)
+        button.backgroundColor = .blueOne
         button.addTarget(self, action: #selector(signIn), for: .touchUpInside)
         
     }
     
     @objc func signIn()  {
         print("signin")
+        // Lock the UI.
+        // Grab the username and password
+        let user = usernameField.text!
+        let pass = passwordField.text!
+        CheddarKit.sharedInstance.login(username: user, password: pass, callback: { result in
+            switch result {
+            case .success(let token):
+                print("We've got a new Token: \(token).")
+                if CheddarKit.sharedInstance.setUserSessionWith(token) {
+                    // we're officially logged in so let's show us some lists.
+                    DispatchQueue.main.async {
+                        let app = UIApplication.shared.delegate
+                        (app as! AppDelegate).loadApplication()
+                    }
+                }
+            case .failure(let error):
+                print("We failed to login: \(error.localizedDescription)")
+            }
+        })
     }
 
 }

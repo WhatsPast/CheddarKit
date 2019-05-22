@@ -11,7 +11,7 @@ import UIKit
 struct Cells {
     let listCell = "listCell"
     let task = "task"
-    let moveTaskLlist = "moveTaskListCell"
+    let moveTaskList = "moveTaskListCell"
 }
 
 let cells = Cells()

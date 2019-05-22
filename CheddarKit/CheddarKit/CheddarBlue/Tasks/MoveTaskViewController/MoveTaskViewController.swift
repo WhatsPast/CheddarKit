@@ -57,7 +57,7 @@ class MoveTaskViewController: UIViewController {
         collectionView!.dataSource = self
         collectionView!.delegate = self
         collectionView!.backgroundColor = .white
-        collectionView!.register(MoveTaskListCell.self, forCellWithReuseIdentifier: cells.moveTaskLlist)
+        collectionView!.register(MoveTaskListCell.self, forCellWithReuseIdentifier: cells.moveTaskList)
         collectionView!.alwaysBounceVertical = true
     }
 
@@ -103,7 +103,7 @@ extension MoveTaskViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var cell = UICollectionViewCell()
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells.moveTaskLlist, for: indexPath)
+        cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells.moveTaskList, for: indexPath)
         if let activeLists = activeLists {
             (cell as! MoveTaskListCell).configure(indexPath: indexPath, list: activeLists[indexPath.row])
         }

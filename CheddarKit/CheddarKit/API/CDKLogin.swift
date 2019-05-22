@@ -27,10 +27,14 @@ extension CheddarKit: CDKAuthenticationProtocol {
         return request
     }
     
+    func login(username: String, password: String, callback: @escaping (Result<CDKToken, CDKAPIError>) -> Void) {
+        perform(request: makePasswordTokenRequest(username: username, password: password), completion: parseDecodable(completion: callback))
+    }
+    
     // convertCodeToToken
     // get's a token from the authorize code that we already have.
     // API Endpoint: oauth/token
-    func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> ()?) {
+    func convertCodeToToken(code: String, callback: @escaping (_ token: CDKToken?, _ error: CDKSimpleError?) -> Void) {
         
         let request = makeTokenRequest(host: "https://api.cheddarapp.com/", endpoint: "oauth/token", code: code)
         
@@ -39,11 +43,7 @@ extension CheddarKit: CDKAuthenticationProtocol {
         session.dataTask(with: request) { (data, response, error) in
             
             if let data = data {
-                // to spit out whatever is coming from the api uncomment below
-                //                if let returnData = String(data: data, encoding: .utf8) {
-                //                    print(returnData)
-                //                }
-                
+
                 let decoder = JSONDecoder()
                 decoder.dataDecodingStrategy = .deferredToData
                 do {
@@ -69,18 +69,15 @@ extension CheddarKit: CDKAuthenticationProtocol {
                     }
                 }
             }
-            
             }.resume()
     }
     
     // Save the entire user Session
     @discardableResult func setUserSessionWith(_ tokenResponse: CDKToken) -> Bool {
-        
         // alright, we have to encode the user session into the keychain
         let encoder = JSONEncoder()
         do {
-            let serializedToken = try encoder.encode(tokenResponse)
-            let json = String(data: serializedToken, encoding: .utf8)! // {"name":"Brad","age":53}
+            let json = String(data: try encoder.encode(tokenResponse), encoding: .utf8)! // {"name":"Brad","age":53}
             A0SimpleKeychain().setString(json, forKey: CDKSessionKey)
             return true
         } catch {

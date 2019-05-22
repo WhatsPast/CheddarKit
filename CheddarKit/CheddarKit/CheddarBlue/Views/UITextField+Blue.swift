@@ -23,7 +23,6 @@ class TextField: UITextField {
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
-//        return UIEdgeInsetsInsetRect(bounds, padding)
     }
 
 }

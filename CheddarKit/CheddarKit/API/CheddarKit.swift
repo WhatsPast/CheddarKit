@@ -16,13 +16,14 @@ class CheddarKit: NSObject {
     let session: URLSession
     var baseURL = URL(string: "https://api.cheddarapp.com/v1/")!
     
+    // These are sample Keys, They are changed frequently so be sure to add your own to CDKSecrets
     var clientID = "167a530bee50379854f469b8f9b07b7d"
     var clientSecret = "22b9bff290a692da4e14eddb787a8d31"
     
     private init(singleton: Bool) {
         self.session = URLSession.shared
-        var clientID = CDKSecrets.clientID()
-        var clientSecret = CDKSecrets.clientSecret()
+        clientID = CDKSecrets.clientID()
+        clientSecret = CDKSecrets.clientSecret()
         super.init()
     }
     
@@ -51,7 +52,6 @@ class CheddarKit: NSObject {
         for item in params {
             paramString = paramString + "\(item)&"
         }
-        
         return paramString
     }
     
@@ -129,6 +129,26 @@ class CheddarKit: NSObject {
         let base64LoginString = loginData.base64EncodedString()
         
         var request = URLRequest(url: URL(string: host + endpoint)!)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
+        request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+        request.httpBody = paramString.data(using: .utf8)
+        
+        return request
+    }
+    
+    // Make an authenticated post request using generic parameters.
+    func makePasswordTokenRequest(username: String,
+                          password: String) -> URLRequest {
+        
+        let params = ["grant_type": "password", "username": username, "password": password]
+        let paramString = encode(parametersToQueryString: params)
+        
+        let loginString = String(format: "%@:%@", clientID, clientSecret)
+        let loginData = loginString.data(using: String.Encoding.utf8)!
+        let base64LoginString = loginData.base64EncodedString()
+        
+        var request = URLRequest(url: URL(string: "https://api.cheddarapp.com/" + "oauth/token")!)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
         request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")

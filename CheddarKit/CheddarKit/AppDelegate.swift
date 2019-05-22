@@ -17,21 +17,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.backgroundColor = UIColor.white
-
         
         if CheddarKit.sharedInstance.getUserSession() == nil {
-            let webView = CDKWebView()
-            window?.rootViewController = webView
-            
-            webView.authCodeCallback = { (code, error) -> () in
-                if code != nil {
-                    self.handleAuth(code: code!)
-                }
-            }
+            window?.rootViewController = LoginViewController()
         } else {
-            let session = CheddarKit.sharedInstance.getUserSession()
             loadApplication()
         }
+        
+        // This is the Old Auth Flow
+//        if CheddarKit.sharedInstance.getUserSession() == nil {
+//            let webView = CDKWebView()
+//            window?.rootViewController = webView
+//
+//            webView.authCodeCallback = { (code, error) -> () in
+//                if code != nil {
+//                    self.handleAuth(code: code!)
+//                }
+//            }
+//        } else {
+//            let session = CheddarKit.sharedInstance.getUserSession()
+//            loadApplication()
+//        }
         
         window?.makeKeyAndVisible()
         return true
@@ -43,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleAuth(code: String) {
-        CheddarKit.sharedInstance.convertCodeToToken(code: code, callback:  { (token: CDKToken?, error: CDKSimpleError?) -> Void in
+        CheddarKit.sharedInstance.convertCodeToToken(code: code, callback:  { token, error in
             print("I love it here.")
             if let token = token {
                 self.handleToken(token: token)
