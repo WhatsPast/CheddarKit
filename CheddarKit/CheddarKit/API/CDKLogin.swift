@@ -92,8 +92,10 @@ extension CheddarKit: CDKAuthenticationProtocol {
         do {
             if let jsonStuff = json?.data(using: .utf8) {
                 let token = try decoder.decode(CDKToken.self, from: jsonStuff)
+                print("We've got a token.")
                 return token
             }
+            print("No token.")
             return nil
         } catch {
             return nil
