@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.white
         
         if CheddarKit.sharedInstance.getUserSession() == nil {
-            window?.rootViewController = LoginViewController()
+            loadLoginView()
         } else {
             loadApplication()
         }
@@ -43,9 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func loadLoginView() {
+        window?.rootViewController = LoginViewController()
+    }
+    
     func loadApplication() {
-        window?.rootViewController = UINavigationController()
-        (window?.rootViewController as! UINavigationController).pushViewController(ListsViewController(), animated: true)
+        window?.rootViewController = NavigationController()
+        (window?.rootViewController as! NavigationController).pushViewController(ListsViewController(), animated: true)
     }
     
     func handleAuth(code: String) {

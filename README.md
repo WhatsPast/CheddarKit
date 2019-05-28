@@ -55,11 +55,16 @@ You should be good.
     * [x] New List floating text field
     * [ ] Edit List Name
     * [ ] Archive List with Swipe
+  * [ ] Magic TextFieldViewController
+    * [ ] Add the TextField, Save, and cancel buttons.
+    * [ ] Hide the Text field when we tap anything but the textField.
+    * [ ] Setup the delegate.
   * [x] Tasks CollectionView
     * [ ] Fancy Update a task interface
     * [ ] Better Add a task interface (Text Editor)
-  * [ ] IAP
-    * [ ] Add In App purchases page
+  * [ ] Settings
+    * [ ] Add In App purchases to the page
+    * [x] Add a logout button.
     * [ ] Integrate with the API and record the purchases
 
 * [ ] TESTS!!!!

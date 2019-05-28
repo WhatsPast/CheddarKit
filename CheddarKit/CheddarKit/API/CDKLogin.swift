@@ -102,4 +102,8 @@ extension CheddarKit: CDKAuthenticationProtocol {
         }
     }
     
+    @discardableResult func logout() -> Bool {
+        return A0SimpleKeychain().deleteEntry(forKey: CDKSessionKey)
+    }
+    
 }

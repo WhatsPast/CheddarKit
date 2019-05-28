@@ -33,9 +33,10 @@ protocol CDKAuthenticationProtocol {
     @discardableResult func setUserSessionWith(_ tokenResponse: CDKToken) -> Bool
     // get's the user's session or nothing.
     func getUserSession() -> CDKToken?
-    
     // Username / Password Login Flow, only authorized apps can actually use this flow
     func login(username: String, password: String, callback: @escaping (Result<CDKToken, CDKAPIError>) -> Void)
+    // deletes a user's suession
+    @discardableResult func logout() -> Bool
 }
 
 // Users

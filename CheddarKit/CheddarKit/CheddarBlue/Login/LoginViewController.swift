@@ -9,6 +9,8 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    let loginDelegate = LoginDelegate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +37,13 @@ class LoginViewController: UIViewController {
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         usernameLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100).isActive = true
         usernameLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        usernameLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
+        usernameLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 17).isActive = true
         usernameLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         usernameLabel.text = "Username"
         usernameLabel.font = UIFont.systemFont(ofSize: 12)
         usernameLabel.textColor = .black
+        
+        
         
         self.view.addSubview(usernameField)
         usernameField.translatesAutoresizingMaskIntoConstraints = false
@@ -49,12 +53,17 @@ class LoginViewController: UIViewController {
         usernameField.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         usernameField.layer.cornerRadius = 10
         usernameField.backgroundColor = .whiteTwo
+        usernameField.delegate = loginDelegate
+        usernameField.placeholder = "Username"
+        usernameField.autocorrectionType = .no
+        usernameField.autocapitalizationType = .none
+        usernameField.spellCheckingType = .no
         
         self.view.addSubview(passwordLabel)
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordLabel.topAnchor.constraint(equalTo: usernameField.bottomAnchor, constant: 20).isActive = true
         passwordLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        passwordLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
+        passwordLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 17).isActive = true
         passwordLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         passwordLabel.text = "Password"
         passwordLabel.font = UIFont.systemFont(ofSize: 12)
@@ -69,6 +78,8 @@ class LoginViewController: UIViewController {
         passwordField.layer.cornerRadius = 10
         passwordField.backgroundColor = .whiteTwo
         passwordField.isSecureTextEntry = true
+        passwordField.delegate = loginDelegate
+        passwordField.placeholder = "Password"
         
         self.view.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false

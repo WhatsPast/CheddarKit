@@ -17,6 +17,8 @@ class ListsViewController: UIViewController {
     var newListInput = TextField()
     var newListDelegate = NewListDelegate()
     
+    var magicTextField = MagicTextFieldViewController()
+    
     // for moving cells
     var longPress = UILongPressGestureRecognizer()
     var snapshot: UIView?
@@ -26,9 +28,10 @@ class ListsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Lists"
-        view.backgroundColor = .clear
+        view.backgroundColor = .whiteFive
         setupCollectionView()
         setupNewListInput()
+        
         CheddarKit.sharedInstance.lists(callback: { result in
             switch result {
             case .success(let lists):
@@ -43,6 +46,7 @@ class ListsViewController: UIViewController {
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized))
         self.collectionView?.addGestureRecognizer(longPress)
     }
+    
     
     func setupCollectionView() {
         
@@ -94,16 +98,25 @@ class ListsViewController: UIViewController {
     }
     
     func setupNewListInput() {
-        newListInput.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(newListInput)
-        newListInput.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0).isActive = true
-        newListInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
-        newListInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        newListInput.backgroundColor = .whiteThree
-        newListInput.layer.cornerRadius = 13.0
-        newListInput.delegate = newListDelegate
-        newListDelegate.textField = newListInput
-        newListDelegate.setupConstraints()
+        
+        add(magicTextField)
+        magicTextField.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
+        magicTextField.view.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
+//        magicTextField.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        magicTextField.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        magicTextField.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        view.bringSubviewToFront(magicTextField.view)
+        
+//        newListInput.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(newListInput)
+//        newListInput.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0).isActive = true
+//        newListInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
+//        newListInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
+//        newListInput.backgroundColor = .whiteThree
+//        newListInput.layer.cornerRadius = 13.0
+//        newListInput.delegate = newListDelegate
+//        newListDelegate.textField = newListInput
+//        newListDelegate.setupConstraints()
     }
 
 }

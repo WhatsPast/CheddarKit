@@ -17,3 +17,25 @@ struct Cells {
 let cells = Cells()
 
 let checkMark: String = "✓"
+
+/*
+    Handy extension from https://www.swiftbysundell.com/basics/child-view-controllers
+    This makes it a bit easier to add and remove child ViewControllers from other VCs.
+ */
+extension UIViewController {
+    func add(_ child: UIViewController) {
+        addChild(child)
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+    
+    func remove() {
+        guard parent != nil else {
+            return
+        }
+        
+        willMove(toParent: nil)
+        view.removeFromSuperview()
+        removeFromParent()
+    }
+}
