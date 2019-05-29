@@ -38,4 +38,10 @@ extension UIButton {
         setTitleColor(.blueOne, for: .normal)
         heightAnchor.constraint(equalToConstant: 32.0).isActive = true
     }
+    func asSmallCDKLinkButton() {
+        titleLabel?.font = UIFont.systemFont(ofSize: 10.0, weight: UIFont.Weight.medium)
+        contentHorizontalAlignment = .center
+        setTitleColor(.blueOne, for: .normal)
+        heightAnchor.constraint(equalToConstant: 16.0).isActive = true
+    }
 }

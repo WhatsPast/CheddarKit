@@ -26,7 +26,6 @@ class TextField: UITextField {
     }
     
     override func drawPlaceholder(in rect: CGRect) {
-//        UIColor.blackFour.setFill()
         let new_rect = CGRect(x: rect.origin.x, y: rect.origin.y + 4.0, width: rect.size.width, height: rect.size.height)
         NSString(string: placeholder ?? "").draw(in: new_rect, withAttributes:
             [.font: UIFont.systemFont(ofSize: 18.0, weight: UIFont.Weight.regular),

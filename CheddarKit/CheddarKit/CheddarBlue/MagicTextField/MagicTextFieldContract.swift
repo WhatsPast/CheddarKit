@@ -22,6 +22,8 @@ protocol MagicTextField: UIViewController {
     func grow()
     // shrink collapses the text field to float at the bottom of whatever View It's the child of.
     func shrink()
+    // This gives the view dimensions and a parent view
+    func layoutToBottomOf(_ superView: UIView)
 }
 
 /*
@@ -29,9 +31,10 @@ protocol MagicTextField: UIViewController {
  */
 protocol MagicTextFieldDelegate {
     // When the magic text field is dismissed
-    func didDismissMagicText()
+    func didDismissMagicText(from: MagicTextField)
     // When the user taps the cancel
-    func didCancelMagicText()
+    func didCancelMagicText(from: MagicTextField)
     // When the text field saves their current state
-    func didSaveMagicText(withText: String)
+    func didSaveMagicText(withText: String, from: MagicTextField)
+    
 }

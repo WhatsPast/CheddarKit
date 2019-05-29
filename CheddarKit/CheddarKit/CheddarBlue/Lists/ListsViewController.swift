@@ -98,25 +98,10 @@ class ListsViewController: UIViewController {
     }
     
     func setupNewListInput() {
-        
+        magicTextField.delegate = self
         add(magicTextField)
-        magicTextField.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-        magicTextField.view.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
-//        magicTextField.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
-        magicTextField.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
-        magicTextField.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        magicTextField.layoutToBottomOf(view)
         view.bringSubviewToFront(magicTextField.view)
-        
-//        newListInput.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(newListInput)
-//        newListInput.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0).isActive = true
-//        newListInput.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0).isActive = true
-//        newListInput.heightAnchor.constraint(equalToConstant: 36).isActive = true
-//        newListInput.backgroundColor = .whiteThree
-//        newListInput.layer.cornerRadius = 13.0
-//        newListInput.delegate = newListDelegate
-//        newListDelegate.textField = newListInput
-//        newListDelegate.setupConstraints()
     }
 
 }
@@ -313,6 +298,10 @@ extension ListsViewController {
     
 }
 
+/*
+ * Provides some simple information about a listview text that we can use
+ * to determine how tall it should be.
+ */
 extension ListsViewController: ListsViewLayoutDelegate {
     
     func textFor(indexPath: IndexPath) -> String {
@@ -328,6 +317,28 @@ extension ListsViewController: ListsViewLayoutDelegate {
             return activeLists.count
         }
         return 0
+    }
+    
+}
+
+/*
+ * MagicTextFieldDelegate
+ * Allows us to respond to actions undertaken by the magic textField, Such as saving
+ *
+ */
+extension ListsViewController: MagicTextFieldDelegate {
+    
+    // When the magic textField is dismissed
+    func didDismissMagicText(from magicField: MagicTextField) {
+        //
+    }
+    
+    func didCancelMagicText(from magicField: MagicTextField) {
+        //
+    }
+    
+    func didSaveMagicText(withText: String, from magicField: MagicTextField) {
+        //
     }
     
 }

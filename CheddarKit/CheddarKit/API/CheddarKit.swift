@@ -43,7 +43,7 @@ class CheddarKit: NSObject {
             let escapedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             let escapedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             paramString = paramString + "\(escapedKey)=\(escapedValue)&"
-            print("supposed paramString: \(paramString)")
+//            print("supposed paramString: \(paramString)")
         }
         return paramString
     }
