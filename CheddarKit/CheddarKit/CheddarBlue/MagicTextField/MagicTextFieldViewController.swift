@@ -36,6 +36,11 @@ class MagicTextFieldViewController: UIViewController {
     var backgroundViewHeightConstraintTall: NSLayoutConstraint?
     var backgroundViewHeightConstraintShort: NSLayoutConstraint?
     
+    // for changing the position of the textField
+    var textFieldTopConstraintActive: NSLayoutConstraint?
+    var textFieldTopConstraintInactive: NSLayoutConstraint?
+    
+    
     // the Keyboard Height
     var keyboardHeight: CGFloat = 0.0
     var keyboardHeightLayoutConstraint: NSLayoutConstraint?
@@ -78,7 +83,6 @@ class MagicTextFieldViewController: UIViewController {
         
         // activate the height constraint
         backgroundDismissButtonHeightConstraintShort?.isActive = true
-        
     }
     
     func setupBackgroundView() {
@@ -96,6 +100,29 @@ class MagicTextFieldViewController: UIViewController {
     
     func setupButtons() {
         
+        // save button
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(saveButton)
+        saveButton.widthAnchor.constraint(equalToConstant: 64.0).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 32.0).isActive = true
+        saveButton.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -10.0).isActive = true
+        saveButton.topAnchor.constraint(equalTo: textInputField.bottomAnchor, constant: 8.0).isActive = true
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.layer.cornerRadius = 11
+        saveButton.backgroundColor = .blueOne
+        self.saveButton.layer.opacity = 0.0
+        
+        // cancel button
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(cancelButton)
+        cancelButton.widthAnchor.constraint(equalToConstant: 74.0).isActive = true
+        cancelButton.heightAnchor.constraint(equalToConstant: 32.0).isActive = true
+        cancelButton.rightAnchor.constraint(equalTo: saveButton.leftAnchor).isActive = true
+        cancelButton.topAnchor.constraint(equalTo: textInputField.bottomAnchor, constant: 8.0).isActive = true
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.backgroundColor = .clear
+        cancelButton.setTitleColor(.blueOne, for: .normal)
+        self.cancelButton.layer.opacity = 0.0
     }
     
     func setupMagicTextField() {
@@ -104,7 +131,6 @@ class MagicTextFieldViewController: UIViewController {
         textInputField.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 10.0).isActive = true
         textInputField.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -10.0).isActive = true
         textInputField.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        textInputField.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 28).isActive = true
         textInputField.delegate = self
 //        textInputField.backgroundColor = .black
         textInputField.layer.cornerRadius = 10
@@ -112,6 +138,11 @@ class MagicTextFieldViewController: UIViewController {
         textInputField.placeholder = "New List"
         view.bringSubviewToFront(textInputField)
         textInputField.isUserInteractionEnabled = true
+        
+        textFieldTopConstraintActive = textInputField.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 8)
+        textFieldTopConstraintInactive = textInputField.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 28)
+        textFieldTopConstraintInactive?.isActive = true
+        
     }
     
     func layoutToBottomOf(_ superView: UIView) {
@@ -205,8 +236,6 @@ extension MagicTextFieldViewController: UITextFieldDelegate {
         return true
     }
     
-    
-    
     // MARK: Mutations / Animations of State
     func setToActiveState() {
         textInputField.activeState()
@@ -216,12 +245,20 @@ extension MagicTextFieldViewController: UITextFieldDelegate {
             self.backgroundDismissButtonHeightConstraintShort?.isActive = false
             self.viewHeightConstraintShort?.isActive = false
             self.backgroundViewHeightConstraintShort?.isActive = false
+            self.textFieldTopConstraintInactive?.isActive = false
             
             self.backgroundDismissButtonHeightConstraintTall?.isActive = true
             self.viewHeightConstraintTall?.isActive = true
             self.backgroundViewHeightConstraintTall?.isActive = true
+            self.textFieldTopConstraintActive?.isActive = true
             
             self.textInputField.backgroundColor = .white
+            
+            self.saveButton.layer.opacity = 1.0
+            self.cancelButton.layer.opacity = 1.0
+            self.saveButton.isUserInteractionEnabled = true
+            self.cancelButton.isUserInteractionEnabled = true
+            
             
             self.view.superview?.layoutIfNeeded()
             self.view.layoutIfNeeded()
@@ -232,21 +269,27 @@ extension MagicTextFieldViewController: UITextFieldDelegate {
         textInputField.resignFirstResponder()
         textInputField.inactiveState()
         UIView.animate(withDuration: 0.5) {
-
             
             self.backgroundDismissButtonHeightConstraintTall?.isActive = false
             self.viewHeightConstraintTall?.isActive = false
             self.backgroundViewHeightConstraintTall?.isActive = false
-            
+            self.textFieldTopConstraintActive?.isActive = false
             
             self.backgroundDismissButtonHeightConstraintShort?.isActive = true
             self.viewHeightConstraintShort?.isActive = true
             self.backgroundViewHeightConstraintShort?.isActive = true
+            self.textFieldTopConstraintInactive?.isActive = true
             
-            
-            self.textInputField.layoutIfNeeded()
-            self.textInputField.superview?.layoutIfNeeded()
             self.textInputField.backgroundColor = .whiteTwo
+            
+            self.saveButton.layer.opacity = 0.0
+            self.cancelButton.layer.opacity = 0.0
+            self.saveButton.isUserInteractionEnabled = false
+            self.cancelButton.isUserInteractionEnabled = false
+            
+            
+            self.view.superview?.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }
     }
     

@@ -12,6 +12,7 @@ class ListCell: UICollectionViewCell {
     
     let titleLabel = UILabel()
     let activeTasksLabel = UILabel()
+    let pillBackground = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,15 +40,14 @@ class ListCell: UICollectionViewCell {
         titleLabel.numberOfLines = 0
         titleLabel.text = "Whatever"
         
-        let randomView = UIView()
-        randomView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(randomView)
-        randomView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
-        randomView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
-        randomView.heightAnchor.constraint(equalToConstant: 16.0).isActive = true
-        randomView.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
-        randomView.layer.cornerRadius = 4.0
-        randomView.backgroundColor = .whiteFour
+        pillBackground.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(pillBackground)
+        pillBackground.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
+        pillBackground.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
+        pillBackground.heightAnchor.constraint(equalToConstant: 16.0).isActive = true
+        pillBackground.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        pillBackground.layer.cornerRadius = 8.0
+        pillBackground.backgroundColor = .whiteSeven
         
         // Task Number
         activeTasksLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class ListCell: UICollectionViewCell {
         activeTasksLabel.textAlignment = .center
         activeTasksLabel.backgroundColor = .clear
         activeTasksLabel.layer.cornerRadius = 4.0
-        activeTasksLabel.textColor = .blackSeven
+        activeTasksLabel.textColor = .blackFour
         contentView.addSubview(activeTasksLabel)
         activeTasksLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -15.0).isActive = true
         activeTasksLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
@@ -70,10 +70,6 @@ class ListCell: UICollectionViewCell {
     func configure(indexPath: IndexPath, list: CDKList) {
         titleLabel.text = list.title
         activeTasksLabel.text = "\(list.active_uncompleted_tasks_count)"
-        activeTasksLabel.layer.cornerRadius = 4.0
     }
     
 }
-
-
-
