@@ -47,7 +47,6 @@ class ListsViewController: UIViewController {
         self.collectionView?.addGestureRecognizer(longPress)
     }
     
-    
     func setupCollectionView() {
         
         layout.delegate = self
@@ -79,9 +78,8 @@ class ListsViewController: UIViewController {
             if list.archived_at == nil { // this list is not archived
                 print("\(list.title) [\(list.active_uncompleted_tasks_count)]")
                 activeLists?.append(list)
-            } else { // this list is archived
+            } else { // these lists are archived
                 archivedLists?.append(list)
-//                print("These be archived!")
             }
         }
         
@@ -145,7 +143,6 @@ extension ListsViewController: UICollectionViewDelegate {
     }
     
 }
-
 
 // Long Press to move items.
 extension ListsViewController {

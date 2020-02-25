@@ -11,6 +11,7 @@ import UIKit
 class TasksViewController: UIViewController {
     
     var list_id: Int = 0
+    var local_list_id: String = ""
     
     var collectionView: UICollectionView?
     var layout = ListsViewLayout()
@@ -25,29 +26,27 @@ class TasksViewController: UIViewController {
     var sourceIndexPath: IndexPath?
     var dontrecognizeMovement = false
     
-    convenience init(withListId listId: Int) {
+    convenience init(withListId localListId: String) {
         self.init(nibName: nil, bundle: nil)
-        list_id = listId
+//        list_id = listId
+        local_list_id = localListId
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tasks"
-        view.backgroundColor = .clear
+        view.backgroundColor = .whiteFive
         setupCollectionView()
         setupNewTaskInput()
-        CheddarKit.sharedInstance.tasks(fromList: list_id, callback: { result in
-            switch result {
-            case .success(let tasks):
-                print("populateTasks")
-                DispatchQueue.main.async {
-                    self.populateTasks(tasks)
-                }
-            case .failure(let error):
-                // we got error
-                break
+        
+        // Replace with Platter
+        
+        if let list = Platter.list(withId: local_list_id) {
+            print("populateTasks")
+            DispatchQueue.main.async {
+                self.populateTasks(Platter.tasks(inList: list))
             }
-        })
+        }
      
         longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized))
         self.collectionView?.addGestureRecognizer(longPress)
@@ -59,6 +58,7 @@ class TasksViewController: UIViewController {
         layout.delegate = self
         
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView!.backgroundColor = .whiteFive
         
         print("Frame width: \(self.view.frame.height)")
         
@@ -73,11 +73,9 @@ class TasksViewController: UIViewController {
         self.view.addSubview(collectionView!)
         collectionView!.dataSource = self
         collectionView!.delegate = self
-        collectionView!.backgroundColor = .white
         collectionView!.register(TaskCell.self, forCellWithReuseIdentifier: cells.task)
         collectionView!.alwaysBounceVertical = true
     }
-    
     
     func populateTasks(_ tasks: CDKTasks) {
         print("populatingTasks")
@@ -151,6 +149,14 @@ extension TasksViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let activeTasks = activeTasks {
             let task = activeTasks[indexPath.row]
+
+//            let hopper = (UIApplication.shared.delegate as! AppDelegate).hopper!
+            let parameters = ["taskId": "\(task.id)", "archive": "true", "complete":""]
+            let action = RadioAction(parameters: parameters, name: ActionName.UPDATETask, result: ActionResult.untested, attempts: 0, complete: false)
+            if Hopper.appendAction(action) == false {
+                // revert state
+            }
+            
             
 //            CheddarKit.sharedInstance.update(task: task, withText: nil, archive: true, complete: nil, callback: { (task, error) in
 //                if task != nil {
@@ -159,8 +165,8 @@ extension TasksViewController: UICollectionViewDelegate {
 //                }
 //            })
             
-            let moveVC = MoveTaskViewController(withTask: task)
-            self.navigationController?.pushViewController(moveVC, animated: true)
+//            let moveVC = MoveTaskViewController(withTask: task)
+//            self.navigationController?.pushViewController(moveVC, animated: true)
             
         }
         print("Tapped.")

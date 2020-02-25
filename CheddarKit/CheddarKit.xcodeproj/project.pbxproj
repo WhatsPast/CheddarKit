@@ -31,6 +31,7 @@
 		9378645A2082AC3F00C5570F /* MoveTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937864592082AC3F00C5570F /* MoveTaskViewController.swift */; };
 		9378645E2082AD6B00C5570F /* MoveTaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9378645D2082AD6B00C5570F /* MoveTaskListCell.swift */; };
 		9378646020840ADD00C5570F /* CDKMembers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9378645F20840ADD00C5570F /* CDKMembers.swift */; };
+		93A098B622A125D8001C143C /* ListsActionsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A098B522A125D8001C143C /* ListsActionsDelegate.swift */; };
 		93A0FEE81F6491D60036D68E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A0FEE71F6491D60036D68E /* AppDelegate.swift */; };
 		93A0FEEF1F6491D60036D68E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEEE1F6491D60036D68E /* Assets.xcassets */; };
 		93A0FEF21F6491D60036D68E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93A0FEF01F6491D60036D68E /* LaunchScreen.storyboard */; };
@@ -93,6 +94,7 @@
 		937864592082AC3F00C5570F /* MoveTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveTaskViewController.swift; sourceTree = "<group>"; };
 		9378645D2082AD6B00C5570F /* MoveTaskListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveTaskListCell.swift; sourceTree = "<group>"; };
 		9378645F20840ADD00C5570F /* CDKMembers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDKMembers.swift; sourceTree = "<group>"; };
+		93A098B522A125D8001C143C /* ListsActionsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsActionsDelegate.swift; sourceTree = "<group>"; };
 		93A0FEE41F6491D60036D68E /* CheddarKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheddarKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A0FEE71F6491D60036D68E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93A0FEEE1F6491D60036D68E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				93BC32A42076B59700902307 /* NewListDelegate.swift */,
 				9306A1A61FFC3EAD009BB18E /* ListsViewLayout.swift */,
 				93584A801FFC313E007465F7 /* ListCell.swift */,
+				93A098B522A125D8001C143C /* ListsActionsDelegate.swift */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				93BF951D2290E192004C6E7D /* CDKSecrets.swift in Sources */,
 				93A92757207F1D6800EDEED9 /* CheckButtonViewController.swift in Sources */,
 				93BC32AE2078286600902307 /* TasksViewController.swift in Sources */,
+				93A098B622A125D8001C143C /* ListsActionsDelegate.swift in Sources */,
 				931639DD1F664F0C00C5B5D6 /* CDKContract.swift in Sources */,
 				930341BB1F64B24C00C7A5F1 /* UIButton+Blue.swift in Sources */,
 				931639D91F6603D200C5B5D6 /* CDKResponseTypes.swift in Sources */,

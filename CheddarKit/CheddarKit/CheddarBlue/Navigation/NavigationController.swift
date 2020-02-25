@@ -16,7 +16,7 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSettingsView()
-        navigationBar.backgroundColor = .whiteTwo
+        navigationBar.backgroundColor = .whiteFive
     }
     
     func setupSettingsView() {

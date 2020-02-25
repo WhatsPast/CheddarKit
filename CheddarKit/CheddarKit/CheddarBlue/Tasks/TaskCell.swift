@@ -56,7 +56,7 @@ class TaskCell: UICollectionViewCell {
         border.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         border.backgroundColor = .whiteFour
         
-        self.contentView.backgroundColor = .white
+        self.contentView.backgroundColor = .whiteFive
     }
     
     func configure(indexPath: IndexPath, task: CDKTask) {
